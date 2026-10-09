@@ -1,0 +1,64 @@
+/* Animasjoner til ordlysbildet i karusellen. Resten av stilen ligger i Tailwind-klassene. */
+
+.marquee {
+  display: inline-flex;
+  animation: mq 70s linear infinite;
+}
+.marqueeRevers {
+  animation-direction: reverse;
+  animation-duration: 85s;
+}
+.marquee span {
+  padding-right: 0.3em;
+}
+@keyframes mq {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.kontur {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(255 255 255 / 0.22);
+}
+
+/* 18 ord, 1,8 sekunder hver: 32,4 sekunder per runde. */
+.ord {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: ord 32.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+@keyframes ord {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  1% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  4.72% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  5.56% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee,
+  .ord {
+    animation: none;
+  }
+  .ord:first-child {
+    opacity: 1;
+    transform: none;
+  }
+}
