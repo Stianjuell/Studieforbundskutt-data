@@ -1,0 +1,4973 @@
+diff --git a/app/(www)/kart/data.ts b/app/(www)/kart/data.ts
+new file mode 100644
+index 0000000..cf9a1bb
+--- /dev/null
++++ b/app/(www)/kart/data.ts
+@@ -0,0 +1,44 @@
++import "server-only";
++
++import {
++  DATA_URL,
++  OPPDATER_SEK,
++  type Historie,
++  type Kart,
++  type Konsekvensdata,
++  type Kutt,
++  type Nyhet,
++} from "./lib";
++
++async function hent<T>(fil: string): Promise<T | null> {
++  try {
++    const res = await fetch(`${DATA_URL}/${fil}`, {
++      next: { revalidate: OPPDATER_SEK, tags: ["konsekvenskart"] },
++    });
++    if (!res.ok) return null;
++    return (await res.json()) as T;
++  } catch {
++    return null;
++  }
++}
++
++/** Henter alle data til Konsekvenskartet. Returnerer null hvis tallgrunnlaget mangler. */
++export async function hentKonsekvensdata(): Promise<Konsekvensdata | null> {
++  const [kutt, kart, nyheter, historier] = await Promise.all([
++    hent<Kutt>("kutt.json"),
++    hent<Kart>("kart.json"),
++    hent<Nyhet[]>("nyheter.json"),
++    hent<Historie[]>("historier.json"),
++  ]);
++  if (!kutt || !kart) return null;
++  return {
++    kutt,
++    kart,
++    nyheter: Array.isArray(nyheter)
++      ? nyheter.filter((n) => n?.tittel && n?.url)
++      : [],
++    historier: Array.isArray(historier)
++      ? historier.filter((h) => h?.tittel && h?.url && h?.fylke)
++      : [],
++  };
++}
+diff --git a/app/(www)/kart/karusell.module.css b/app/(www)/kart/karusell.module.css
+new file mode 100644
+index 0000000..468df2f
+--- /dev/null
++++ b/app/(www)/kart/karusell.module.css
+@@ -0,0 +1,64 @@
++/* Animasjoner til ordlysbildet i karusellen. Resten av stilen ligger i Tailwind-klassene. */
++
++.marquee {
++  display: inline-flex;
++  animation: mq 70s linear infinite;
++}
++.marqueeRevers {
++  animation-direction: reverse;
++  animation-duration: 85s;
++}
++.marquee span {
++  padding-right: 0.3em;
++}
++@keyframes mq {
++  to {
++    transform: translateX(-50%);
++  }
++}
++
++.kontur {
++  color: transparent;
++  -webkit-text-stroke: 1px rgb(255 255 255 / 0.22);
++}
++
++/* 18 ord, 1,8 sekunder hver: 32,4 sekunder per runde. */
++.ord {
++  grid-area: 1 / 1;
++  opacity: 0;
++  transform: translateY(100%);
++  animation: ord 32.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
++}
++@keyframes ord {
++  0% {
++    opacity: 0;
++    transform: translateY(100%);
++  }
++  1% {
++    opacity: 1;
++    transform: translateY(0);
++  }
++  4.72% {
++    opacity: 1;
++    transform: translateY(0);
++  }
++  5.56% {
++    opacity: 0;
++    transform: translateY(-100%);
++  }
++  100% {
++    opacity: 0;
++    transform: translateY(-100%);
++  }
++}
++
++@media (prefers-reduced-motion: reduce) {
++  .marquee,
++  .ord {
++    animation: none;
++  }
++  .ord:first-child {
++    opacity: 1;
++    transform: none;
++  }
++}
+diff --git a/app/(www)/kart/karusell.tsx b/app/(www)/kart/karusell.tsx
+new file mode 100644
+index 0000000..2a81c64
+--- /dev/null
++++ b/app/(www)/kart/karusell.tsx
+@@ -0,0 +1,757 @@
++"use client";
++
++import { useCallback, useEffect, useMemo, useRef, useState } from "react";
++import {
++  ChevronLeft,
++  ChevronRight,
++  Maximize2,
++  Minimize2,
++  Pause,
++  Play,
++} from "lucide-react";
++
++import { cn } from "@/lib/utils";
++import { Button } from "@/components/ui/button";
++import {
++  Carousel,
++  CarouselContent,
++  CarouselItem,
++  type CarouselApi,
++} from "@/components/ui/carousel";
++
++import styles from "./karusell.module.css";
++import {
++  beregnForbund,
++  erHttps,
++  mill,
++  nf,
++  type Fylke,
++  type Historie,
++  type Kart,
++  type Kutt,
++} from "./lib";
++import { Norgeskart } from "./norgeskart";
++
++const VARIGHET = 7000; // ms per lysbilde
++const PAUSE_ETTER_BRUK = 15000; // ms pause etter at noen blar selv
++const VEDTAK = new Date("2026-12-15T12:00:00");
++
++const ORD = [
++  "kor",
++  "korps",
++  "husflid",
++  "jakt",
++  "idrett",
++  "helse",
++  "språk",
++  "førstehjelp",
++  "trosopplæring",
++  "politikk",
++  "dans",
++  "teater",
++  "kystkultur",
++  "friluftsliv",
++  "beredskap",
++  "håndverk",
++  "musikk",
++  "fellesskap",
++];
++
++type Lysbilde =
++  | { type: "fakta"; key: string; node: React.ReactNode }
++  | { type: "historie"; key: string; h: Historie };
++
++/* ---------- Byggeklosser ---------- */
++
++function Fakta({
++  over,
++  tittel,
++  children,
++  className,
++}: {
++  over?: string;
++  tittel?: string;
++  children?: React.ReactNode;
++  className?: string;
++}) {
++  return (
++    <div
++      className={cn(
++        "flex h-full min-h-[22rem] flex-col justify-center gap-4 rounded-lg bg-primary p-6 text-primary-foreground md:p-12",
++        className,
++      )}
++    >
++      {over && (
++        <p className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
++          {over}
++        </p>
++      )}
++      {tittel && (
++        <h3 className="max-w-[24ch] text-balance font-serif text-3xl font-bold leading-tight md:text-4xl group-data-[fs=true]:text-6xl">
++          {tittel}
++        </h3>
++      )}
++      {children}
++    </div>
++  );
++}
++
++function Tall({ tall }: { tall: [string, string][] }) {
++  return (
++    <div className="grid gap-5 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
++      {tall.map(([n, l]) => (
++        <div key={l}>
++          <b className="block font-serif text-4xl font-bold leading-none tabular-nums md:text-6xl group-data-[fs=true]:text-8xl">
++            {n}
++          </b>
++          <span className="mt-1 block text-base text-primary-foreground/90 group-data-[fs=true]:text-2xl">
++            {l}
++          </span>
++        </div>
++      ))}
++    </div>
++  );
++}
++
++function Fotnote({ children }: { children: React.ReactNode }) {
++  return (
++    <p className="max-w-prose text-sm text-primary-foreground/75 group-data-[fs=true]:text-lg">
++      {children}
++    </p>
++  );
++}
++
++function Stolper({ rader }: { rader: [string, number][] }) {
++  const max = Math.max(1, ...rader.map(([, v]) => v));
++  return (
++    <div className="gap-x-10 sm:columns-2">
++      {rader.map(([n, v]) => (
++        <div
++          key={n}
++          className="mb-1.5 grid break-inside-avoid grid-cols-[minmax(7rem,11rem)_minmax(0,1fr)_5rem] items-center gap-2.5 text-sm group-data-[fs=true]:mb-3 group-data-[fs=true]:text-xl"
++        >
++          <span className="truncate">{n}</span>
++          <i
++            className="block h-2.5 bg-white"
++            style={{ width: `${((v / max) * 100).toFixed(1)}%` }}
++          />
++          <em className="text-right not-italic tabular-nums">{mill(v)}</em>
++        </div>
++      ))}
++    </div>
++  );
++}
++
++function OrdBilde({ deltakere }: { deltakere: number }) {
++  const rad1 =
++    ORD.map((o) => o[0].toUpperCase() + o.slice(1)).join(" · ") + " · ";
++  const rad2 =
++    [...ORD]
++      .reverse()
++      .map((o) => o[0].toUpperCase() + o.slice(1))
++      .join(" · ") + " · ";
++  const rekke = (tekst: string, revers?: boolean, plass?: string) => (
++    <div
++      aria-hidden="true"
++      className={cn(
++        "pointer-events-none absolute inset-x-0 overflow-hidden whitespace-nowrap font-serif text-6xl font-bold leading-none md:text-8xl group-data-[fs=true]:text-[10rem]",
++        styles.kontur,
++        plass,
++      )}
++    >
++      <div className={cn(styles.marquee, revers && styles.marqueeRevers)}>
++        <span>{tekst}</span>
++        <span>{tekst}</span>
++      </div>
++    </div>
++  );
++  return (
++    <div className="relative flex h-full min-h-[22rem] flex-col justify-center overflow-hidden rounded-lg bg-[radial-gradient(120%_90%_at_15%_50%,#B8263F_0%,hsl(var(--primary))_45%,#7E1528_100%)] p-6 text-primary-foreground md:p-12">
++      {rekke(rad1, false, "-top-2")}
++      {rekke(rad2, true, "bottom-0")}
++      <div className="relative z-10 grid gap-3">
++        <p className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
++          Læring i hele landet
++        </p>
++        <p className="font-serif text-2xl md:text-4xl group-data-[fs=true]:text-5xl">
++          Hver uke lærer folk
++        </p>
++        <span
++          aria-label={ORD.join(", ")}
++          className="inline-grid h-[1.12em] overflow-hidden font-serif text-6xl font-bold italic leading-[1.1] tracking-tight md:text-8xl group-data-[fs=true]:text-[11rem]"
++        >
++          {ORD.map((o, i) => (
++            <span
++              key={o}
++              className={styles.ord}
++              style={{ animationDelay: `${i * 1.8}s` }}
++            >
++              {o}
++              <span className="not-italic text-[#F2A5B2]">.</span>
++            </span>
++          ))}
++        </span>
++        <p className="max-w-prose text-base text-primary-foreground/90 md:text-lg group-data-[fs=true]:text-2xl">
++          <b className="text-white">{nf.format(deltakere)} deltakere</b> i 2025,
++          i alle landets kommuner. Statstilskuddet til studieforbundene gjør det
++          mulig.
++        </p>
++      </div>
++    </div>
++  );
++}
++
++function HistorieBilde({
++  h,
++  fylkeId,
++  onKart,
++  eager,
++}: {
++  h: Historie;
++  fylkeId?: string;
++  onKart: (id: string) => void;
++  eager: boolean;
++}) {
++  return (
++    <div className="grid h-full overflow-hidden rounded-lg border bg-card text-card-foreground md:grid-cols-[7fr_5fr]">
++      <div className="relative aspect-video bg-primary/10 md:aspect-auto md:min-h-[22rem]">
++        <span className="absolute inset-x-4 bottom-3 font-serif text-2xl font-bold text-primary">
++          {h.sted || h.fylke}
++        </span>
++        {erHttps(h.bilde) && (
++          // eslint-disable-next-line @next/next/no-img-element
++          <img
++            src={h.bilde}
++            alt=""
++            loading={eager ? "eager" : "lazy"}
++            referrerPolicy="no-referrer"
++            className="absolute inset-0 h-full w-full object-cover"
++            onError={(e) => e.currentTarget.remove()}
++          />
++        )}
++      </div>
++      <div className="flex flex-col justify-center gap-3 p-6 md:p-8">
++        <p className="text-xs font-semibold uppercase tracking-widest text-[#009890]">
++          {h.sted}
++          {h.fylke && h.fylke !== h.sted ? ` · ${h.fylke}` : ""}
++        </p>
++        <h3 className="text-balance font-serif text-2xl font-bold leading-tight md:text-3xl group-data-[fs=true]:text-5xl">
++          {h.tittel}
++        </h3>
++        {h.ingress && (
++          <p className="line-clamp-5 text-muted-foreground group-data-[fs=true]:text-xl">
++            {h.ingress}
++          </p>
++        )}
++        <div className="mt-1 flex flex-wrap gap-2">
++          <Button asChild>
++            <a
++              href={erHttps(h.url) ? h.url : "#"}
++              target="_blank"
++              rel="noopener noreferrer"
++            >
++              Les historien
++            </a>
++          </Button>
++          {fylkeId && (
++            <Button variant="outline" onClick={() => onKart(fylkeId)}>
++              Se {h.fylke} i kartet
++            </Button>
++          )}
++        </div>
++      </div>
++    </div>
++  );
++}
++
++/* ---------- Karusellen ---------- */
++
++export function Karusell({
++  kutt,
++  kart,
++  fylker,
++  historier,
++  onVelgFylke,
++}: {
++  kutt: Kutt;
++  kart: Kart;
++  fylker: Fylke[];
++  historier: Historie[];
++  onVelgFylke: (id: string, scroll?: boolean) => void;
++}) {
++  const seksjon = useRef<HTMLElement>(null);
++  const [api, setApi] = useState<CarouselApi>();
++  const [aktiv, setAktiv] = useState(0);
++  const [antall, setAntall] = useState(0);
++  const [spiller, setSpiller] = useState(true);
++  const [fs, setFs] = useState(false);
++  const [dager, setDager] = useState<number | null>(null);
++  const sistBrukt = useRef(0);
++  const velgRef = useRef(onVelgFylke);
++  useEffect(() => {
++    velgRef.current = onVelgFylke;
++  }, [onVelgFylke]);
++  const onVelg = useCallback(
++    (id: string, scroll?: boolean) => velgRef.current(id, scroll),
++    [],
++  );
++
++  const idFor = useCallback(
++    (navn: string) => fylker.find((f) => f.n === navn)?.id,
++    [fylker],
++  );
++
++  // Tall som bare kan regnes ut i nettleseren (unngår ulik tekst mellom server og klient).
++  useEffect(() => {
++    const oppdater = () =>
++      setDager(Math.max(0, Math.ceil((VEDTAK.getTime() - Date.now()) / 864e5)));
++    const start = setTimeout(() => {
++      oppdater();
++      if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches)
++        setSpiller(false);
++    }, 0);
++    const t = setInterval(oppdater, 3600e3);
++    return () => {
++      clearTimeout(start);
++      clearInterval(t);
++    };
++  }, []);
++
++  const lysbilder = useMemo<Lysbilde[]>(() => {
++    const sum = (k: "kurs" | "timer" | "delt" | "tk" | "tt" | "td") =>
++      fylker.reduce((a, f) => a + f[k], 0);
++    const forbund = beregnForbund(kutt);
++    const total = kutt.kutt.KUD + kutt.kutt.KD;
++    const fyl = [...fylker].sort((a, b) => b.kr - a.kr);
++
++    const hs = [...historier].sort(
++      (a, b) =>
++        Number(!!b.bilde) - Number(!!a.bilde) || b.dato.localeCompare(a.dato),
++    );
++    const brukt = new Set<Historie>();
++    const par: Record<string, Historie> = {};
++    for (const f of fylker) {
++      const h = hs.find((x) => x.fylke === f.n && !brukt.has(x));
++      if (h) {
++        par[f.id] = h;
++        brukt.add(h);
++      }
++    }
++    const rest = hs.filter((h) => !brukt.has(h));
++    let pi = 0;
++    const q = Math.ceil(rest.length / 4);
++    const ut: Lysbilde[] = [];
++    const ta = (n: number) => {
++      for (let k = 0; k < n && pi < rest.length; k++, pi++)
++        ut.push({ type: "historie", key: rest[pi].url, h: rest[pi] });
++    };
++    const fakta = (key: string, node: React.ReactNode) =>
++      ut.push({ type: "fakta", key, node });
++
++    fakta(
++      "aar",
++      <Fakta
++        over="Studieforbundene i 2025"
++        tittel="Dette lærte Norge sammen i fjor"
++      >
++        <Tall
++          tall={[
++            [nf.format(sum("kurs")), "kurs"],
++            [mill(sum("timer")), "kurstimer"],
++            [nf.format(sum("delt")), "deltakere"],
++          ]}
++        />
++        <Fotnote>
++          Kurs i regi av studieforbundene i hele landet. Kilde: SSBs
++          kursstatistikk for 2025. Deltakere telles per kurs.
++        </Fotnote>
++      </Fakta>,
++    );
++    ta(q);
++    fakta("ord", <OrdBilde deltakere={sum("delt")} />);
++    ta(q);
++    fakta(
++      "spill",
++      <Fakta
++        over="Dette står på spill"
++        tittel={`Regjeringen foreslår å kutte ${mill(total).replace(" mill.", "")} millioner kroner`}
++      >
++        <Tall
++          tall={[
++            [
++              mill(kutt.kutt.KUD),
++              "kutt under Kultur- og likestillingsdepartementet",
++            ],
++            [mill(kutt.kutt.KD), "kutt under Kunnskapsdepartementet"],
++          ]}
++        />
++        <Fotnote>Forslag til statsbudsjett for 2027.</Fotnote>
++      </Fakta>,
++    );
++    fakta(
++      "kons",
++      <Fakta
++        over="Konsekvensene"
++        tittel="Hvis aktiviteten faller like mye som tilskuddet"
++      >
++        <Tall
++          tall={[
++            [nf.format(sum("tk")), "kurs kan forsvinne"],
++            [nf.format(sum("tt")), "kurstimer kan forsvinne"],
++            [nf.format(sum("td")), "deltakere kan miste tilbudet"],
++          ]}
++        />
++        <Fotnote>
++          Beregnet ut fra SSBs kursstatistikk for 2025 og kuttet per
++          studieforbund.
++        </Fotnote>
++      </Fakta>,
++    );
++    ta(q);
++    fakta(
++      "forbund",
++      <Fakta
++        over="Kuttet per studieforbund"
++        tittel="Slik rammes studieforbundene"
++      >
++        <Stolper rader={forbund.map((f) => [f.s, f.kr])} />
++      </Fakta>,
++    );
++    fakta(
++      "tabell",
++      <Fakta
++        over="Studieforbundene nasjonalt"
++        tittel="Konsekvensene per studieforbund"
++        className="gap-3 md:py-8"
++      >
++        <div className="overflow-x-auto">
++          <table className="w-full border-collapse text-[13px] tabular-nums group-data-[fs=true]:text-xl">
++            <thead>
++              <tr className="border-b border-white/40 text-primary-foreground/75">
++                <th className="py-1 pr-2 text-left font-semibold">
++                  Studieforbund
++                </th>
++                <th className="px-2 py-1 text-right font-semibold">Kutt</th>
++                <th className="hidden px-2 py-1 text-right font-semibold sm:table-cell">
++                  Kurs 2025
++                </th>
++                <th className="px-2 py-1 text-right font-semibold">
++                  Færre kurs
++                </th>
++                <th className="hidden px-2 py-1 text-right font-semibold sm:table-cell">
++                  Deltakere 2025
++                </th>
++                <th className="py-1 pl-2 text-right font-semibold">
++                  Færre deltakere
++                </th>
++              </tr>
++            </thead>
++            <tbody>
++              {forbund.map((f) => (
++                <tr key={f.s} className="border-b border-white/15">
++                  <td className="py-0.5 pr-2 font-semibold">{f.s}</td>
++                  <td className="px-2 py-0.5 text-right font-semibold">
++                    {mill(f.kr)}
++                  </td>
++                  <td className="hidden px-2 py-0.5 text-right text-primary-foreground/80 sm:table-cell">
++                    {nf.format(f.kurs)}
++                  </td>
++                  <td className="px-2 py-0.5 text-right font-semibold">
++                    {nf.format(Math.round(f.tk))}
++                  </td>
++                  <td className="hidden px-2 py-0.5 text-right text-primary-foreground/80 sm:table-cell">
++                    {nf.format(f.delt)}
++                  </td>
++                  <td className="py-0.5 pl-2 text-right font-semibold">
++                    {nf.format(Math.round(f.td))}
++                  </td>
++                </tr>
++              ))}
++            </tbody>
++          </table>
++        </div>
++        <Fotnote>
++          Potensielt tap hvis aktiviteten faller like mye som tilskuddet. Kilde:
++          SSBs kursstatistikk for 2025 og Vofos beregning av kuttet per
++          studieforbund.
++        </Fotnote>
++      </Fakta>,
++    );
++    ta(q);
++    fakta(
++      "fylker",
++      <Fakta over="Kuttet per fylke" tittel="Kuttet treffer alle fylker">
++        <Stolper rader={fyl.map((f) => [f.n, f.kr])} />
++        <div>
++          <Button variant="secondary" onClick={() => onVelg(fyl[0].id, true)}>
++            Utforsk kartet
++          </Button>
++        </div>
++      </Fakta>,
++    );
++    for (const f of fyl) {
++      fakta(
++        `fylke-${f.id}`,
++        <Fakta className="md:grid md:grid-cols-[3fr_2fr] md:items-center">
++          <div className="grid gap-4">
++            <p className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
++              Fylke for fylke · {f.n}
++            </p>
++            <h3 className="max-w-[24ch] text-balance font-serif text-3xl font-bold leading-tight md:text-4xl group-data-[fs=true]:text-6xl">
++              {mill(f.kr)} kroner mindre til kurs i {f.n}
++            </h3>
++            <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-4 gap-y-1">
++              {(
++                [
++                  [f.tk, "færre kurs"],
++                  [f.tt, "færre kurstimer"],
++                  [f.td, "færre deltakere"],
++                ] as const
++              ).map(([v, l]) => (
++                <div key={l} className="contents">
++                  <b className="text-right font-serif text-3xl font-bold leading-none tabular-nums md:text-5xl group-data-[fs=true]:text-7xl">
++                    {nf.format(v)}
++                  </b>
++                  <span className="group-data-[fs=true]:text-2xl">{l}</span>
++                </div>
++              ))}
++            </div>
++            <Fotnote>
++              Potensielt tap hvis aktiviteten faller like mye som tilskuddet. I
++              2025 hadde {f.n} {nf.format(f.kurs)} kurs og {nf.format(f.delt)}{" "}
++              deltakere i studieforbundene.
++            </Fotnote>
++            <div>
++              <Button variant="secondary" onClick={() => onVelg(f.id, true)}>
++                Se {f.n} i kartet
++              </Button>
++            </div>
++          </div>
++          <div className="hidden h-[20rem] md:block group-data-[fs=true]:h-[60vh]">
++            <Norgeskart kart={kart} markert={f.id} />
++          </div>
++        </Fakta>,
++      );
++      if (par[f.id])
++        ut.push({ type: "historie", key: par[f.id].url, h: par[f.id] });
++    }
++    ta(rest.length);
++    fakta(
++      "snu",
++      <Fakta over="Veien til vedtak" tittel="Dette skal vi snu">
++        {dager !== null && (
++          <div className="flex flex-wrap items-baseline gap-3">
++            <b className="font-serif text-6xl font-bold leading-none tabular-nums md:text-7xl group-data-[fs=true]:text-9xl">
++              {dager}
++            </b>
++            <span className="text-lg group-data-[fs=true]:text-3xl">
++              {dager === 1 ? "dag" : "dager"} igjen til Stortinget vedtar
++              budsjettet
++            </span>
++          </div>
++        )}
++        <div className="grid gap-5 sm:grid-cols-3">
++          {[
++            [
++              "Oktober",
++              "Budsjetthøringer i Stortingets komiteer. Organisasjonene gir innspill.",
++            ],
++            [
++              "November",
++              "Forhandlinger om budsjettet. Rammevedtak i Stortinget senest 27. november.",
++            ],
++            [
++              "Desember",
++              "Endelig vedtak av budsjettet for 2027 senest 15. desember.",
++            ],
++          ].map(([m, t]) => (
++            <div key={m} className="border-t-4 border-white pt-2.5">
++              <b className="block font-serif text-2xl group-data-[fs=true]:text-4xl">
++                {m}
++              </b>
++              <span className="mt-1 block text-primary-foreground/90 group-data-[fs=true]:text-xl">
++                {t}
++              </span>
++            </div>
++          ))}
++        </div>
++        <p className="text-primary-foreground/90 group-data-[fs=true]:text-2xl">
++          Hver sak, hvert møte og hver historie kan flytte en stemme.
++        </p>
++      </Fakta>,
++    );
++    return ut;
++  }, [kutt, kart, fylker, historier, dager, onVelg]);
++
++  // Teller og autoavspilling
++  useEffect(() => {
++    if (!api) return;
++    const sync = () => {
++      setAktiv(api.selectedScrollSnap());
++      setAntall(api.scrollSnapList().length);
++    };
++    const bruk = () =>
++      (sistBrukt.current = Date.now() + PAUSE_ETTER_BRUK - VARIGHET);
++    sync();
++    api.on("select", sync);
++    api.on("reInit", sync);
++    api.on("pointerDown", bruk);
++    return () => {
++      api.off("select", sync);
++      api.off("reInit", sync);
++      api.off("pointerDown", bruk);
++    };
++  }, [api]);
++
++  useEffect(() => {
++    if (!api || !spiller) return;
++    sistBrukt.current = Date.now();
++    const t = setInterval(() => {
++      if (document.hidden || Date.now() - sistBrukt.current < VARIGHET) return;
++      sistBrukt.current = Date.now();
++      api.scrollNext();
++    }, 500);
++    return () => clearInterval(t);
++  }, [api, spiller]);
++
++  const bla = (retning: 1 | -1) => {
++    sistBrukt.current = Date.now() + PAUSE_ETTER_BRUK - VARIGHET;
++    if (retning === 1) api?.scrollNext();
++    else api?.scrollPrev();
++  };
++
++  // Fullskjerm, med vekkelås så skjermen ikke slukker på stand
++  useEffect(() => {
++    let lås: WakeLockSentinel | null = null;
++    const onEndring = async () => {
++      const på = document.fullscreenElement === seksjon.current;
++      setFs(på);
++      try {
++        if (på && !lås && "wakeLock" in navigator)
++          lås = await navigator.wakeLock.request("screen");
++        if (!på && lås) {
++          await lås.release();
++          lås = null;
++        }
++      } catch {
++        /* nettleseren tillater ikke vekkelås */
++      }
++      requestAnimationFrame(() => api?.reInit());
++    };
++    document.addEventListener("fullscreenchange", onEndring);
++    return () => {
++      document.removeEventListener("fullscreenchange", onEndring);
++      lås?.release().catch(() => {});
++    };
++  }, [api]);
++
++  const fullskjerm = () => {
++    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
++    else {
++      seksjon.current?.requestFullscreen?.().catch(() => {});
++      setSpiller(true);
++    }
++  };
++
++  return (
++    <section
++      ref={seksjon}
++      data-fs={fs}
++      aria-labelledby="bevar-h"
++      className="group grid min-w-0 gap-3 data-[fs=true]:flex data-[fs=true]:flex-col data-[fs=true]:bg-background data-[fs=true]:p-6"
++    >
++      <h2
++        id="bevar-h"
++        className="font-serif text-3xl md:text-4xl group-data-[fs=true]:text-5xl"
++      >
++        Dette jobber vi for å bevare
++      </h2>
++      <p className="max-w-prose text-muted-foreground group-data-[fs=true]:hidden">
++        Kor, dans, teater, håndverk, kystkultur, trosopplæring, beredskap og
++        fellesskap over hele landet. Hver uke møtes folk for å lære noe nytt
++        sammen. Her er noen av historiene.
++      </p>
++
++      <Carousel
++        setApi={setApi}
++        opts={{ loop: true }}
++        className="min-w-0 group-data-[fs=true]:min-h-0 group-data-[fs=true]:flex-1 [&>div>div]:h-full [&>div]:h-full"
++      >
++        <CarouselContent className="items-stretch">
++          {lysbilder.map((l, i) => (
++            <CarouselItem
++              key={l.key}
++              aria-label={`${i + 1} av ${lysbilder.length}`}
++            >
++              {l.type === "fakta" ? (
++                l.node
++              ) : (
++                <HistorieBilde
++                  h={l.h}
++                  fylkeId={idFor(l.h.fylke)}
++                  onKart={(id) => {
++                    if (document.fullscreenElement)
++                      document.exitFullscreen().catch(() => {});
++                    onVelg(id, true);
++                  }}
++                  eager={i < 3}
++                />
++              )}
++            </CarouselItem>
++          ))}
++        </CarouselContent>
++      </Carousel>
++
++      <div className="flex flex-wrap items-center gap-2">
++        <Button
++          variant="outline"
++          size="icon"
++          onClick={() => bla(-1)}
++          aria-label="Forrige"
++        >
++          <ChevronLeft className="h-4 w-4" />
++        </Button>
++        <span className="min-w-[4.5rem] text-center text-sm tabular-nums text-muted-foreground">
++          {antall ? `${aktiv + 1} / ${antall}` : ""}
++        </span>
++        <Button
++          variant="outline"
++          size="icon"
++          onClick={() => bla(1)}
++          aria-label="Neste"
++        >
++          <ChevronRight className="h-4 w-4" />
++        </Button>
++        <Button
++          variant="outline"
++          size="sm"
++          onClick={() => {
++            if (!spiller) bla(1);
++            setSpiller((s) => !s);
++          }}
++          aria-pressed={!spiller}
++        >
++          {spiller ? (
++            <Pause className="mr-1.5 h-4 w-4" />
++          ) : (
++            <Play className="mr-1.5 h-4 w-4" />
++          )}
++          {spiller ? "Pause" : "Spill av"}
++        </Button>
++        <Button
++          variant="outline"
++          size="sm"
++          className="ml-auto"
++          onClick={fullskjerm}
++        >
++          {fs ? (
++            <Minimize2 className="mr-1.5 h-4 w-4" />
++          ) : (
++            <Maximize2 className="mr-1.5 h-4 w-4" />
++          )}
++          {fs ? "Avslutt fullskjerm" : "Start fullskjerm"}
++        </Button>
++      </div>
++    </section>
++  );
++}
+diff --git a/app/(www)/kart/konsekvenskart.tsx b/app/(www)/kart/konsekvenskart.tsx
+index 463caf5..3d26e72 100644
+--- a/app/(www)/kart/konsekvenskart.tsx
++++ b/app/(www)/kart/konsekvenskart.tsx
+@@ -1,2548 +1,347 @@
+-// src/components/konsekvenskart.tsx
+ "use client";
+ 
+-import { useMemo, useRef, useState } from "react";
++import { useCallback, useEffect, useMemo, useRef, useState } from "react";
++import { X } from "lucide-react";
+ 
+ import { cn } from "@/lib/utils";
+ import { Button } from "@/components/ui/button";
+ import { Card } from "@/components/ui/card";
+ 
+-const GEO: { w: number; h: number; p: Record<string, string> } = {
+-  w: 600,
+-  h: 758,
+-  p: {
+-    "33": "M73.1,639.6L77.7,638.5L82.3,640.4L91.0,636.7L101.7,638.6L108.4,638.5L114.3,643.7L115.1,648.8L116.8,651.9L120.4,654.8L119.7,659.9L124.7,662.9L123.3,667.9L125.3,668.5L126.6,675.9L131.4,684.8L134.8,684.8L134.4,682.2L139.1,682.7L143.2,682.0L139.7,675.5L142.4,671.0L149.8,671.0L151.3,671.8L151.8,677.5L152.8,679.2L153.9,674.2L151.5,668.4L152.6,660.8L154.0,656.7L153.8,654.5L157.7,652.0L160.5,648.8L161.3,645.7L153.5,638.6L153.9,637.7L150.9,629.7L150.3,622.5L147.4,616.2L141.9,618.3L140.8,620.0L140.9,625.7L136.8,623.8L135.1,620.5L131.4,620.7L129.8,619.6L128.3,609.0L127.3,607.1L110.6,595.6L108.0,591.1L105.3,590.2L102.0,585.8L100.3,586.7L101.0,589.1L98.9,592.6L96.6,592.1L93.5,596.3L86.9,595.4L83.5,601.0L75.3,607.7L80.6,609.8L80.3,614.0L82.6,616.5L80.9,621.7L79.5,629.1L77.4,631.8L76.2,635.6L73.1,639.6Z",
+-    "42": "M119.8,720.2L115.0,717.9L114.3,713.2L110.9,710.2L110.0,706.7L105.3,706.5L102.9,709.2L104.8,710.8L101.3,714.1L99.3,712.8L97.4,709.0L94.2,711.3L89.2,707.9L85.9,705.0L80.3,705.6L77.6,700.8L76.0,696.2L74.1,693.1L75.3,689.7L74.1,684.0L71.8,683.6L70.0,679.4L72.9,676.1L70.7,672.3L71.6,668.8L68.8,664.5L67.3,665.7L62.5,662.8L59.0,663.6L54.7,670.5L55.7,673.0L51.3,675.5L51.3,677.2L49.0,681.6L48.6,689.3L49.7,693.4L41.9,699.8L39.5,705.5L36.0,711.5L37.7,712.1L38.5,716.0L35.0,717.0L36.8,720.4L37.4,723.9L36.1,727.3L37.0,730.3L35.8,734.1L34.1,736.6L30.2,738.2L33.4,741.2L37.8,743.1L34.9,745.2L34.1,750.4L37.2,752.2L40.0,750.6L42.9,752.3L44.8,755.0L48.4,756.7L49.5,754.8L55.3,756.3L57.1,757.6L60.2,757.3L65.2,758.2L67.9,755.2L70.6,755.8L74.8,755.0L74.8,752.3L77.3,751.7L79.1,754.2L81.7,754.2L85.9,749.1L92.5,746.3L92.8,744.7L99.0,739.9L98.7,737.6L102.2,735.7L106.9,731.5L109.0,728.3L114.5,725.7L115.8,722.9L119.8,720.2Z",
+-    "32": "M150.9,629.7L153.9,637.7L153.5,638.6L161.3,645.7L165.1,646.3L166.9,652.1L170.6,656.7L168.1,664.4L164.9,663.2L161.6,661.9L159.5,666.5L159.4,669.2L160.8,675.0L160.5,678.3L161.3,682.4L164.0,682.1L164.0,679.0L169.8,674.5L170.3,670.6L174.9,671.0L177.7,672.3L178.6,667.4L181.2,668.4L181.7,671.7L185.3,675.5L189.0,673.9L191.5,676.4L195.5,675.2L198.1,672.7L198.0,667.0L195.6,664.2L194.6,657.7L195.9,655.2L194.5,650.0L191.1,648.0L188.7,644.8L190.1,639.7L185.5,635.3L183.3,628.4L179.8,625.6L180.1,622.2L177.5,620.9L176.5,624.7L169.2,626.4L165.2,625.4L165.8,628.7L170.8,631.2L171.5,634.1L169.4,635.8L165.4,634.7L155.4,634.5L154.8,631.9L150.9,629.7ZM151.5,668.4L154.7,670.7L154.8,674.3L153.6,679.0L155.0,680.4L159.6,677.6L159.1,672.3L157.3,670.6L157.3,664.2L156.6,662.5L158.3,659.2L161.6,658.3L161.4,655.4L157.7,652.0L153.8,654.5L154.0,656.7L152.6,660.8L151.5,668.4Z",
+-    "03": "M157.7,652.0L161.4,655.4L161.6,658.3L164.1,658.5L164.9,663.2L168.1,664.4L170.6,656.7L166.9,652.1L165.1,646.3L161.3,645.7L160.5,648.8L157.7,652.0Z",
+-    "56": "M405.2,69.8L411.9,71.3L417.3,74.4L421.2,71.4L423.7,73.6L425.6,78.7L428.0,83.0L433.0,85.0L433.8,88.0L432.3,91.4L434.1,92.4L435.4,96.4L439.3,98.9L440.0,101.0L439.7,106.7L435.4,106.9L431.1,109.2L431.6,112.2L437.7,122.4L438.3,126.8L437.6,129.8L434.6,131.9L427.8,133.1L432.5,139.3L433.1,141.3L436.7,146.2L438.2,152.3L441.3,150.4L447.2,152.9L452.2,152.1L455.1,155.2L460.3,150.9L464.9,149.5L466.1,142.8L470.3,141.7L472.6,144.1L477.7,146.9L484.3,147.9L491.3,151.2L495.1,148.4L494.2,142.7L494.4,139.5L496.2,136.2L500.0,132.4L503.1,132.6L504.9,125.0L503.2,121.8L502.9,118.0L501.4,114.9L501.3,107.0L502.5,103.7L501.4,101.9L501.7,96.0L502.9,91.0L500.6,88.3L502.4,84.6L504.2,83.9L507.9,76.5L508.9,70.8L512.8,68.6L514.0,69.5L519.0,69.1L520.2,70.3L524.8,66.6L526.5,62.7L528.3,62.1L529.4,58.9L535.8,56.5L537.2,60.7L541.7,65.2L545.7,66.6L547.6,69.9L563.3,73.5L564.7,76.5L570.1,84.6L568.8,89.7L563.5,101.1L564.4,107.5L570.4,112.0L573.0,105.4L572.9,98.5L571.6,94.8L573.3,92.9L576.8,92.4L578.9,87.7L580.7,85.4L584.0,84.9L585.4,81.3L585.3,75.4L583.3,71.6L584.9,70.7L592.1,75.5L598.1,74.6L600.0,72.2L598.5,65.8L595.3,61.1L591.8,61.1L590.3,59.8L585.6,60.5L582.5,57.8L580.3,58.9L581.3,62.3L576.9,67.6L574.9,67.6L572.8,69.3L572.2,67.1L573.8,63.0L569.7,56.1L562.3,54.6L548.9,53.3L549.8,49.1L555.5,50.2L557.2,49.3L567.0,49.3L571.5,49.9L576.2,47.7L579.4,44.4L579.8,39.8L581.9,37.0L587.9,34.1L591.5,31.3L590.3,27.4L587.5,23.5L585.4,23.9L576.2,19.7L571.8,20.9L573.4,17.2L570.1,14.1L567.3,12.9L564.8,13.7L560.1,13.0L554.2,17.6L552.6,15.1L553.3,11.9L550.9,11.6L550.1,9.0L544.6,8.1L540.7,11.4L538.3,18.7L539.0,20.0L538.6,29.2L540.2,32.2L536.1,32.1L532.9,33.3L529.5,33.3L533.8,28.2L534.9,21.9L529.5,22.6L531.4,19.9L527.1,18.5L532.4,16.4L534.1,14.0L535.9,8.4L535.9,5.3L530.9,4.1L529.0,0.0L525.2,0.7L522.0,4.7L520.9,2.7L516.5,1.3L515.4,4.1L516.4,7.0L511.9,5.9L510.0,11.6L512.3,14.5L518.6,15.1L518.1,17.2L514.5,17.7L515.1,21.4L512.7,23.0L513.2,26.1L511.5,35.0L514.0,38.1L512.8,40.1L509.5,39.3L508.9,42.7L504.4,42.8L505.4,40.3L504.3,37.9L504.6,30.6L501.6,28.4L504.3,24.7L503.4,15.4L501.7,12.4L500.0,13.6L497.2,18.6L492.6,28.9L492.8,34.9L488.1,42.4L486.7,48.8L484.7,52.8L486.7,55.8L484.5,61.0L483.5,66.7L476.7,64.2L476.7,59.7L480.7,54.8L478.5,51.4L480.1,46.9L479.2,39.9L481.5,34.5L486.7,25.6L488.7,20.3L485.1,20.3L481.6,19.3L479.0,17.0L476.6,17.6L479.0,20.9L478.6,24.7L477.0,25.5L475.3,21.2L473.5,19.8L471.7,23.6L466.6,18.9L462.8,18.9L463.9,25.3L461.8,27.7L459.9,25.1L458.2,27.7L458.8,31.0L466.8,34.3L468.4,38.2L467.0,39.0L463.7,35.7L460.3,36.4L460.2,40.8L457.4,46.5L453.9,48.0L452.9,50.8L449.6,54.7L447.5,58.4L447.3,61.0L444.9,62.9L443.9,66.3L448.1,70.5L443.4,73.1L445.8,75.1L451.5,76.1L449.7,79.0L447.4,77.8L445.0,80.4L442.7,76.2L440.9,76.5L440.7,72.2L438.6,66.8L432.4,66.5L428.8,65.2L427.1,65.7L419.0,62.1L416.4,66.0L416.1,68.8L410.4,64.0L409.2,66.4L405.2,69.8ZM416.6,44.4L422.4,45.5L423.7,46.6L421.3,50.5L421.9,52.9L432.9,50.1L438.4,45.9L439.8,39.1L441.5,39.0L443.3,35.7L443.3,30.7L441.7,29.3L437.5,33.2L438.4,35.5L436.7,37.4L431.3,35.5L430.1,36.6L433.2,42.1L430.6,41.8L427.4,38.6L426.2,41.3L416.6,44.4ZM426.4,60.7L427.8,62.9L431.3,64.5L435.2,64.9L439.7,63.3L435.0,57.5L432.0,57.0L426.4,60.7ZM434.9,55.4L436.7,57.9L439.2,59.2L442.2,62.4L445.5,60.2L450.3,51.8L448.2,43.8L445.9,41.5L443.5,42.4L445.8,45.1L439.7,47.1L439.3,48.8L435.7,53.1L434.9,55.4ZM448.1,42.6L449.8,42.8L452.3,47.4L454.5,47.3L457.9,42.1L457.6,39.1L454.6,35.9L448.8,34.3L447.9,37.2L449.5,38.6L448.1,42.6ZM449.5,19.7L450.8,22.1L454.0,23.8L456.0,20.3L451.9,17.1L449.5,19.7ZM462.9,13.7L466.2,15.3L466.1,11.1L462.9,13.7ZM474.7,12.6L476.2,14.5L479.7,16.2L481.6,18.3L485.2,15.1L489.1,14.6L488.1,11.7L485.4,9.5L485.6,7.3L483.4,4.0L481.0,4.4L480.7,7.5L477.8,8.2L474.7,12.6ZM573.3,67.4L576.2,66.6L579.8,62.7L576.0,58.2L573.2,58.6L574.4,64.1L573.3,67.4Z",
+-    "55": "M309.2,171.4L311.8,169.9L317.5,169.7L317.1,167.3L319.0,165.1L318.2,157.8L318.9,156.6L312.7,151.3L308.4,155.3L309.3,157.5L306.7,159.1L304.2,161.8L302.2,161.8L302.1,165.1L299.4,166.2L298.7,170.1L300.7,174.8L306.8,170.4L309.2,171.4ZM308.5,178.5L310.2,180.0L312.4,178.4L315.6,177.9L317.2,174.1L315.9,173.0L316.4,172.0L314.9,170.4L311.7,171.0L308.5,178.5ZM311.6,147.5L316.1,151.7L319.6,150.9L318.6,146.6L315.5,147.2L312.6,145.4L311.6,147.5ZM318.6,176.4L318.5,173.9L321.8,172.7L324.8,169.1L331.7,169.7L334.7,169.3L339.0,167.2L348.8,166.1L351.1,170.1L356.8,167.2L361.5,171.2L369.1,170.2L389.3,177.9L395.1,169.7L388.7,166.4L391.0,164.3L393.7,159.8L395.8,151.8L394.6,144.9L389.0,138.5L398.9,136.8L401.9,133.1L409.3,137.2L410.0,133.3L407.0,128.5L408.8,124.4L412.2,121.1L419.4,122.4L427.8,133.1L434.6,131.9L437.6,129.8L438.3,126.8L437.7,122.4L431.6,112.2L431.1,109.2L435.4,106.9L439.7,106.7L440.0,101.0L439.3,98.9L435.4,96.4L434.1,92.4L432.3,91.4L433.8,88.0L433.0,85.0L428.0,83.0L425.6,78.7L423.7,73.6L421.2,71.4L417.3,74.4L411.9,71.3L405.2,69.8L407.1,72.8L409.1,73.0L411.4,76.4L413.0,76.4L418.9,80.1L420.8,83.8L421.2,87.9L423.1,88.4L422.1,93.3L418.3,87.9L414.4,86.3L414.0,84.3L411.1,81.0L407.4,81.7L406.8,86.1L403.6,92.7L401.8,92.5L400.7,87.5L398.6,90.6L399.2,93.5L394.6,97.0L395.1,100.1L394.2,102.9L392.3,114.7L391.2,117.3L389.0,118.4L389.8,112.7L389.8,108.0L391.9,104.4L390.3,103.4L390.4,97.3L391.6,90.0L389.0,85.2L386.1,88.0L384.1,97.8L381.5,97.6L380.3,103.0L378.1,103.6L379.0,95.9L378.0,95.3L371.8,98.2L370.1,98.1L366.8,100.8L366.5,103.3L364.2,107.2L364.4,110.9L365.7,112.6L365.3,116.6L368.6,121.2L373.3,121.3L374.8,123.9L375.0,127.6L371.4,128.2L373.5,124.6L372.2,122.7L368.5,122.9L365.9,120.6L364.1,117.2L362.6,111.4L354.7,114.3L355.0,117.4L358.0,120.2L359.9,124.8L356.3,127.0L356.2,122.4L353.2,120.0L353.3,117.4L349.8,117.5L348.3,124.3L346.6,126.2L346.1,131.0L346.7,135.2L342.6,137.5L338.0,142.4L336.5,144.9L337.5,149.5L339.8,150.4L335.7,155.1L329.9,160.8L326.4,161.2L319.5,165.2L317.9,169.9L316.5,171.4L316.4,173.1L318.0,174.4L318.6,176.4ZM322.3,141.5L325.9,140.4L330.9,140.1L335.7,133.0L339.1,135.8L341.3,134.5L345.9,133.8L343.7,130.9L345.8,129.3L343.8,125.9L347.5,123.2L346.1,116.9L343.5,112.0L340.9,113.3L338.9,111.7L335.0,111.6L335.8,116.1L330.1,117.3L333.0,121.6L328.9,121.0L324.9,122.4L327.4,125.4L324.7,127.8L328.4,129.8L325.5,136.8L322.2,139.3L322.3,141.5ZM323.7,160.3L329.7,158.9L329.5,155.9L327.7,152.2L323.7,160.3ZM329.0,149.8L332.5,156.1L337.0,151.4L334.3,148.7L331.7,148.5L329.0,149.8ZM333.8,144.5L337.8,139.8L335.6,139.5L333.8,144.5ZM345.8,111.6L350.0,114.1L360.3,111.3L361.6,107.4L360.4,104.8L363.6,102.7L365.8,98.7L364.5,96.2L358.6,93.0L357.8,95.9L359.3,99.1L354.9,100.3L352.7,98.3L351.0,99.5L352.1,104.4L348.9,103.3L350.1,107.9L345.9,109.4L345.8,111.6ZM358.3,89.9L364.8,95.3L366.6,97.9L371.5,95.2L373.7,90.2L373.3,88.1L376.0,87.3L377.0,85.0L372.5,82.3L370.7,85.8L367.1,80.5L363.1,84.7L360.3,85.4L360.4,88.8L358.3,89.9ZM362.9,77.2L365.7,79.5L367.2,79.0L368.2,75.1L366.3,70.9L364.2,76.1L362.9,77.2ZM369.8,78.2L373.2,79.9L374.6,78.5L371.1,75.8L369.8,78.2ZM372.4,94.4L378.6,93.1L379.5,89.0L381.2,86.1L378.9,84.4L376.3,88.5L374.4,89.7L372.4,94.4ZM372.5,71.4L376.9,77.4L377.7,81.4L380.8,82.0L382.9,79.7L380.5,75.4L378.0,75.8L375.6,69.9L372.5,71.4ZM390.0,79.1L394.0,81.7L398.5,80.1L397.4,77.6L398.0,72.5L395.9,69.7L392.6,70.8L390.4,73.7L390.0,79.1ZM394.2,92.5L395.8,95.4L398.5,92.7L394.6,89.6L394.2,92.5ZM397.1,82.5L399.9,87.4L401.7,84.0L399.4,81.1L397.1,82.5Z",
+-    "31": "M191.5,676.4L189.0,673.9L185.3,675.5L181.7,671.7L181.2,668.4L178.6,667.4L177.7,672.3L174.9,671.0L170.3,670.6L169.8,674.5L164.0,679.0L164.0,682.1L161.3,682.4L159.9,687.6L162.0,690.7L162.6,696.9L163.8,698.6L169.6,700.5L170.2,703.4L174.3,703.8L175.6,706.0L178.5,704.5L180.0,705.7L182.4,711.5L181.8,717.8L183.9,718.5L187.0,716.9L188.8,714.2L189.6,709.9L191.7,707.0L192.2,700.2L193.7,698.2L193.6,692.4L190.6,678.3L191.5,676.4Z",
+-    "46": "M6.7,569.8L6.7,574.5L9.0,575.0L12.2,573.2L12.4,568.1L6.7,569.8ZM13.3,530.5L14.9,531.1L16.7,535.0L21.0,533.3L24.6,533.4L24.2,531.3L18.7,529.2L17.3,527.9L13.3,530.5ZM4.9,593.6L5.3,596.0L9.9,601.9L12.5,601.8L9.3,595.9L4.9,593.6ZM10.4,559.1L14.4,561.1L14.3,558.3L10.4,559.1ZM5.8,600.9L8.0,605.4L12.7,608.3L13.5,607.0L11.2,603.0L5.8,600.9ZM22.5,659.2L26.3,662.5L32.3,664.0L34.3,658.2L37.9,653.5L40.8,653.4L44.4,650.8L48.5,652.0L48.2,655.5L46.7,658.3L48.2,659.8L56.4,656.4L59.8,656.2L61.9,653.8L61.9,650.8L64.9,646.5L71.1,643.9L73.1,639.6L76.2,635.6L77.4,631.8L79.5,629.1L80.9,621.7L82.6,616.5L80.3,614.0L80.6,609.8L75.3,607.7L83.5,601.0L86.9,595.4L93.5,596.3L96.6,592.1L98.9,592.6L101.0,589.1L100.3,586.7L97.6,584.4L96.2,581.2L95.8,577.1L101.9,571.7L99.5,569.6L99.7,566.4L103.1,566.5L104.5,565.3L103.3,560.7L99.4,560.9L95.0,558.5L94.1,553.4L94.9,549.0L90.9,546.7L84.4,547.5L84.6,545.6L82.5,539.8L83.0,533.0L81.8,531.1L79.0,530.1L74.0,531.3L63.4,531.4L59.8,531.9L54.0,530.1L50.8,527.0L49.5,528.9L46.5,529.5L43.9,526.8L40.4,528.1L38.4,527.0L33.7,527.4L32.5,524.1L31.7,520.7L28.8,517.5L29.5,514.9L26.0,511.7L23.7,512.5L23.4,517.8L26.5,518.1L29.0,521.1L28.9,523.2L25.9,525.1L23.3,524.9L21.9,528.1L23.3,529.6L27.2,529.4L30.8,528.2L37.4,530.9L37.2,532.3L28.8,529.7L26.3,531.9L26.1,534.1L21.9,534.5L16.2,538.5L15.8,541.5L22.7,546.2L24.4,549.2L20.2,550.6L21.0,554.7L16.6,554.3L13.7,555.6L15.6,561.6L12.6,563.3L15.1,568.4L14.2,570.2L18.4,572.2L17.7,574.3L21.0,575.1L22.7,577.1L28.6,573.9L38.9,573.8L40.6,575.3L44.9,574.8L49.4,578.6L54.0,577.6L55.1,571.7L59.0,575.7L62.7,576.0L64.8,580.4L70.7,579.4L72.0,578.1L75.5,579.2L77.7,576.6L79.2,578.5L76.9,581.3L73.1,579.6L72.3,581.0L68.1,580.9L66.1,583.2L62.9,581.6L62.5,578.3L58.5,577.5L56.7,575.9L54.9,580.5L47.5,580.4L44.2,577.6L41.0,577.6L36.2,575.7L30.7,576.9L28.9,576.5L22.0,579.8L18.9,576.8L13.7,575.7L11.5,577.5L10.3,582.0L12.0,589.4L15.0,588.9L17.7,591.1L16.0,594.0L11.2,592.0L10.2,593.7L12.5,598.8L13.3,604.8L15.0,606.4L21.2,602.3L23.6,601.9L23.3,598.6L24.4,598.8L26.4,597.3L26.8,599.1L29.0,599.4L28.2,599.9L28.2,602.1L26.7,608.2L26.4,613.0L23.1,614.2L19.8,613.9L16.7,608.7L13.2,609.7L14.4,614.3L10.0,615.4L10.1,620.3L11.7,625.3L14.8,627.8L18.6,626.9L20.2,624.5L23.2,624.8L19.6,629.7L23.8,630.0L22.3,636.0L22.6,638.7L26.0,639.9L28.4,637.1L28.4,631.9L29.9,630.9L32.8,624.7L36.5,626.7L37.9,624.9L37.8,620.0L44.4,618.1L48.4,616.1L49.9,617.4L47.1,620.0L43.9,620.6L41.8,623.0L39.5,623.8L37.5,627.8L34.1,629.4L36.9,634.2L32.0,636.2L27.6,642.1L23.8,643.2L20.8,648.6L23.0,649.0L25.1,652.5L27.4,651.6L29.0,653.9L24.0,654.8L21.6,656.9L22.5,659.2ZM3.0,619.6L3.8,623.9L8.1,625.7L8.6,618.4L6.8,613.4L4.4,612.0L4.6,619.8L3.0,619.6ZM5.8,604.0L10.3,614.6L12.6,613.5L12.1,609.2L5.8,604.0ZM19.1,522.1L20.3,523.9L19.3,526.4L21.7,527.6L23.5,524.1L23.2,522.3L19.1,522.1ZM3.0,649.3L5.1,649.5L7.6,652.4L9.8,651.0L6.1,643.8L3.0,649.3ZM7.5,633.9L10.3,636.3L11.1,633.3L7.5,633.9ZM6.2,666.4L10.8,666.1L13.7,662.2L13.5,658.5L7.7,658.7L4.8,664.8L6.2,666.4ZM8.8,643.3L9.8,649.6L12.9,652.0L14.4,650.9L15.8,646.8L15.5,643.3L11.0,638.4L10.7,641.1L8.8,643.3ZM16.1,606.7L20.6,613.9L26.0,611.5L26.0,608.6L28.1,601.0L28.1,600.2L27.3,599.1L26.5,599.8L26.1,598.5L24.8,599.4L23.6,603.3L16.1,606.7ZM12.5,638.1L16.9,644.5L21.7,639.0L22.3,634.5L15.9,635.1L15.8,638.3L12.5,638.1Z",
+-    "15": "M32.5,524.1L33.7,527.4L38.4,527.0L40.4,528.1L43.9,526.8L46.5,529.5L49.5,528.9L50.8,527.0L54.0,530.1L59.8,531.9L63.4,531.4L74.0,531.3L79.0,530.1L81.8,531.1L84.1,526.6L86.8,526.6L93.2,522.3L99.8,523.4L106.6,515.3L111.6,514.0L124.8,514.6L125.5,516.0L129.3,515.2L132.8,512.5L135.0,505.3L132.7,504.1L127.4,495.7L129.3,494.1L133.5,493.7L138.4,491.1L138.9,488.1L137.5,484.3L134.2,484.0L133.7,474.6L131.0,471.8L126.7,471.9L123.4,474.6L119.1,475.0L118.1,473.7L112.0,476.5L115.9,480.8L117.0,483.8L116.1,486.9L112.1,481.8L113.6,479.8L108.9,475.3L108.7,471.2L105.3,471.8L105.0,474.1L106.5,478.6L108.4,480.3L109.3,487.3L112.4,488.9L115.3,491.9L114.9,493.3L107.8,487.5L107.9,481.7L106.0,479.1L100.7,479.3L96.9,477.8L92.3,480.7L89.9,477.6L87.5,476.5L87.5,474.5L80.3,475.9L78.6,477.6L77.8,480.9L80.1,483.7L77.4,485.5L77.1,489.4L87.0,489.9L90.4,493.2L86.1,497.2L80.0,496.6L77.1,493.3L71.8,492.8L63.0,494.4L59.5,493.5L57.2,495.0L56.8,497.9L61.8,498.5L61.6,500.7L58.4,503.8L62.0,504.4L65.3,503.1L68.4,503.9L58.0,507.1L54.9,507.6L47.6,511.7L46.6,515.2L49.3,520.6L48.0,520.9L44.7,515.3L40.0,516.2L35.7,515.9L33.9,513.7L31.3,517.5L34.7,519.5L32.5,524.1ZM35.3,512.2L37.0,514.9L41.3,514.5L42.8,513.2L42.8,509.8L37.0,508.7L35.3,512.2ZM42.8,512.1L45.4,512.4L47.5,510.1L51.7,507.5L49.8,506.3L49.3,503.1L45.1,503.4L44.0,505.6L44.7,510.7L42.8,512.1ZM68.4,490.7L68.9,491.7L75.9,490.1L75.8,487.9L70.5,488.8L68.4,490.7ZM88.5,476.1L92.8,478.9L97.2,476.8L97.5,470.5L88.5,476.1ZM97.7,473.9L100.4,475.0L102.9,472.8L102.0,470.5L98.6,471.3L97.7,473.9ZM102.4,453.1L103.4,456.3L107.2,458.6L112.3,457.3L111.7,452.1L108.5,450.5L102.4,453.1ZM104.0,466.8L105.0,468.6L110.6,468.3L110.0,463.8L104.0,466.8ZM110.7,465.3L111.4,468.6L114.6,468.2L112.6,464.6L110.7,465.3ZM113.0,462.6L113.3,465.3L115.1,468.5L118.5,469.3L121.2,468.1L118.4,462.0L115.7,463.2L113.0,462.6ZM118.7,458.9L121.5,460.6L125.1,459.8L124.1,456.9L120.7,456.7L118.7,458.9ZM127.8,467.6L127.7,464.0L130.4,459.5L127.1,454.8L124.2,455.8L125.4,460.1L121.1,461.0L120.3,463.9L122.8,468.0L127.8,467.6Z",
+-    "40": "M59.8,656.2L59.7,660.9L62.5,662.8L67.3,665.7L68.8,664.5L71.6,668.8L70.7,672.3L72.9,676.1L70.0,679.4L71.8,683.6L74.1,684.0L75.3,689.7L74.1,693.1L76.0,696.2L77.6,700.8L80.3,705.6L85.9,705.0L89.2,707.9L94.2,711.3L97.4,709.0L99.3,712.8L101.3,714.1L104.8,710.8L102.9,709.2L105.3,706.5L110.0,706.7L110.9,710.2L114.3,713.2L115.0,717.9L119.8,720.2L123.1,717.2L121.5,715.0L122.0,712.8L130.1,709.5L134.9,705.8L135.7,702.8L135.1,699.2L137.2,698.4L136.7,694.1L133.7,689.7L134.8,684.8L131.4,684.8L126.6,675.9L125.3,668.5L123.3,667.9L124.7,662.9L119.7,659.9L120.4,654.8L116.8,651.9L115.1,648.8L114.3,643.7L108.4,638.5L101.7,638.6L91.0,636.7L82.3,640.4L77.7,638.5L73.1,639.6L71.1,643.9L64.9,646.5L61.9,650.8L61.9,653.8L59.8,656.2Z",
+-    "39": "M134.9,705.8L134.7,709.5L137.5,710.6L140.5,710.0L140.1,706.1L143.4,707.5L146.3,707.0L148.7,704.6L151.6,693.7L154.1,695.8L155.8,693.1L154.5,689.7L154.8,685.6L152.4,684.6L149.2,679.0L152.8,679.2L151.8,677.5L151.3,671.8L149.8,671.0L142.4,671.0L139.7,675.5L143.2,682.0L139.1,682.7L134.4,682.2L134.8,684.8L133.7,689.7L136.7,694.1L137.2,698.4L135.1,699.2L135.7,702.8L134.9,705.8Z",
+-    "11": "M0.0,681.4L1.1,684.6L3.1,685.6L5.3,678.3L3.3,672.4L0.0,681.4ZM30.2,738.2L34.1,736.6L35.8,734.1L37.0,730.3L36.1,727.3L37.4,723.9L36.8,720.4L35.0,717.0L38.5,716.0L37.7,712.1L36.0,711.5L39.5,705.5L41.9,699.8L49.7,693.4L48.6,689.3L49.0,681.6L51.3,677.2L51.3,675.5L55.7,673.0L54.7,670.5L59.0,663.6L62.5,662.8L59.7,660.9L59.8,656.2L56.4,656.4L48.2,659.8L46.7,658.3L48.2,655.5L48.5,652.0L44.4,650.8L40.8,653.4L37.9,653.5L34.3,658.2L32.3,664.0L26.3,662.5L22.5,659.2L16.6,656.1L14.7,658.5L14.3,663.4L10.8,666.1L6.2,666.4L4.0,668.8L5.6,674.5L8.0,677.5L11.6,679.3L14.8,678.9L22.5,674.5L21.4,671.1L23.6,669.2L23.8,676.0L28.9,679.2L28.4,683.9L23.0,689.4L20.0,691.1L21.7,695.1L23.7,702.9L20.9,700.9L19.2,698.0L15.6,697.5L10.8,693.5L9.4,697.9L7.4,706.6L5.7,708.3L6.5,713.0L10.2,721.5L11.9,721.9L14.8,726.2L18.5,726.0L18.6,730.9L22.5,734.4L30.2,738.2ZM10.9,687.7L15.5,691.4L16.5,688.5L12.2,686.8L10.9,687.7ZM22.3,681.3L23.0,683.5L27.4,682.4L26.5,679.9L22.3,681.3Z",
+-    "50": "M112.0,476.5L118.1,473.7L119.1,475.0L123.4,474.6L126.7,471.9L131.0,471.8L133.7,474.6L134.2,484.0L137.5,484.3L138.9,488.1L138.4,491.1L133.5,493.7L129.3,494.1L127.4,495.7L132.7,504.1L135.0,505.3L132.8,512.5L129.3,515.2L140.1,520.8L143.0,523.1L148.3,521.7L149.8,517.6L156.9,514.4L155.0,506.8L160.1,499.3L163.9,499.6L170.8,501.9L173.9,502.0L179.7,500.7L185.6,503.8L187.6,510.5L192.1,513.7L195.1,520.1L200.6,519.8L208.3,522.2L210.1,524.3L213.4,523.3L208.9,507.1L211.3,499.4L210.1,490.6L214.1,485.2L208.5,469.6L215.1,458.0L213.8,451.4L217.8,447.1L218.7,444.7L228.1,430.3L234.3,425.7L241.5,423.8L254.0,426.9L260.2,429.2L265.1,418.6L264.2,403.4L258.8,400.8L253.1,396.5L254.4,393.1L265.0,374.1L269.8,366.1L266.0,364.9L253.1,366.6L250.8,365.9L247.9,366.9L241.7,365.7L237.9,368.3L235.6,373.6L232.4,373.4L228.8,375.4L227.3,372.4L223.1,372.2L220.4,373.9L218.1,372.5L218.3,371.5L215.0,370.5L215.1,367.8L213.6,367.2L213.1,366.8L207.7,371.1L201.0,374.1L203.0,378.0L196.1,379.0L198.2,381.7L201.3,381.6L204.7,379.9L208.1,383.8L202.9,383.9L201.4,386.1L198.6,387.5L198.1,391.5L200.8,395.3L200.6,402.0L196.3,403.5L192.5,399.7L188.0,392.4L185.8,398.2L182.9,397.4L179.3,400.8L176.2,401.0L177.9,403.9L173.8,405.8L174.3,408.8L167.5,413.7L167.4,417.1L162.4,419.5L162.2,423.1L159.8,427.8L163.7,427.5L164.7,429.1L152.7,433.1L149.2,437.2L149.1,442.3L151.3,442.6L157.1,440.1L154.9,443.8L157.7,453.5L161.6,453.8L165.1,450.6L167.0,450.8L173.7,447.2L175.4,444.8L183.4,441.7L187.4,435.8L187.0,433.7L183.9,432.0L186.8,429.1L193.4,425.1L195.3,425.0L198.5,427.2L192.7,429.5L190.5,432.0L187.7,433.3L188.0,436.1L191.8,434.5L194.7,434.9L197.0,438.7L190.6,443.0L186.3,444.1L183.9,443.7L181.2,446.8L177.5,448.1L180.9,450.7L178.2,454.2L179.5,456.4L178.3,458.7L174.2,457.7L168.4,458.0L163.6,456.5L157.0,460.4L158.2,456.5L155.1,453.9L154.9,450.7L152.9,446.2L147.6,446.6L137.3,452.2L139.3,454.6L137.0,457.5L135.8,454.7L127.1,454.8L130.4,459.5L127.7,464.0L127.8,467.6L120.9,469.0L120.0,470.7L114.8,469.4L110.1,470.3L112.0,476.5ZM116.5,439.2L121.3,440.6L129.6,439.9L131.1,436.8L130.7,433.7L123.2,438.1L116.5,439.2ZM115.7,450.5L117.7,453.8L121.6,454.0L124.0,452.4L129.5,452.2L135.1,450.7L139.0,448.2L136.4,445.6L133.5,445.8L133.2,442.3L123.8,443.9L124.3,446.5L118.8,447.3L115.7,450.5ZM182.6,377.2L185.1,377.8L187.6,375.3L186.3,373.2L183.5,374.7L182.6,377.2ZM185.1,378.5L189.3,376.6L192.9,379.9L196.7,376.0L192.6,372.3L185.1,378.5ZM189.1,391.6L190.9,393.7L192.8,398.3L195.5,399.9L199.1,397.6L191.6,390.5L189.1,391.6ZM192.3,389.6L196.0,393.4L197.3,388.9L195.7,388.1L192.3,389.6ZM196.0,378.5L201.6,377.6L200.6,374.6L196.0,378.5ZM202.3,367.6L204.3,368.5L208.6,365.2L205.7,364.1L203.7,364.8L202.3,367.6ZM212.2,367.3L212.2,365.8L212.3,365.7L212.7,362.7L207.8,368.8L212.2,367.3Z",
+-    "18": "M209.5,336.0L213.2,337.7L216.4,332.9L215.8,331.0L211.5,331.7L209.5,336.0ZM213.1,366.8L213.6,367.2L215.9,367.5L217.1,368.5L220.2,367.6L221.6,366.5L221.3,362.9L219.4,359.3L217.1,360.8L215.4,365.2L213.1,366.8ZM218.3,371.5L218.0,368.8L217.1,368.7L215.8,367.7L215.1,367.8L215.0,370.5L218.3,371.5ZM218.1,372.5L220.4,373.9L223.1,372.2L227.3,372.4L228.8,375.4L232.4,373.4L235.6,373.6L237.9,368.3L241.7,365.7L247.9,366.9L250.8,365.9L253.1,366.6L266.0,364.9L269.8,366.1L271.2,358.8L274.3,355.3L274.2,343.3L275.3,333.1L277.3,326.8L276.3,321.7L274.9,308.5L286.8,307.3L297.1,300.0L294.6,288.5L300.1,282.2L309.2,264.0L312.6,259.9L316.8,256.2L317.0,247.2L309.8,234.2L311.2,229.4L316.6,228.4L319.7,221.9L323.2,206.6L332.4,198.6L334.4,194.6L342.8,198.9L347.9,202.6L352.6,189.3L351.0,177.5L351.1,170.1L348.8,166.1L339.0,167.2L334.7,169.3L331.7,169.7L324.8,169.1L321.8,172.7L318.5,173.9L318.6,176.4L325.2,174.9L326.4,172.3L329.2,172.8L328.9,175.9L333.0,175.0L336.5,171.4L341.0,174.0L336.2,175.9L332.0,179.3L325.3,182.3L325.8,179.6L322.4,177.7L319.3,177.8L312.8,180.7L310.1,185.8L317.2,189.2L313.2,194.4L315.1,196.8L313.3,200.4L312.9,207.4L317.5,209.9L317.0,211.2L311.6,207.2L312.2,204.1L310.6,200.5L308.6,199.4L310.3,192.8L309.7,190.3L307.1,187.0L305.9,188.2L305.4,193.1L304.3,195.6L301.8,197.2L301.2,192.8L297.8,194.8L294.6,194.1L292.2,200.8L294.5,200.5L297.2,198.3L298.5,199.6L306.1,200.6L306.1,203.9L304.6,205.5L301.8,203.9L292.4,207.5L288.1,207.5L284.2,208.5L281.3,211.7L282.4,214.8L285.8,216.4L282.0,218.4L280.3,220.7L284.2,221.7L290.5,217.1L292.6,214.1L295.4,213.1L297.4,215.4L292.8,217.2L289.5,223.2L291.3,223.4L290.6,227.4L287.3,225.4L284.4,226.5L278.4,232.1L278.0,237.2L274.7,240.1L273.0,243.8L277.6,243.1L280.1,245.3L283.7,242.3L289.8,240.4L288.5,243.6L289.8,244.7L293.4,244.0L296.6,248.7L295.3,249.6L290.9,246.6L288.0,245.7L284.9,247.5L282.2,245.5L279.5,247.1L275.2,247.3L271.4,249.2L270.7,255.1L268.6,259.5L266.0,255.7L260.8,259.8L258.1,259.9L255.0,261.6L256.9,269.5L252.4,269.9L252.8,274.4L247.0,273.8L247.5,276.0L244.6,278.0L245.9,280.7L245.0,285.5L241.2,285.3L244.0,292.3L240.3,295.1L240.8,296.8L245.5,299.3L240.7,303.9L244.4,304.0L247.4,301.3L248.8,302.1L252.9,300.3L254.3,302.0L260.1,300.1L261.8,298.5L264.8,299.4L259.7,302.8L257.9,301.9L254.8,303.2L253.4,302.3L246.9,302.9L241.6,306.4L236.1,307.9L232.3,311.1L233.4,312.3L238.5,312.6L238.6,314.8L237.3,316.1L231.7,319.6L230.3,326.3L226.0,331.8L223.7,336.0L224.7,341.1L221.4,339.0L219.7,345.1L219.4,350.6L216.9,357.8L219.4,357.5L222.6,353.2L223.2,356.4L225.1,356.8L222.7,362.7L226.0,364.2L221.9,367.0L218.0,368.7L219.0,370.6L218.1,372.5ZM223.5,313.6L227.5,312.7L231.8,309.7L229.6,305.9L227.8,308.6L225.0,309.6L223.5,313.6ZM225.1,320.9L228.8,320.6L233.1,316.9L238.1,314.9L236.9,313.5L233.3,314.4L231.4,313.6L227.7,316.3L225.1,320.9ZM233.2,301.1L235.2,303.0L237.5,300.9L235.8,298.2L233.2,301.1ZM238.7,210.6L244.5,207.1L247.3,203.1L246.9,202.2L247.2,200.7L246.9,199.1L245.3,200.5L245.5,199.2L247.0,198.4L243.7,198.3L241.2,203.4L240.1,209.0L238.7,210.6ZM246.9,199.1L247.2,200.6L249.0,199.4L248.9,201.7L251.7,200.0L253.2,193.4L250.4,192.1L250.4,195.9L248.5,195.9L248.4,197.5L246.9,199.1ZM253.3,197.0L258.3,196.8L261.4,194.1L261.8,191.2L265.6,191.1L268.5,187.5L265.5,186.0L264.6,182.4L262.4,183.3L259.6,186.9L258.3,184.3L255.7,185.9L253.8,191.7L253.3,197.0ZM264.0,253.8L266.4,254.8L268.3,251.3L265.9,250.5L264.0,253.8ZM269.2,192.2L270.3,192.5L276.2,189.8L282.2,185.6L286.9,181.1L290.0,175.8L278.8,177.3L273.5,180.4L275.2,182.4L271.6,185.8L269.6,188.7L269.2,192.2ZM272.9,163.2L274.2,167.8L278.1,166.9L279.1,164.6L288.1,161.7L286.7,164.0L282.7,165.0L282.8,168.7L286.7,169.4L294.6,163.2L294.4,160.6L292.1,158.9L294.0,154.4L292.1,152.4L292.7,150.2L288.6,147.9L286.4,154.3L284.0,153.8L283.2,157.1L279.6,157.4L278.4,155.0L274.9,158.1L275.2,160.6L272.9,163.2ZM277.9,170.5L281.3,174.0L284.5,173.3L284.5,170.5L281.7,169.3L277.9,170.5ZM284.9,205.2L285.5,207.0L290.9,207.0L288.1,203.2L284.9,205.2ZM309.2,171.4L306.8,170.4L300.7,174.8L298.7,170.1L299.4,166.2L302.1,165.1L302.2,161.8L304.2,161.8L306.7,159.1L304.7,154.2L305.7,151.5L304.5,147.1L299.1,148.1L298.6,151.6L295.7,155.6L295.0,161.9L296.5,165.6L293.8,168.3L290.8,169.2L289.7,171.9L291.5,175.0L287.9,180.3L286.7,185.3L290.7,183.2L292.8,179.5L294.2,182.0L296.8,183.3L300.6,183.1L301.8,178.7L305.1,180.0L307.0,178.6L309.2,171.4ZM299.8,146.3L303.8,143.7L304.7,140.6L307.6,137.1L308.7,127.4L305.9,128.7L303.0,131.6L302.5,136.0L299.5,137.5L294.7,146.7L294.6,151.2L297.6,149.7L299.8,146.3Z",
+-    "34": "M81.8,531.1L83.0,533.0L82.5,539.8L84.6,545.6L84.4,547.5L90.9,546.7L94.9,549.0L94.1,553.4L95.0,558.5L99.4,560.9L103.3,560.7L104.5,565.3L103.1,566.5L99.7,566.4L99.5,569.6L101.9,571.7L95.8,577.1L96.2,581.2L97.6,584.4L100.3,586.7L102.0,585.8L105.3,590.2L108.0,591.1L110.6,595.6L127.3,607.1L128.3,609.0L129.8,619.6L131.4,620.7L135.1,620.5L136.8,623.8L140.9,625.7L140.8,620.0L141.9,618.3L147.4,616.2L150.3,622.5L150.9,629.7L154.8,631.9L155.4,634.5L165.4,634.7L169.4,635.8L171.5,634.1L170.8,631.2L165.8,628.7L165.2,625.4L169.2,626.4L176.5,624.7L177.5,620.9L180.1,622.2L179.8,625.6L183.3,628.4L185.5,635.3L190.1,639.7L188.7,644.8L191.1,648.0L194.5,650.0L195.9,655.2L194.6,657.7L195.6,664.2L199.9,661.0L205.3,661.9L210.2,657.8L213.4,653.7L215.1,650.4L216.4,645.1L215.5,637.6L218.7,633.0L218.9,627.0L216.6,621.9L216.5,619.5L213.5,614.2L212.1,605.2L209.4,598.1L215.7,596.2L220.1,596.6L222.1,595.9L223.0,591.2L225.4,588.3L227.9,579.3L220.1,566.9L216.0,567.1L208.8,557.6L214.4,526.9L213.4,523.3L210.1,524.3L208.3,522.2L200.6,519.8L195.1,520.1L192.1,513.7L187.6,510.5L185.6,503.8L179.7,500.7L173.9,502.0L170.8,501.9L163.9,499.6L160.1,499.3L155.0,506.8L156.9,514.4L149.8,517.6L148.3,521.7L143.0,523.1L140.1,520.8L129.3,515.2L125.5,516.0L124.8,514.6L111.6,514.0L106.6,515.3L99.8,523.4L93.2,522.3L86.8,526.6L84.1,526.6L81.8,531.1Z",
+-  },
+-};
+-
+-type FylkeMeta = { id: string; n: string };
+-
+-type Row = {
+-  f: string; // fylke id
+-  s: string; // studieforbund
+-  d: string; // departement ("KUD" | "KD")
+-  kurs: number;
+-  timer: number;
+-  delt: number;
+-  kr: number;
+-  tk: number;
+-  tt: number;
+-  td: number;
+-};
+-
+-type Fylke = FylkeMeta & {
+-  kurs: number;
+-  timer: number;
+-  delt: number;
+-  kr: number;
+-  tk: number;
+-  tt: number;
+-  td: number;
+-  fb: [string, number][]; // tapt tilskudd per studieforbund, sortert synkende
+-};
+-
+-// ⬇ paste the object from `const RAW=...` in the HTML, unchanged
+-
+-const RAW: { f: FylkeMeta[]; r: Row[] } = {
+-  f: [
+-    { id: "31", n: "Østfold" },
+-    { id: "32", n: "Akershus" },
+-    { id: "03", n: "Oslo" },
+-    { id: "34", n: "Innlandet" },
+-    { id: "33", n: "Buskerud" },
+-    { id: "39", n: "Vestfold" },
+-    { id: "40", n: "Telemark" },
+-    { id: "42", n: "Agder" },
+-    { id: "11", n: "Rogaland" },
+-    { id: "46", n: "Vestland" },
+-    { id: "15", n: "Møre og Romsdal" },
+-    { id: "50", n: "Trøndelag" },
+-    { id: "18", n: "Nordland" },
+-    { id: "55", n: "Troms" },
+-    { id: "56", n: "Finnmark" },
+-  ],
+-  r: [
+-    {
+-      f: "31",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 305,
+-      timer: 8445,
+-      delt: 3247,
+-      kr: 231499,
+-      tk: 58,
+-      tt: 1601,
+-      td: 615,
+-    },
+-    {
+-      f: "31",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 480,
+-      timer: 8436,
+-      delt: 3745,
+-      kr: 422299,
+-      tk: 91,
+-      tt: 1599,
+-      td: 710,
+-    },
+-    {
+-      f: "31",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 411,
+-      timer: 13604,
+-      delt: 3487,
+-      kr: 388901,
+-      tk: 78,
+-      tt: 2579,
+-      td: 661,
+-    },
+-    {
+-      f: "31",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 151,
+-      timer: 2147,
+-      delt: 1907,
+-      kr: 73696,
+-      tk: 29,
+-      tt: 407,
+-      td: 361,
+-    },
+-    {
+-      f: "31",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 268,
+-      timer: 12822,
+-      delt: 4133,
+-      kr: 390178,
+-      tk: 51,
+-      tt: 2431,
+-      td: 783,
+-    },
+-    {
+-      f: "31",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "31",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 36,
+-      timer: 646,
+-      delt: 217,
+-      kr: 19006,
+-      tk: 7,
+-      tt: 122,
+-      td: 41,
+-    },
+-    {
+-      f: "31",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 9,
+-      timer: 1301,
+-      delt: 78,
+-      kr: 78217,
+-      tk: 2,
+-      tt: 247,
+-      td: 15,
+-    },
+-    {
+-      f: "31",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 210,
+-      timer: 3826,
+-      delt: 1589,
+-      kr: 106329,
+-      tk: 40,
+-      tt: 725,
+-      td: 301,
+-    },
+-    {
+-      f: "31",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 20,
+-      timer: 337,
+-      delt: 101,
+-      kr: 9887,
+-      tk: 4,
+-      tt: 64,
+-      td: 19,
+-    },
+-    {
+-      f: "31",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 127,
+-      timer: 3963,
+-      delt: 1230,
+-      kr: 642307,
+-      tk: 66,
+-      tt: 2047,
+-      td: 635,
+-    },
+-    {
+-      f: "31",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 151,
+-      timer: 6052,
+-      delt: 2144,
+-      kr: 767903,
+-      tk: 78,
+-      tt: 3127,
+-      td: 1108,
+-    },
+-    {
+-      f: "31",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 71,
+-      timer: 646,
+-      delt: 1820,
+-      kr: 96237,
+-      tk: 37,
+-      tt: 334,
+-      td: 940,
+-    },
+-    {
+-      f: "32",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 572,
+-      timer: 12313,
+-      delt: 6556,
+-      kr: 337538,
+-      tk: 108,
+-      tt: 2334,
+-      td: 1243,
+-    },
+-    {
+-      f: "32",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 1201,
+-      timer: 23814,
+-      delt: 12082,
+-      kr: 1192205,
+-      tk: 228,
+-      tt: 4514,
+-      td: 2290,
+-    },
+-    {
+-      f: "32",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 1439,
+-      timer: 42260,
+-      delt: 11122,
+-      kr: 1208133,
+-      tk: 273,
+-      tt: 8010,
+-      td: 2108,
+-    },
+-    {
+-      f: "32",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 344,
+-      timer: 4347,
+-      delt: 5701,
+-      kr: 149210,
+-      tk: 65,
+-      tt: 824,
+-      td: 1081,
+-    },
+-    {
+-      f: "32",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 619,
+-      timer: 28132,
+-      delt: 8982,
+-      kr: 856034,
+-      tk: 117,
+-      tt: 5332,
+-      td: 1703,
+-    },
+-    {
+-      f: "32",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "32",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 63,
+-      timer: 812,
+-      delt: 322,
+-      kr: 23905,
+-      tk: 12,
+-      tt: 154,
+-      td: 61,
+-    },
+-    {
+-      f: "32",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 21,
+-      timer: 2428,
+-      delt: 115,
+-      kr: 145973,
+-      tk: 4,
+-      tt: 460,
+-      td: 22,
+-    },
+-    {
+-      f: "32",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 467,
+-      timer: 8346,
+-      delt: 3925,
+-      kr: 231937,
+-      tk: 89,
+-      tt: 1582,
+-      td: 744,
+-    },
+-    {
+-      f: "32",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 90,
+-      timer: 1200,
+-      delt: 623,
+-      kr: 35204,
+-      tk: 17,
+-      tt: 227,
+-      td: 118,
+-    },
+-    {
+-      f: "32",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 255,
+-      timer: 3787,
+-      delt: 2997,
+-      kr: 613782,
+-      tk: 132,
+-      tt: 1956,
+-      td: 1548,
+-    },
+-    {
+-      f: "32",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 460,
+-      timer: 14678,
+-      delt: 8040,
+-      kr: 1862469,
+-      tk: 238,
+-      tt: 7583,
+-      td: 4154,
+-    },
+-    {
+-      f: "32",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 215,
+-      timer: 3032,
+-      delt: 9169,
+-      kr: 451614,
+-      tk: 111,
+-      tt: 1566,
+-      td: 4737,
+-    },
+-    {
+-      f: "03",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 731,
+-      timer: 15290,
+-      delt: 5981,
+-      kr: 419138,
+-      tk: 139,
+-      tt: 2898,
+-      td: 1134,
+-    },
+-    {
+-      f: "03",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 605,
+-      timer: 13862,
+-      delt: 6847,
+-      kr: 693986,
+-      tk: 115,
+-      tt: 2628,
+-      td: 1298,
+-    },
+-    {
+-      f: "03",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 448,
+-      timer: 16192,
+-      delt: 4074,
+-      kr: 462894,
+-      tk: 85,
+-      tt: 3069,
+-      td: 772,
+-    },
+-    {
+-      f: "03",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 546,
+-      timer: 7150,
+-      delt: 8676,
+-      kr: 245423,
+-      tk: 103,
+-      tt: 1355,
+-      td: 1645,
+-    },
+-    {
+-      f: "03",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 903,
+-      timer: 60807,
+-      delt: 12257,
+-      kr: 1850300,
+-      tk: 171,
+-      tt: 11526,
+-      td: 2323,
+-    },
+-    {
+-      f: "03",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 1,
+-      timer: 24,
+-      delt: 16,
+-      kr: 1126,
+-      tk: 0,
+-      tt: 5,
+-      td: 3,
+-    },
+-    {
+-      f: "03",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 27,
+-      timer: 220,
+-      delt: 195,
+-      kr: 6473,
+-      tk: 5,
+-      tt: 42,
+-      td: 37,
+-    },
+-    {
+-      f: "03",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 55,
+-      timer: 2224,
+-      delt: 426,
+-      kr: 133708,
+-      tk: 10,
+-      tt: 422,
+-      td: 81,
+-    },
+-    {
+-      f: "03",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 295,
+-      timer: 4714,
+-      delt: 3503,
+-      kr: 131000,
+-      tk: 56,
+-      tt: 894,
+-      td: 664,
+-    },
+-    {
+-      f: "03",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 120,
+-      timer: 1562,
+-      delt: 829,
+-      kr: 45817,
+-      tk: 23,
+-      tt: 296,
+-      td: 157,
+-    },
+-    {
+-      f: "03",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 114,
+-      timer: 2850,
+-      delt: 1556,
+-      kr: 461835,
+-      tk: 59,
+-      tt: 1472,
+-      td: 804,
+-    },
+-    {
+-      f: "03",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 638,
+-      timer: 17312,
+-      delt: 11682,
+-      kr: 2196644,
+-      tk: 330,
+-      tt: 8944,
+-      td: 6035,
+-    },
+-    {
+-      f: "03",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 1064,
+-      timer: 14235,
+-      delt: 32428,
+-      kr: 2120643,
+-      tk: 550,
+-      tt: 7354,
+-      td: 16753,
+-    },
+-    {
+-      f: "34",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 833,
+-      timer: 17366,
+-      delt: 7442,
+-      kr: 476054,
+-      tk: 158,
+-      tt: 3292,
+-      td: 1411,
+-    },
+-    {
+-      f: "34",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 909,
+-      timer: 12664,
+-      delt: 7383,
+-      kr: 634012,
+-      tk: 172,
+-      tt: 2401,
+-      td: 1399,
+-    },
+-    {
+-      f: "34",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 898,
+-      timer: 25483,
+-      delt: 7239,
+-      kr: 728508,
+-      tk: 170,
+-      tt: 4830,
+-      td: 1372,
+-    },
+-    {
+-      f: "34",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 185,
+-      timer: 2759,
+-      delt: 2402,
+-      kr: 94702,
+-      tk: 35,
+-      tt: 523,
+-      td: 455,
+-    },
+-    {
+-      f: "34",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 480,
+-      timer: 22682,
+-      delt: 8137,
+-      kr: 690195,
+-      tk: 91,
+-      tt: 4299,
+-      td: 1542,
+-    },
+-    {
+-      f: "34",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "34",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 137,
+-      timer: 2381,
+-      delt: 817,
+-      kr: 70059,
+-      tk: 26,
+-      tt: 451,
+-      td: 155,
+-    },
+-    {
+-      f: "34",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 61,
+-      timer: 16604,
+-      delt: 548,
+-      kr: 998243,
+-      tk: 12,
+-      tt: 3147,
+-      td: 104,
+-    },
+-    {
+-      f: "34",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 596,
+-      timer: 11082,
+-      delt: 4260,
+-      kr: 307973,
+-      tk: 113,
+-      tt: 2101,
+-      td: 807,
+-    },
+-    {
+-      f: "34",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 44,
+-      timer: 795,
+-      delt: 233,
+-      kr: 23330,
+-      tk: 8,
+-      tt: 151,
+-      td: 44,
+-    },
+-    {
+-      f: "34",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 157,
+-      timer: 2259,
+-      delt: 1527,
+-      kr: 366130,
+-      tk: 81,
+-      tt: 1167,
+-      td: 789,
+-    },
+-    {
+-      f: "34",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 469,
+-      timer: 16680,
+-      delt: 6110,
+-      kr: 2116453,
+-      tk: 242,
+-      tt: 8618,
+-      td: 3157,
+-    },
+-    {
+-      f: "34",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 86,
+-      timer: 1207,
+-      delt: 3202,
+-      kr: 179811,
+-      tk: 44,
+-      tt: 624,
+-      td: 1654,
+-    },
+-    {
+-      f: "33",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 403,
+-      timer: 7751,
+-      delt: 5503,
+-      kr: 212468,
+-      tk: 76,
+-      tt: 1469,
+-      td: 1043,
+-    },
+-    {
+-      f: "33",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 386,
+-      timer: 8522,
+-      delt: 4066,
+-      kr: 426605,
+-      tk: 73,
+-      tt: 1615,
+-      td: 771,
+-    },
+-    {
+-      f: "33",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 364,
+-      timer: 9277,
+-      delt: 3160,
+-      kr: 265213,
+-      tk: 69,
+-      tt: 1758,
+-      td: 599,
+-    },
+-    {
+-      f: "33",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 158,
+-      timer: 1793,
+-      delt: 1770,
+-      kr: 61545,
+-      tk: 30,
+-      tt: 340,
+-      td: 336,
+-    },
+-    {
+-      f: "33",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 275,
+-      timer: 12042,
+-      delt: 3856,
+-      kr: 366413,
+-      tk: 52,
+-      tt: 2282,
+-      td: 731,
+-    },
+-    {
+-      f: "33",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "33",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 67,
+-      timer: 1069,
+-      delt: 381,
+-      kr: 31458,
+-      tk: 13,
+-      tt: 203,
+-      td: 72,
+-    },
+-    {
+-      f: "33",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 13,
+-      timer: 2983,
+-      delt: 61,
+-      kr: 179340,
+-      tk: 2,
+-      tt: 565,
+-      td: 12,
+-    },
+-    {
+-      f: "33",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 340,
+-      timer: 6238,
+-      delt: 2670,
+-      kr: 173360,
+-      tk: 64,
+-      tt: 1182,
+-      td: 506,
+-    },
+-    {
+-      f: "33",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 51,
+-      timer: 724,
+-      delt: 305,
+-      kr: 21225,
+-      tk: 10,
+-      tt: 137,
+-      td: 58,
+-    },
+-    {
+-      f: "33",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 68,
+-      timer: 1638,
+-      delt: 879,
+-      kr: 265399,
+-      tk: 35,
+-      tt: 846,
+-      td: 454,
+-    },
+-    {
+-      f: "33",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 166,
+-      timer: 5772,
+-      delt: 2267,
+-      kr: 732432,
+-      tk: 86,
+-      tt: 2982,
+-      td: 1171,
+-    },
+-    {
+-      f: "33",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 65,
+-      timer: 688,
+-      delt: 2053,
+-      kr: 102569,
+-      tk: 34,
+-      tt: 356,
+-      td: 1061,
+-    },
+-    {
+-      f: "39",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 315,
+-      timer: 7860,
+-      delt: 2736,
+-      kr: 215470,
+-      tk: 60,
+-      tt: 1490,
+-      td: 519,
+-    },
+-    {
+-      f: "39",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 349,
+-      timer: 6850,
+-      delt: 3748,
+-      kr: 342938,
+-      tk: 66,
+-      tt: 1298,
+-      td: 710,
+-    },
+-    {
+-      f: "39",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 564,
+-      timer: 16585,
+-      delt: 4547,
+-      kr: 474144,
+-      tk: 107,
+-      tt: 3144,
+-      td: 862,
+-    },
+-    {
+-      f: "39",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 126,
+-      timer: 1563,
+-      delt: 1674,
+-      kr: 53650,
+-      tk: 24,
+-      tt: 296,
+-      td: 317,
+-    },
+-    {
+-      f: "39",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 198,
+-      timer: 10048,
+-      delt: 3242,
+-      kr: 305768,
+-      tk: 38,
+-      tt: 1905,
+-      td: 615,
+-    },
+-    {
+-      f: "39",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "39",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 19,
+-      timer: 263,
+-      delt: 93,
+-      kr: 7738,
+-      tk: 4,
+-      tt: 50,
+-      td: 18,
+-    },
+-    {
+-      f: "39",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 38,
+-      timer: 11430,
+-      delt: 267,
+-      kr: 687179,
+-      tk: 7,
+-      tt: 2167,
+-      td: 51,
+-    },
+-    {
+-      f: "39",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 156,
+-      timer: 2899,
+-      delt: 1201,
+-      kr: 80573,
+-      tk: 30,
+-      tt: 550,
+-      td: 228,
+-    },
+-    {
+-      f: "39",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 88,
+-      timer: 1084,
+-      delt: 469,
+-      kr: 31794,
+-      tk: 17,
+-      tt: 205,
+-      td: 89,
+-    },
+-    {
+-      f: "39",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 45,
+-      timer: 758,
+-      delt: 590,
+-      kr: 122935,
+-      tk: 23,
+-      tt: 392,
+-      td: 305,
+-    },
+-    {
+-      f: "39",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 256,
+-      timer: 6924,
+-      delt: 3796,
+-      kr: 878546,
+-      tk: 132,
+-      tt: 3577,
+-      td: 1961,
+-    },
+-    {
+-      f: "39",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 106,
+-      timer: 1075,
+-      delt: 5948,
+-      kr: 160110,
+-      tk: 55,
+-      tt: 555,
+-      td: 3073,
+-    },
+-    {
+-      f: "40",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 392,
+-      timer: 7170,
+-      delt: 3500,
+-      kr: 196562,
+-      tk: 74,
+-      tt: 1359,
+-      td: 663,
+-    },
+-    {
+-      f: "40",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 222,
+-      timer: 4480,
+-      delt: 2245,
+-      kr: 224266,
+-      tk: 42,
+-      tt: 849,
+-      td: 426,
+-    },
+-    {
+-      f: "40",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 355,
+-      timer: 10048,
+-      delt: 3041,
+-      kr: 287262,
+-      tk: 67,
+-      tt: 1905,
+-      td: 576,
+-    },
+-    {
+-      f: "40",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 119,
+-      timer: 1204,
+-      delt: 1563,
+-      kr: 41327,
+-      tk: 23,
+-      tt: 228,
+-      td: 296,
+-    },
+-    {
+-      f: "40",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 180,
+-      timer: 9624,
+-      delt: 2646,
+-      kr: 292835,
+-      tk: 34,
+-      tt: 1824,
+-      td: 502,
+-    },
+-    {
+-      f: "40",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "40",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 51,
+-      timer: 808,
+-      delt: 277,
+-      kr: 23772,
+-      tk: 10,
+-      tt: 153,
+-      td: 53,
+-    },
+-    {
+-      f: "40",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 9,
+-      timer: 1684,
+-      delt: 48,
+-      kr: 101243,
+-      tk: 2,
+-      tt: 319,
+-      td: 9,
+-    },
+-    {
+-      f: "40",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 143,
+-      timer: 2248,
+-      delt: 1030,
+-      kr: 62474,
+-      tk: 27,
+-      tt: 426,
+-      td: 195,
+-    },
+-    {
+-      f: "40",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 27,
+-      timer: 271,
+-      delt: 162,
+-      kr: 7950,
+-      tk: 5,
+-      tt: 51,
+-      td: 31,
+-    },
+-    {
+-      f: "40",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 57,
+-      timer: 833,
+-      delt: 541,
+-      kr: 135009,
+-      tk: 29,
+-      tt: 430,
+-      td: 279,
+-    },
+-    {
+-      f: "40",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 88,
+-      timer: 3989,
+-      delt: 1340,
+-      kr: 506141,
+-      tk: 45,
+-      tt: 2061,
+-      td: 692,
+-    },
+-    {
+-      f: "40",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 33,
+-      timer: 254,
+-      delt: 1007,
+-      kr: 37914,
+-      tk: 17,
+-      tt: 131,
+-      td: 520,
+-    },
+-    {
+-      f: "42",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 965,
+-      timer: 19598,
+-      delt: 8154,
+-      kr: 537238,
+-      tk: 183,
+-      tt: 3715,
+-      td: 1546,
+-    },
+-    {
+-      f: "42",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 563,
+-      timer: 9178,
+-      delt: 4939,
+-      kr: 459445,
+-      tk: 107,
+-      tt: 1740,
+-      td: 936,
+-    },
+-    {
+-      f: "42",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 447,
+-      timer: 14689,
+-      delt: 3461,
+-      kr: 419926,
+-      tk: 85,
+-      tt: 2784,
+-      td: 656,
+-    },
+-    {
+-      f: "42",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 208,
+-      timer: 2877,
+-      delt: 3041,
+-      kr: 98753,
+-      tk: 39,
+-      tt: 545,
+-      td: 576,
+-    },
+-    {
+-      f: "42",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 271,
+-      timer: 11070,
+-      delt: 4433,
+-      kr: 336851,
+-      tk: 51,
+-      tt: 2098,
+-      td: 840,
+-    },
+-    {
+-      f: "42",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "42",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 47,
+-      timer: 802,
+-      delt: 259,
+-      kr: 23603,
+-      tk: 9,
+-      tt: 152,
+-      td: 49,
+-    },
+-    {
+-      f: "42",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 8,
+-      timer: 230,
+-      delt: 130,
+-      kr: 13828,
+-      tk: 2,
+-      tt: 44,
+-      td: 25,
+-    },
+-    {
+-      f: "42",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 352,
+-      timer: 8002,
+-      delt: 2638,
+-      kr: 222377,
+-      tk: 67,
+-      tt: 1517,
+-      td: 500,
+-    },
+-    {
+-      f: "42",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 49,
+-      timer: 770,
+-      delt: 353,
+-      kr: 22597,
+-      tk: 9,
+-      tt: 146,
+-      td: 67,
+-    },
+-    {
+-      f: "42",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 143,
+-      timer: 1807,
+-      delt: 1212,
+-      kr: 292871,
+-      tk: 74,
+-      tt: 934,
+-      td: 626,
+-    },
+-    {
+-      f: "42",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 169,
+-      timer: 5995,
+-      delt: 2010,
+-      kr: 760670,
+-      tk: 87,
+-      tt: 3097,
+-      td: 1038,
+-    },
+-    {
+-      f: "42",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 132,
+-      timer: 3821,
+-      delt: 3905,
+-      kr: 569266,
+-      tk: 68,
+-      tt: 1974,
+-      td: 2017,
+-    },
+-    {
+-      f: "11",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 1120,
+-      timer: 27484,
+-      delt: 9251,
+-      kr: 753421,
+-      tk: 212,
+-      tt: 5210,
+-      td: 1754,
+-    },
+-    {
+-      f: "11",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 432,
+-      timer: 6404,
+-      delt: 4262,
+-      kr: 320585,
+-      tk: 82,
+-      tt: 1214,
+-      td: 808,
+-    },
+-    {
+-      f: "11",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 409,
+-      timer: 10827,
+-      delt: 3572,
+-      kr: 309525,
+-      tk: 78,
+-      tt: 2052,
+-      td: 677,
+-    },
+-    {
+-      f: "11",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 252,
+-      timer: 2602,
+-      delt: 3694,
+-      kr: 89313,
+-      tk: 48,
+-      tt: 493,
+-      td: 700,
+-    },
+-    {
+-      f: "11",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 344,
+-      timer: 16312,
+-      delt: 5241,
+-      kr: 496346,
+-      tk: 65,
+-      tt: 3092,
+-      td: 993,
+-    },
+-    {
+-      f: "11",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "11",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 98,
+-      timer: 1275,
+-      delt: 593,
+-      kr: 37512,
+-      tk: 19,
+-      tt: 242,
+-      td: 112,
+-    },
+-    {
+-      f: "11",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 19,
+-      timer: 3045,
+-      delt: 122,
+-      kr: 183067,
+-      tk: 4,
+-      tt: 577,
+-      td: 23,
+-    },
+-    {
+-      f: "11",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 462,
+-      timer: 4966,
+-      delt: 3337,
+-      kr: 138024,
+-      tk: 88,
+-      tt: 941,
+-      td: 633,
+-    },
+-    {
+-      f: "11",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 51,
+-      timer: 802,
+-      delt: 316,
+-      kr: 23528,
+-      tk: 10,
+-      tt: 152,
+-      td: 60,
+-    },
+-    {
+-      f: "11",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 156,
+-      timer: 1998,
+-      delt: 1801,
+-      kr: 323747,
+-      tk: 81,
+-      tt: 1032,
+-      td: 930,
+-    },
+-    {
+-      f: "11",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 438,
+-      timer: 14607,
+-      delt: 5660,
+-      kr: 1853365,
+-      tk: 226,
+-      tt: 7546,
+-      td: 2924,
+-    },
+-    {
+-      f: "11",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 122,
+-      timer: 1610,
+-      delt: 3621,
+-      kr: 239848,
+-      tk: 63,
+-      tt: 832,
+-      td: 1871,
+-    },
+-    {
+-      f: "46",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 871,
+-      timer: 18354,
+-      delt: 8653,
+-      kr: 503144,
+-      tk: 165,
+-      tt: 3479,
+-      td: 1640,
+-    },
+-    {
+-      f: "46",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 803,
+-      timer: 14802,
+-      delt: 6615,
+-      kr: 741007,
+-      tk: 152,
+-      tt: 2806,
+-      td: 1254,
+-    },
+-    {
+-      f: "46",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 735,
+-      timer: 20861,
+-      delt: 6640,
+-      kr: 596387,
+-      tk: 139,
+-      tt: 3954,
+-      td: 1259,
+-    },
+-    {
+-      f: "46",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 355,
+-      timer: 5150,
+-      delt: 4782,
+-      kr: 176773,
+-      tk: 67,
+-      tt: 976,
+-      td: 906,
+-    },
+-    {
+-      f: "46",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 852,
+-      timer: 39953,
+-      delt: 12009,
+-      kr: 1215730,
+-      tk: 161,
+-      tt: 7573,
+-      td: 2276,
+-    },
+-    {
+-      f: "46",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 1,
+-      timer: 20,
+-      delt: 10,
+-      kr: 938,
+-      tk: 0,
+-      tt: 4,
+-      td: 2,
+-    },
+-    {
+-      f: "46",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 128,
+-      timer: 1851,
+-      delt: 668,
+-      kr: 54451,
+-      tk: 24,
+-      tt: 351,
+-      td: 127,
+-    },
+-    {
+-      f: "46",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 7,
+-      timer: 245,
+-      delt: 60,
+-      kr: 14730,
+-      tk: 1,
+-      tt: 46,
+-      td: 11,
+-    },
+-    {
+-      f: "46",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 407,
+-      timer: 7924,
+-      delt: 3561,
+-      kr: 220230,
+-      tk: 77,
+-      tt: 1502,
+-      td: 675,
+-    },
+-    {
+-      f: "46",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 193,
+-      timer: 2153,
+-      delt: 934,
+-      kr: 63163,
+-      tk: 37,
+-      tt: 408,
+-      td: 177,
+-    },
+-    {
+-      f: "46",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 189,
+-      timer: 2531,
+-      delt: 1794,
+-      kr: 410214,
+-      tk: 98,
+-      tt: 1308,
+-      td: 927,
+-    },
+-    {
+-      f: "46",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 787,
+-      timer: 27573,
+-      delt: 10506,
+-      kr: 3498558,
+-      tk: 407,
+-      tt: 14245,
+-      td: 5428,
+-    },
+-    {
+-      f: "46",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 196,
+-      timer: 2096,
+-      delt: 8517,
+-      kr: 312175,
+-      tk: 101,
+-      tt: 1083,
+-      td: 4400,
+-    },
+-    {
+-      f: "15",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 217,
+-      timer: 5108,
+-      delt: 1963,
+-      kr: 140023,
+-      tk: 41,
+-      tt: 968,
+-      td: 372,
+-    },
+-    {
+-      f: "15",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 713,
+-      timer: 10164,
+-      delt: 7216,
+-      kr: 508832,
+-      tk: 135,
+-      tt: 1927,
+-      td: 1368,
+-    },
+-    {
+-      f: "15",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 382,
+-      timer: 10498,
+-      delt: 3572,
+-      kr: 300134,
+-      tk: 72,
+-      tt: 1990,
+-      td: 677,
+-    },
+-    {
+-      f: "15",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 210,
+-      timer: 2182,
+-      delt: 2879,
+-      kr: 74897,
+-      tk: 40,
+-      tt: 414,
+-      td: 546,
+-    },
+-    {
+-      f: "15",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 267,
+-      timer: 13574,
+-      delt: 4924,
+-      kr: 413053,
+-      tk: 51,
+-      tt: 2573,
+-      td: 933,
+-    },
+-    {
+-      f: "15",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 1,
+-      timer: 5,
+-      delt: 10,
+-      kr: 235,
+-      tk: 0,
+-      tt: 1,
+-      td: 2,
+-    },
+-    {
+-      f: "15",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 114,
+-      timer: 1174,
+-      delt: 603,
+-      kr: 34540,
+-      tk: 22,
+-      tt: 223,
+-      td: 114,
+-    },
+-    {
+-      f: "15",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 5,
+-      timer: 136,
+-      delt: 47,
+-      kr: 8176,
+-      tk: 1,
+-      tt: 26,
+-      td: 9,
+-    },
+-    {
+-      f: "15",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 296,
+-      timer: 3850,
+-      delt: 2227,
+-      kr: 107002,
+-      tk: 56,
+-      tt: 730,
+-      td: 422,
+-    },
+-    {
+-      f: "15",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 44,
+-      timer: 575,
+-      delt: 267,
+-      kr: 16861,
+-      tk: 8,
+-      tt: 109,
+-      td: 51,
+-    },
+-    {
+-      f: "15",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 103,
+-      timer: 1604,
+-      delt: 661,
+-      kr: 259970,
+-      tk: 53,
+-      tt: 829,
+-      td: 341,
+-    },
+-    {
+-      f: "15",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 334,
+-      timer: 10274,
+-      delt: 5371,
+-      kr: 1303608,
+-      tk: 173,
+-      tt: 5308,
+-      td: 2775,
+-    },
+-    {
+-      f: "15",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 65,
+-      timer: 603,
+-      delt: 1966,
+-      kr: 89794,
+-      tk: 34,
+-      tt: 311,
+-      td: 1016,
+-    },
+-    {
+-      f: "50",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 280,
+-      timer: 4649,
+-      delt: 2736,
+-      kr: 127434,
+-      tk: 53,
+-      tt: 881,
+-      td: 519,
+-    },
+-    {
+-      f: "50",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 960,
+-      timer: 23251,
+-      delt: 8889,
+-      kr: 1163982,
+-      tk: 182,
+-      tt: 4407,
+-      td: 1685,
+-    },
+-    {
+-      f: "50",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 801,
+-      timer: 32656,
+-      delt: 6843,
+-      kr: 933586,
+-      tk: 152,
+-      tt: 6190,
+-      td: 1297,
+-    },
+-    {
+-      f: "50",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 370,
+-      timer: 4077,
+-      delt: 4563,
+-      kr: 139943,
+-      tk: 70,
+-      tt: 773,
+-      td: 865,
+-    },
+-    {
+-      f: "50",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 729,
+-      timer: 38166,
+-      delt: 11357,
+-      kr: 1161353,
+-      tk: 138,
+-      tt: 7234,
+-      td: 2153,
+-    },
+-    {
+-      f: "50",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "50",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 96,
+-      timer: 1649,
+-      delt: 575,
+-      kr: 48523,
+-      tk: 18,
+-      tt: 313,
+-      td: 109,
+-    },
+-    {
+-      f: "50",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 46,
+-      timer: 13078,
+-      delt: 241,
+-      kr: 786257,
+-      tk: 9,
+-      tt: 2479,
+-      td: 46,
+-    },
+-    {
+-      f: "50",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 431,
+-      timer: 8826,
+-      delt: 3532,
+-      kr: 245270,
+-      tk: 82,
+-      tt: 1673,
+-      td: 669,
+-    },
+-    {
+-      f: "50",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 54,
+-      timer: 792,
+-      delt: 258,
+-      kr: 23242,
+-      tk: 10,
+-      tt: 150,
+-      td: 49,
+-    },
+-    {
+-      f: "50",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 318,
+-      timer: 9968,
+-      delt: 1779,
+-      kr: 1615654,
+-      tk: 164,
+-      tt: 5150,
+-      td: 919,
+-    },
+-    {
+-      f: "50",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 572,
+-      timer: 18647,
+-      delt: 7925,
+-      kr: 2365977,
+-      tk: 296,
+-      tt: 9634,
+-      td: 4094,
+-    },
+-    {
+-      f: "50",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 155,
+-      timer: 1642,
+-      delt: 6723,
+-      kr: 244578,
+-      tk: 80,
+-      tt: 848,
+-      td: 3473,
+-    },
+-    {
+-      f: "18",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 74,
+-      timer: 1469,
+-      delt: 561,
+-      kr: 40269,
+-      tk: 14,
+-      tt: 278,
+-      td: 106,
+-    },
+-    {
+-      f: "18",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 622,
+-      timer: 15420,
+-      delt: 4651,
+-      kr: 771983,
+-      tk: 118,
+-      tt: 2923,
+-      td: 882,
+-    },
+-    {
+-      f: "18",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 345,
+-      timer: 9752,
+-      delt: 2789,
+-      kr: 278807,
+-      tk: 65,
+-      tt: 1849,
+-      td: 529,
+-    },
+-    {
+-      f: "18",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 127,
+-      timer: 1429,
+-      delt: 1414,
+-      kr: 49050,
+-      tk: 24,
+-      tt: 271,
+-      td: 268,
+-    },
+-    {
+-      f: "18",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 277,
+-      timer: 13171,
+-      delt: 4508,
+-      kr: 400775,
+-      tk: 53,
+-      tt: 2497,
+-      td: 855,
+-    },
+-    {
+-      f: "18",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 1,
+-      timer: 26,
+-      delt: 9,
+-      kr: 1220,
+-      tk: 0,
+-      tt: 5,
+-      td: 2,
+-    },
+-    {
+-      f: "18",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 110,
+-      timer: 1580,
+-      delt: 596,
+-      kr: 46500,
+-      tk: 21,
+-      tt: 300,
+-      td: 113,
+-    },
+-    {
+-      f: "18",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 2,
+-      timer: 312,
+-      delt: 18,
+-      kr: 18758,
+-      tk: 0,
+-      tt: 59,
+-      td: 3,
+-    },
+-    {
+-      f: "18",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 221,
+-      timer: 5038,
+-      delt: 1840,
+-      kr: 140004,
+-      tk: 42,
+-      tt: 955,
+-      td: 349,
+-    },
+-    {
+-      f: "18",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 54,
+-      timer: 649,
+-      delt: 287,
+-      kr: 19047,
+-      tk: 10,
+-      tt: 123,
+-      td: 54,
+-    },
+-    {
+-      f: "18",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 191,
+-      timer: 4446,
+-      delt: 1167,
+-      kr: 720509,
+-      tk: 99,
+-      tt: 2297,
+-      td: 603,
+-    },
+-    {
+-      f: "18",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 240,
+-      timer: 8862,
+-      delt: 2968,
+-      kr: 1124403,
+-      tk: 124,
+-      tt: 4578,
+-      td: 1533,
+-    },
+-    {
+-      f: "18",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 61,
+-      timer: 733,
+-      delt: 1561,
+-      kr: 109235,
+-      tk: 32,
+-      tt: 379,
+-      td: 806,
+-    },
+-    {
+-      f: "55",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 56,
+-      timer: 1339,
+-      delt: 493,
+-      kr: 36705,
+-      tk: 11,
+-      tt: 254,
+-      td: 93,
+-    },
+-    {
+-      f: "55",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 201,
+-      timer: 3715,
+-      delt: 1914,
+-      kr: 185968,
+-      tk: 38,
+-      tt: 704,
+-      td: 363,
+-    },
+-    {
+-      f: "55",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 291,
+-      timer: 6428,
+-      delt: 2394,
+-      kr: 183780,
+-      tk: 55,
+-      tt: 1219,
+-      td: 454,
+-    },
+-    {
+-      f: "55",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 125,
+-      timer: 1542,
+-      delt: 1702,
+-      kr: 52929,
+-      tk: 24,
+-      tt: 292,
+-      td: 323,
+-    },
+-    {
+-      f: "55",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 237,
+-      timer: 11709,
+-      delt: 3046,
+-      kr: 356303,
+-      tk: 45,
+-      tt: 2220,
+-      td: 577,
+-    },
+-    {
+-      f: "55",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 10,
+-      timer: 319,
+-      delt: 92,
+-      kr: 14963,
+-      tk: 2,
+-      tt: 60,
+-      td: 17,
+-    },
+-    {
+-      f: "55",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 44,
+-      timer: 427,
+-      delt: 232,
+-      kr: 12570,
+-      tk: 8,
+-      tt: 81,
+-      td: 44,
+-    },
+-    {
+-      f: "55",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 2,
+-      timer: 312,
+-      delt: 27,
+-      kr: 18758,
+-      tk: 0,
+-      tt: 59,
+-      td: 5,
+-    },
+-    {
+-      f: "55",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 186,
+-      timer: 4287,
+-      delt: 1682,
+-      kr: 119140,
+-      tk: 35,
+-      tt: 813,
+-      td: 319,
+-    },
+-    {
+-      f: "55",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 10,
+-      timer: 164,
+-      delt: 52,
+-      kr: 4804,
+-      tk: 2,
+-      tt: 31,
+-      td: 10,
+-    },
+-    {
+-      f: "55",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 163,
+-      timer: 3980,
+-      delt: 2112,
+-      kr: 645143,
+-      tk: 84,
+-      tt: 2056,
+-      td: 1091,
+-    },
+-    {
+-      f: "55",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 126,
+-      timer: 4372,
+-      delt: 1528,
+-      kr: 554788,
+-      tk: 65,
+-      tt: 2259,
+-      td: 789,
+-    },
+-    {
+-      f: "55",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 64,
+-      timer: 718,
+-      delt: 2260,
+-      kr: 106926,
+-      tk: 33,
+-      tt: 371,
+-      td: 1168,
+-    },
+-    {
+-      f: "56",
+-      s: "K-stud",
+-      d: "KUD",
+-      kurs: 18,
+-      timer: 548,
+-      delt: 188,
+-      kr: 15015,
+-      tk: 3,
+-      tt: 104,
+-      td: 36,
+-    },
+-    {
+-      f: "56",
+-      s: "Funkis",
+-      d: "KUD",
+-      kurs: 143,
+-      timer: 2152,
+-      delt: 1185,
+-      kr: 107709,
+-      tk: 27,
+-      tt: 408,
+-      td: 225,
+-    },
+-    {
+-      f: "56",
+-      s: "Kultur og tradisjon",
+-      d: "KUD",
+-      kurs: 86,
+-      timer: 1720,
+-      delt: 637,
+-      kr: 49172,
+-      tk: 16,
+-      tt: 326,
+-      td: 121,
+-    },
+-    {
+-      f: "56",
+-      s: "Idrettens",
+-      d: "KUD",
+-      kurs: 71,
+-      timer: 793,
+-      delt: 706,
+-      kr: 27220,
+-      tk: 13,
+-      tt: 150,
+-      td: 134,
+-    },
+-    {
+-      f: "56",
+-      s: "Musikkens",
+-      d: "KUD",
+-      kurs: 97,
+-      timer: 4041,
+-      delt: 1437,
+-      kr: 122964,
+-      tk: 18,
+-      tt: 766,
+-      td: 272,
+-    },
+-    {
+-      f: "56",
+-      s: "Samisk",
+-      d: "KUD",
+-      kurs: 45,
+-      timer: 4006,
+-      delt: 228,
+-      kr: 187911,
+-      tk: 9,
+-      tt: 759,
+-      td: 43,
+-    },
+-    {
+-      f: "56",
+-      s: "Senterpartiets",
+-      d: "KUD",
+-      kurs: 9,
+-      timer: 174,
+-      delt: 48,
+-      kr: 5105,
+-      tk: 2,
+-      tt: 33,
+-      td: 9,
+-    },
+-    {
+-      f: "56",
+-      s: "Solidaritet",
+-      d: "KUD",
+-      kurs: 0,
+-      timer: 0,
+-      delt: 0,
+-      kr: 0,
+-      tk: 0,
+-      tt: 0,
+-      td: 0,
+-    },
+-    {
+-      f: "56",
+-      s: "Natur og miljø",
+-      d: "KUD",
+-      kurs: 113,
+-      timer: 2085,
+-      delt: 955,
+-      kr: 57951,
+-      tk: 21,
+-      tt: 395,
+-      td: 181,
+-    },
+-    {
+-      f: "56",
+-      s: "Venstres",
+-      d: "KUD",
+-      kurs: 2,
+-      timer: 38,
+-      delt: 10,
+-      kr: 1115,
+-      tk: 0,
+-      tt: 7,
+-      td: 2,
+-    },
+-    {
+-      f: "56",
+-      s: "Næring og samfunn",
+-      d: "KD",
+-      kurs: 4,
+-      timer: 60,
+-      delt: 32,
+-      kr: 9725,
+-      tk: 2,
+-      tt: 31,
+-      td: 17,
+-    },
+-    {
+-      f: "56",
+-      s: "Livslang læring",
+-      d: "KD",
+-      kurs: 54,
+-      timer: 1720,
+-      delt: 591,
+-      kr: 218241,
+-      tk: 28,
+-      tt: 889,
+-      td: 305,
+-    },
+-    {
+-      f: "56",
+-      s: "Akademisk",
+-      d: "KD",
+-      kurs: 37,
+-      timer: 362,
+-      delt: 601,
+-      kr: 53854,
+-      tk: 19,
+-      tt: 187,
+-      td: 310,
+-    },
+-  ],
+-};
+-
+-// Aggregated once at module load (the data is static)
+-const FYLKER: Fylke[] = RAW.f.map((m) => {
+-  const o = { ...m, kurs: 0, timer: 0, delt: 0, kr: 0, tk: 0, tt: 0, td: 0 };
+-  const fb: Record<string, number> = {};
+-  for (const r of RAW.r) {
+-    if (r.f !== m.id) continue;
+-    o.kurs += r.kurs;
+-    o.timer += r.timer;
+-    o.delt += r.delt;
+-    o.kr += r.kr;
+-    o.tk += r.tk;
+-    o.tt += r.tt;
+-    o.td += r.td;
+-    if (r.kr > 0) fb[r.s] = r.kr;
+-  }
+-  return {
+-    ...o,
+-    tk: Math.round(o.tk),
+-    tt: Math.round(o.tt),
+-    td: Math.round(o.td),
+-    fb: Object.entries(fb).sort((a, b) => b[1] - a[1]),
+-  };
+-});
+-
+-type Metric = "kr" | "tk" | "tt" | "td";
+-
+-export type NewsItem = {
+-  tittel: string;
+-  url: string;
+-  kilde: string;
+-  dato?: string; // YYYY-MM-DD
+-  fylker?: string[];
+-  viktig?: boolean;
+-  nederst?: boolean;
+-};
+-
+-const LABEL: Record<Metric, string> = {
+-  kr: "Tapt tilskudd",
+-  tk: "Potensielt tap av kurs",
+-  tt: "Potensielt tap av kurstimer",
+-  td: "Potensielt tap av deltakere",
+-};
+-
+-// Full class strings so Tailwind can see them. Light → dark in one string.
++import { Karusell } from "./karusell";
++import {
++  beregnFylker,
++  breaks,
++  bucket,
++  DATA_URL,
++  datoKort,
++  erHttps,
++  fmt,
++  FYLKESBY,
++  LABEL,
++  nf,
++  OPPDATER_SEK,
++  slug,
++  sorterNyheter,
++  tilXY,
++  type Fylke,
++  type Historie,
++  type Konsekvensdata,
++  type Metric,
++  type Nyhet,
++} from "./lib";
++
++// Fulle klassenavn så Tailwind finner dem. Lys og mørk modus i samme streng.
+ const FILL = [
+-  "fill-[#f3d9d2] dark:fill-[#3f2a2e]",
+-  "fill-[#e6a99c] dark:fill-[#6e3138]",
+-  "fill-[#d27466] dark:fill-[#a33a45]",
+-  "fill-[#b3263a] dark:fill-[#d65463]",
+-  "fill-[#7c1424] dark:fill-[#f08c97]",
++  "fill-[#F8E9EC] dark:fill-[#3A1F25]",
++  "fill-[#EBB3BE] dark:fill-[#6B2633]",
++  "fill-[#D16A7E] dark:fill-[#A41F35]",
++  "fill-[#A41F35] dark:fill-[#D8576C]",
++  "fill-[#6E1222] dark:fill-[#F2A5B2]",
+ ];
+ const SWATCH = [
+-  "bg-[#f3d9d2] dark:bg-[#3f2a2e]",
+-  "bg-[#e6a99c] dark:bg-[#6e3138]",
+-  "bg-[#d27466] dark:bg-[#a33a45]",
+-  "bg-[#b3263a] dark:bg-[#d65463]",
+-  "bg-[#7c1424] dark:bg-[#f08c97]",
++  "bg-[#F8E9EC] dark:bg-[#3A1F25]",
++  "bg-[#EBB3BE] dark:bg-[#6B2633]",
++  "bg-[#D16A7E] dark:bg-[#A41F35]",
++  "bg-[#A41F35] dark:bg-[#D8576C]",
++  "bg-[#6E1222] dark:bg-[#F2A5B2]",
+ ];
+-const ACCENT = "text-[#b3263a] dark:text-[#ec6a78]";
+-const ACCENT_BG = "bg-[#b3263a] dark:bg-[#ec6a78]";
+-const ACCENT_BORDER = "border-[#b3263a] dark:border-[#ec6a78]";
++const TEAL = "text-[#009890] dark:text-[#3CC4BB]";
+ 
+-const nf = new Intl.NumberFormat("nb-NO");
+-const fmt = (m: Metric, v: number) =>
+-  m === "kr"
+-    ? v >= 1e6
+-      ? `${(v / 1e6).toLocaleString("nb-NO", { maximumFractionDigits: 1 })} mill. kr`
+-      : `${nf.format(v)} kr`
+-    : nf.format(v);
++type Pin = {
++  type: "historie" | "nyhet";
++  tittel: string;
++  url: string;
++  dato?: string;
++  fylke: string;
++  sted: string;
++  x: number;
++  y: number;
++  tekst?: string;
++  kilde?: string;
++  bilde?: string;
++};
+ 
+-const sum = (k: Exclude<Metric, never>) =>
+-  FYLKER.reduce((a, d) => a + d[k], 0);
++type VB = { x: number; y: number; w: number; h: number };
+ 
+-const BY_ID = Object.fromEntries(FYLKER.map((d) => [d.id, d]));
++const sentence = (d: Fylke) =>
++  `I ${d.n} vil kuttet i statsbudsjettet bety ${fmt("kr", d.kr)} mindre til studieforbundene. Det gir et potensielt tap av ${nf.format(d.tk)} kurs og ${nf.format(d.td)} deltakere.`;
+ 
+-function breaks(metric: Metric) {
+-  const v = FYLKER.map((d) => d[metric]).sort((a, b) => a - b);
+-  return [0.2, 0.4, 0.6, 0.8].map((q) => v[Math.floor(q * (v.length - 1))]);
+-}
+-function bucket(v: number, b: number[]) {
+-  let i = 0;
+-  while (i < b.length && v > b[i]) i++;
+-  return i;
++function Label({
++  children,
++  className,
++}: {
++  children: React.ReactNode;
++  className?: string;
++}) {
++  return (
++    <p
++      className={cn(
++        "mb-2 text-xs uppercase tracking-wider text-muted-foreground",
++        className,
++      )}
++    >
++      {children}
++    </p>
++  );
+ }
+ 
+-const sentence = (d: Fylke) =>
+-  `I ${d.n} vil kuttet i statsbudsjettet bety ${fmt("kr", d.kr)} mindre til studieforbundene. Det gir et potensielt tap av ${nf.format(d.tk)} kurs og ${nf.format(d.td)} deltakere.`;
++function Lenkeliste({
++  items,
++  kant,
++}: {
++  items: { tittel: string; url: string; under: string }[];
++  kant: string;
++}) {
++  return (
++    <ul className="grid gap-2.5">
++      {items.map((n) => (
++        <li
++          key={n.url}
++          className={cn("grid gap-0.5 border-l-[3px] pl-2.5", kant)}
++        >
++          <a
++            href={erHttps(n.url) ? n.url : "#"}
++            target="_blank"
++            rel="noopener noreferrer"
++            className="font-semibold hover:underline"
++          >
++            {n.tittel}
++          </a>
++          <span className="text-sm text-muted-foreground">{n.under}</span>
++        </li>
++      ))}
++    </ul>
++  );
++}
+ 
+-export function Konsekvenskart({ news = [] }: { news?: NewsItem[] }) {
++export function Konsekvenskart(initial: Konsekvensdata) {
++  const { kutt, kart } = initial;
++  const [nyheter, setNyheter] = useState<Nyhet[]>(initial.nyheter);
++  const [historier, setHistorier] = useState<Historie[]>(initial.historier);
++  const [visning, setVisning] = useState<"kart" | "nyheter">("kart");
+   const [metric, setMetric] = useState<Metric>("kr");
+   const [sel, setSel] = useState("50");
++  const [pop, setPop] = useState<Pin[] | null>(null);
++  const [visAlle, setVisAlle] = useState(false);
+   const [copied, setCopied] = useState<"idle" | "ok" | "manual">("idle");
++  const [vb, setVb] = useState<VB>({ x: 0, y: 0, w: kart.w, h: kart.h });
+   const panelRef = useRef<HTMLDivElement>(null);
++  const kartRef = useRef<HTMLDivElement>(null);
++  const svgRef = useRef<SVGSVGElement>(null);
+   const quoteRef = useRef<HTMLDivElement>(null);
++  const anim = useRef(0);
+ 
+-  const d = BY_ID[sel];
+-  const b = useMemo(() => breaks(metric), [metric]);
+-  const rows = useMemo(
+-    () => [...FYLKER].sort((x, y) => y[metric] - x[metric]),
+-    [metric],
++  const fylker = useMemo(() => beregnFylker(kutt), [kutt]);
++  const byId = useMemo(
++    () => Object.fromEntries(fylker.map((f) => [f.id, f])),
++    [fylker],
++  );
++  const d = byId[sel] ?? fylker[0];
++  const b = useMemo(() => breaks(fylker, metric), [fylker, metric]);
++  const rader = useMemo(
++    () => [...fylker].sort((x, y) => y[metric] - x[metric]),
++    [fylker, metric],
+   );
+-  const lo = Math.min(...FYLKER.map((f) => f[metric]));
+-  const hi = Math.max(...FYLKER.map((f) => f[metric]));
++  const total = (k: Metric) => fylker.reduce((a, f) => a + f[k], 0);
++  const lo = Math.min(...fylker.map((f) => f[metric]));
++  const hi = Math.max(...fylker.map((f) => f[metric]));
+   const maxFb = Math.max(1, ...d.fb.map(([, v]) => v));
++  const zoomet = vb.w < kart.w - 1;
++
++  // Henter nye saker og historier jevnlig, så en skjerm som står på hele dagen holder seg oppdatert.
++  useEffect(() => {
++    const hent = async () => {
++      const t = Math.floor(Date.now() / 3e5);
++      const [n, h] = await Promise.all(
++        ["nyheter", "historier"].map((f) =>
++          fetch(`${DATA_URL}/${f}.json?t=${t}`, { cache: "no-store" })
++            .then((r) => (r.ok ? r.json() : null))
++            .catch(() => null),
++        ),
++      );
++      if (Array.isArray(n) && n.length)
++        setNyheter(n.filter((x: Nyhet) => x?.tittel && x?.url));
++      if (Array.isArray(h) && h.length)
++        setHistorier(
++          h.filter((x: Historie) => x?.tittel && x?.url && x?.fylke),
++        );
++    };
++    const t = setInterval(hent, OPPDATER_SEK * 1000);
++    return () => clearInterval(t);
++  }, []);
++
++  /* ----- Zoom ----- */
++  const animer = useCallback(
++    (til: VB) => {
++      cancelAnimationFrame(anim.current);
++      if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
++        setVb(til);
++        return;
++      }
++      const fra = { ...vb };
++      const t0 = performance.now();
++      const steg = (nå: number) => {
++        const p = Math.min(1, (nå - t0) / 500);
++        const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
++        setVb({
++          x: fra.x + (til.x - fra.x) * e,
++          y: fra.y + (til.y - fra.y) * e,
++          w: fra.w + (til.w - fra.w) * e,
++          h: fra.h + (til.h - fra.h) * e,
++        });
++        if (p < 1) anim.current = requestAnimationFrame(steg);
++      };
++      anim.current = requestAnimationFrame(steg);
++    },
++    [vb],
++  );
+ 
+-  const { local, nat } = useMemo(() => {
+-    const all = [...news].sort(
+-      (a, c) =>
+-        Number(!!a.nederst) - Number(!!c.nederst) ||
+-        (c.dato ?? "").localeCompare(a.dato ?? "") ||
+-        Number(!!c.viktig) - Number(!!a.viktig),
++  const zoomTil = useCallback(
++    (id: string) => {
++      const p = svgRef.current?.querySelector<SVGPathElement>(
++        `path[data-id="${id}"]`,
++      );
++      if (!p) return;
++      const bb = p.getBBox();
++      const R = kart.w / kart.h;
++      let w = bb.width * 1.36,
++        h = bb.height * 1.36;
++      if (w / h > R) h = w / R;
++      else w = h * R;
++      if (w < kart.w * 0.16) {
++        w = kart.w * 0.16;
++        h = w / R;
++      }
++      if (w >= kart.w) return animer({ x: 0, y: 0, w: kart.w, h: kart.h });
++      animer({
++        x: bb.x + bb.width / 2 - w / 2,
++        y: bb.y + bb.height / 2 - h / 2,
++        w,
++        h,
++      });
++    },
++    [animer, kart.w, kart.h],
++  );
++
++  const zoomUt = () => {
++    setPop(null);
++    animer({ x: 0, y: 0, w: kart.w, h: kart.h });
++  };
++
++  const velg = useCallback(
++    (id: string, opts?: { zoom?: boolean; scroll?: boolean }) => {
++      setSel(id);
++      setVisning("kart");
++      const f = byId[id];
++      if (f) {
++        try {
++          history.replaceState(null, "", `#${slug(f.n)}`);
++        } catch {}
++      }
++      if (opts?.zoom !== false) requestAnimationFrame(() => zoomTil(id));
++      if (opts?.scroll)
++        setTimeout(
++          () =>
++            kartRef.current?.scrollIntoView({
++              behavior: "smooth",
++              block: "start",
++            }),
++          50,
++        );
++    },
++    [byId, zoomTil],
++  );
++
++  // Lenker som #trondelag eller #nyheter
++  useEffect(() => {
++    const t = setTimeout(() => {
++      const h = location.hash.slice(1);
++      if (h === "nyheter") setVisning("nyheter");
++      const f = fylker.find((x) => slug(x.n) === h);
++      if (f) velg(f.id);
++    }, 0);
++    return () => clearTimeout(t);
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, []);
++
++  /* ----- Prikker ----- */
++  const pins = useMemo(() => {
++    const ut: Pin[] = [];
++    for (const h of historier) {
++      if (typeof h.lat !== "number" || typeof h.lon !== "number") continue;
++      const [x, y] = tilXY(h.lat, h.lon);
++      ut.push({
++        type: "historie",
++        tittel: h.tittel,
++        url: h.url,
++        dato: h.dato,
++        fylke: h.fylke,
++        sted: h.sted || h.fylke,
++        x,
++        y,
++        tekst: h.ingress,
++        bilde: h.bilde,
++      });
++    }
++    for (const n of nyheter) {
++      const fy = n.fylker?.length === 1 ? n.fylker[0] : undefined;
++      let lat = n.lat,
++        lon = n.lon,
++        sted = n.sted;
++      if (typeof lat !== "number" || typeof lon !== "number") {
++        if (!fy || !FYLKESBY[fy]) continue;
++        [lat, lon] = FYLKESBY[fy];
++        sted = fy;
++      }
++      const [x, y] = tilXY(lat, lon);
++      ut.push({
++        type: "nyhet",
++        tittel: n.tittel,
++        url: n.url,
++        dato: n.dato,
++        fylke: fy ?? n.fylker?.[0] ?? "",
++        sted: sted || fy || "",
++        x,
++        y,
++        tekst: n.sammendrag,
++        kilde: n.kilde,
++        bilde: n.bilde,
++      });
++    }
++    const grupper: Record<string, { x: number; y: number; l: Pin[] }> = {};
++    for (const p of ut) {
++      const k = `${p.x.toFixed(0)},${p.y.toFixed(0)}`;
++      (grupper[k] ??= { x: p.x, y: p.y, l: [] }).l.push(p);
++    }
++    return Object.values(grupper);
++  }, [historier, nyheter]);
++
++  const visPop = (l: Pin[]) => {
++    const f = fylker.find((x) => x.n === l[0].fylke);
++    if (f) velg(f.id);
++    setPop(
++      [...l].sort(
++        (a, c) =>
++          (a.type === c.type ? 0 : a.type === "nyhet" ? -1 : 1) ||
++          (c.dato ?? "").localeCompare(a.dato ?? ""),
++      ),
+     );
+-    return {
+-      local: all.filter((n) => n.fylker?.includes(d.n)),
+-      nat: all.filter((n) => !n.fylker?.length).slice(0, 5),
+-    };
+-  }, [news, d.n]);
++  };
+ 
+-  function copy() {
++  /* ----- Saker og historier i panelet ----- */
++  const sortert = useMemo(() => sorterNyheter(nyheter), [nyheter]);
++  const lokale = sortert.filter((n) => n.fylker?.includes(d.n));
++  const nasjonale = sortert.filter((n) => !n.fylker?.length);
++  const fylkeHist = historier
++    .filter((h) => h.fylke === d.n)
++    .sort((a, c) => c.dato.localeCompare(a.dato));
++
++  function kopier() {
+     const flash = (s: "ok" | "manual") => {
+       setCopied(s);
+       setTimeout(() => setCopied("idle"), 1600);
+     };
+-    const manual = () => {
++    const manuell = () => {
+       const el = quoteRef.current;
+       if (el) {
+         const r = document.createRange();
+@@ -2553,263 +352,545 @@ export function Konsekvenskart({ news = [] }: { news?: NewsItem[] }) {
+       }
+       flash("manual");
+     };
+-    navigator.clipboard?.writeText(sentence(d)).then(() => flash("ok"), manual) ??
+-      manual();
++    if (navigator.clipboard)
++      navigator.clipboard
++        .writeText(sentence(d))
++        .then(() => flash("ok"), manuell);
++    else manuell();
+   }
+ 
+-  const NewsList = ({ items, muted }: { items: NewsItem[]; muted?: boolean }) => (
+-    <ul className="grid gap-2.5">
+-      {items.map((n) => (
+-        <li
+-          key={n.url}
+-          className={cn(
+-            "grid gap-0.5 border-l-[3px] pl-2.5",
+-            muted ? "border-border" : ACCENT_BORDER,
+-          )}
+-        >
+-          <a
+-            href={/^https:\/\//.test(n.url) ? n.url : "#"}
+-            target="_blank"
+-            rel="noopener noreferrer"
+-            className="font-semibold hover:underline"
+-          >
+-            {n.tittel}
+-          </a>
+-          <span className="text-sm text-muted-foreground">
+-            {n.kilde}
+-            {n.dato &&
+-              ` · ${new Date(`${n.dato}T12:00`).toLocaleDateString("nb-NO", {
+-                day: "numeric",
+-                month: "short",
+-              })}`}
+-          </span>
+-        </li>
+-      ))}
+-    </ul>
+-  );
+-
+-  const Label = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+-    <p className={cn("mb-2 text-xs uppercase tracking-wider text-muted-foreground", className)}>
+-      {children}
+-    </p>
+-  );
++  const k = vb.w / kart.w; // skalering av prikker ved zoom
+ 
+   return (
+-    <div className="grid gap-6">
+-      {/* Totals */}
+-      <section
+-        aria-label="Hele landet"
+-        className="grid grid-cols-2 gap-px border bg-border md:grid-cols-4"
+-      >
++    <div className="grid gap-8">
++      <div role="tablist" aria-label="Visning" className="flex gap-1 border-b">
+         {(
+           [
+-            ["kr", "mindre i statstilskudd"],
+-            ["tk", "potensielt tap av kurs"],
+-            ["tt", "potensielt tap av kurstimer"],
+-            ["td", "potensielt tap av deltakere"],
++            ["kart", "Konsekvenskartet"],
++            ["nyheter", "I mediene"],
+           ] as const
+-        ).map(([k, text]) => (
+-          <div key={k} className="bg-card px-3.5 py-3">
+-            <b className={cn("block text-2xl font-extrabold tabular-nums md:text-3xl", ACCENT)}>
+-              {fmt(k, sum(k))}
+-            </b>
+-            <span className="text-sm text-muted-foreground">{text}</span>
+-          </div>
+-        ))}
+-      </section>
+-
+-      {/* Metric picker */}
+-      <div role="group" aria-label="Velg hva kartet viser" className="flex flex-wrap gap-1.5">
+-        {(Object.keys(LABEL) as Metric[]).map((m) => (
+-          <Button
+-            key={m}
+-            size="sm"
+-            variant={metric === m ? "default" : "outline"}
+-            aria-pressed={metric === m}
+-            className="rounded-full"
+-            onClick={() => setMetric(m)}
++        ).map(([v, t]) => (
++          <button
++            key={v}
++            role="tab"
++            aria-selected={visning === v}
++            onClick={() => {
++              setVisning(v);
++              try {
++                history.replaceState(
++                  null,
++                  "",
++                  v === "nyheter" ? "#nyheter" : `#${slug(d.n)}`,
++                );
++              } catch {}
++            }}
++            className={cn(
++              "-mb-px border-b-[3px] px-3.5 py-2.5 font-semibold text-muted-foreground transition-colors",
++              visning === v
++                ? "border-primary text-foreground"
++                : "border-transparent hover:text-foreground",
++            )}
+           >
+-            {LABEL[m]}
+-          </Button>
++            {t}
++          </button>
+         ))}
+       </div>
+ 
+-      <div className="grid items-start gap-6 md:grid-cols-[6fr_5fr]">
+-        {/* Map */}
+-        <div className="md:sticky md:top-4">
+-          <svg
+-            viewBox={`0 0 ${GEO.w} ${GEO.h}`}
+-            role="img"
+-            aria-label="Kart over Norge farget etter tap per fylke"
+-            className="block h-auto max-h-[60vh] w-full md:max-h-[82vh]"
++      {visning === "kart" ? (
++        <div className="grid gap-8">
++          <Karusell
++            kutt={kutt}
++            kart={kart}
++            fylker={fylker}
++            historier={historier}
++            onVelgFylke={(id, scroll) => velg(id, { scroll })}
++          />
++
++          <section
++            aria-label="Hele landet"
++            className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border bg-border md:grid-cols-4"
+           >
+-            {Object.entries(GEO.p).map(([id, path]) => {
+-              const f = BY_ID[id];
+-              return (
+-                <path
+-                  key={id}
+-                  d={path}
+-                  tabIndex={0}
+-                  role="button"
+-                  aria-label={f?.n ?? id}
+-                  aria-pressed={id === sel}
+-                  onClick={() => setSel(id)}
+-                  onKeyDown={(e) => {
+-                    if (e.key === "Enter" || e.key === " ") {
+-                      e.preventDefault();
+-                      setSel(id);
+-                    }
+-                  }}
+-                  strokeLinejoin="round"
+-                  className={cn(
+-                    "cursor-pointer outline-none transition-[fill] motion-reduce:transition-none",
+-                    "hover:stroke-foreground focus-visible:stroke-foreground",
+-                    id === sel
+-                      ? "stroke-foreground [stroke-width:2]"
+-                      : "stroke-background [stroke-width:0.8]",
+-                    f ? FILL[bucket(f[metric], b)] : "fill-muted",
+-                  )}
+-                >
+-                  <title>{f?.n ?? id}</title>
+-                </path>
+-              );
+-            })}
+-          </svg>
+-          <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+-            <span>{fmt(metric, lo)}</span>
+-            {SWATCH.map((c) => (
+-              <i key={c} className={cn("inline-block h-2.5 w-[22px]", c)} />
++            {(
++              [
++                ["kr", "mindre i statstilskudd"],
++                ["tk", "potensielt tap av kurs"],
++                ["tt", "potensielt tap av kurstimer"],
++                ["td", "potensielt tap av deltakere"],
++              ] as const
++            ).map(([m, tekst]) => (
++              <div key={m} className="bg-card px-4 py-3">
++                <b className="block font-serif text-2xl font-bold tabular-nums text-primary md:text-3xl">
++                  {fmt(m, total(m))}
++                </b>
++                <span className="text-sm text-muted-foreground">{tekst}</span>
++              </div>
+             ))}
+-            <span>{fmt(metric, hi)}</span>
+-          </div>
+-        </div>
++          </section>
+ 
+-        {/* Panel */}
+-        <Card ref={panelRef} aria-live="polite" className="grid min-w-0 gap-5 p-5">
+-          <h2 className="text-3xl font-extrabold leading-none">{d.n}</h2>
++          <div
++            role="group"
++            aria-label="Velg hva kartet viser"
++            className="flex flex-wrap gap-1.5"
++          >
++            {(Object.keys(LABEL) as Metric[]).map((m) => (
++              <Button
++                key={m}
++                size="sm"
++                variant={metric === m ? "default" : "outline"}
++                aria-pressed={metric === m}
++                className="rounded-full"
++                onClick={() => setMetric(m)}
++              >
++                {LABEL[m]}
++              </Button>
++            ))}
++          </div>
+ 
+-          <div>
+-            <Label>Mindre i statstilskudd</Label>
+-            <div className={cn("text-4xl font-extrabold leading-none tabular-nums md:text-5xl", ACCENT)}>
+-              {fmt("kr", d.kr)}
++          <div
++            ref={kartRef}
++            className="grid scroll-mt-4 items-start gap-6 md:grid-cols-[6fr_5fr]"
++          >
++            <div className="md:sticky md:top-4">
++              <div className="relative">
++                {zoomet && (
++                  <Button
++                    size="sm"
++                    variant="outline"
++                    className="absolute left-2 top-2 z-10"
++                    onClick={zoomUt}
++                  >
++                    Vis hele landet
++                  </Button>
++                )}
++                <svg
++                  ref={svgRef}
++                  viewBox={`${vb.x.toFixed(1)} ${vb.y.toFixed(1)} ${vb.w.toFixed(1)} ${vb.h.toFixed(1)}`}
++                  role="img"
++                  aria-label="Kart over Norge farget etter tap per fylke"
++                  className="block h-auto max-h-[60vh] w-full md:max-h-[82vh]"
++                >
++                  {Object.entries(kart.p).map(([id, path]) => {
++                    const f = byId[id];
++                    return (
++                      <path
++                        key={id}
++                        d={path}
++                        data-id={id}
++                        tabIndex={0}
++                        role="button"
++                        aria-label={f?.n ?? id}
++                        aria-pressed={id === sel}
++                        onClick={() => {
++                          setPop(null);
++                          velg(id);
++                        }}
++                        onKeyDown={(e) => {
++                          if (e.key === "Enter" || e.key === " ") {
++                            e.preventDefault();
++                            velg(id);
++                          }
++                        }}
++                        strokeLinejoin="round"
++                        className={cn(
++                          "cursor-pointer outline-none transition-[fill,opacity] [vector-effect:non-scaling-stroke] motion-reduce:transition-none",
++                          "hover:stroke-foreground focus-visible:stroke-foreground",
++                          id === sel
++                            ? "stroke-foreground [stroke-width:2]"
++                            : "stroke-background [stroke-width:0.8]",
++                          zoomet && id !== sel && "opacity-45",
++                          f ? FILL[bucket(f[metric], b)] : "fill-muted",
++                        )}
++                      >
++                        <title>{f?.n ?? id}</title>
++                      </path>
++                    );
++                  })}
++                  {pins.map((g) => {
++                    const nyhet = g.l.some((p) => p.type === "nyhet");
++                    const nh = g.l.filter((p) => p.type === "historie").length;
++                    const nn = g.l.length - nh;
++                    return (
++                      <circle
++                        key={`${g.x},${g.y}`}
++                        cx={g.x}
++                        cy={g.y}
++                        r={Math.min(5 + g.l.length * 1.6, 12) * k}
++                        tabIndex={0}
++                        role="button"
++                        onClick={(e) => {
++                          e.stopPropagation();
++                          visPop(g.l);
++                        }}
++                        onKeyDown={(e) => {
++                          if (e.key === "Enter" || e.key === " ") {
++                            e.preventDefault();
++                            visPop(g.l);
++                          }
++                        }}
++                        className={cn(
++                          "cursor-pointer stroke-card [stroke-width:2] [vector-effect:non-scaling-stroke] hover:fill-foreground focus-visible:fill-foreground focus-visible:outline-none",
++                          nyhet ? "fill-primary" : "fill-[#009890]",
++                        )}
++                      >
++                        <title>
++                          {`${g.l[0].sted}: ${[nh ? `${nh} ${nh === 1 ? "historie" : "historier"}` : "", nn ? `${nn} ${nn === 1 ? "mediesak" : "mediesaker"}` : ""].filter(Boolean).join(" og ")}`}
++                        </title>
++                      </circle>
++                    );
++                  })}
++                </svg>
++
++                {pop && (
++                  <Card
++                    role="dialog"
++                    aria-label="Saker fra stedet"
++                    className="absolute inset-x-2 bottom-2 z-20 max-h-[55%] overflow-auto p-4 shadow-lg"
++                  >
++                    <div className="mb-2 flex items-center justify-between gap-2">
++                      <b className="font-serif text-xl">{pop[0].sted}</b>
++                      <Button
++                        size="icon"
++                        variant="ghost"
++                        className="h-8 w-8"
++                        onClick={() => setPop(null)}
++                        aria-label="Lukk"
++                      >
++                        <X className="h-4 w-4" />
++                      </Button>
++                    </div>
++                    <ul className="grid gap-3">
++                      {pop.map((p) => (
++                        <li key={p.url} className="grid gap-1">
++                          {erHttps(p.bilde) && (
++                            // eslint-disable-next-line @next/next/no-img-element
++                            <img
++                              src={p.bilde}
++                              alt=""
++                              loading="lazy"
++                              referrerPolicy="no-referrer"
++                              className="mb-1 aspect-video w-full rounded object-cover"
++                              onError={(e) => e.currentTarget.remove()}
++                            />
++                          )}
++                          <span
++                            className={cn(
++                              "justify-self-start rounded px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-white",
++                              p.type === "nyhet"
++                                ? "bg-primary"
++                                : "bg-[#009890]",
++                            )}
++                          >
++                            {p.type === "nyhet" ? "I mediene" : "Historie"}
++                          </span>
++                          <a
++                            href={erHttps(p.url) ? p.url : "#"}
++                            target="_blank"
++                            rel="noopener noreferrer"
++                            className="font-semibold hover:underline"
++                          >
++                            {p.tittel}
++                          </a>
++                          <small className="text-muted-foreground">
++                            {[p.kilde, datoKort(p.dato)]
++                              .filter(Boolean)
++                              .join(" · ")}
++                          </small>
++                          {p.tekst && <p className="text-sm">{p.tekst}</p>}
++                        </li>
++                      ))}
++                    </ul>
++                  </Card>
++                )}
++              </div>
++              <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
++                <span>{fmt(metric, lo)}</span>
++                {SWATCH.map((c) => (
++                  <i key={c} className={cn("inline-block h-2.5 w-[22px]", c)} />
++                ))}
++                <span>{fmt(metric, hi)}</span>
++              </div>
++              <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
++                <span className="flex items-center gap-1.5">
++                  <i className="inline-block h-2.5 w-2.5 rounded-full bg-[#009890]" />{" "}
++                  Historier fra lagene
++                </span>
++                <span className="flex items-center gap-1.5">
++                  <i className="inline-block h-2.5 w-2.5 rounded-full bg-primary" />{" "}
++                  Lokale mediesaker
++                </span>
++                <span>Trykk på en prikk for å lese.</span>
++              </div>
+             </div>
+-          </div>
+ 
+-          <div>
+-            <Label>Potensielt tap</Label>
+-            <div className="grid grid-cols-3 gap-3">
+-              {[
+-                [d.tk, "kurs", d.kurs],
+-                [d.tt, "kurstimer", d.timer],
+-                [d.td, "deltakere", d.delt],
+-              ].map(([v, name, of]) => (
+-                <div key={name as string} className="border-t-2 border-foreground pt-1.5">
+-                  <b className="block text-2xl tabular-nums">−{nf.format(v as number)}</b>
+-                  <small className="block text-sm text-muted-foreground">
+-                    {name} av {nf.format(of as number)}
+-                  </small>
++            <Card
++              ref={panelRef}
++              aria-live="polite"
++              className="grid min-w-0 gap-5 p-5"
++            >
++              <h2 className="font-serif text-3xl font-bold leading-none">
++                {d.n}
++              </h2>
++
++              <div>
++                <Label>Mindre i statstilskudd</Label>
++                <div className="font-serif text-4xl font-bold leading-none tabular-nums text-primary md:text-5xl">
++                  {fmt("kr", d.kr)}
+                 </div>
+-              ))}
+-            </div>
+-          </div>
++              </div>
++
++              <div>
++                <Label>Potensielt tap</Label>
++                <div className="grid grid-cols-3 gap-3">
++                  {(
++                    [
++                      [d.tk, "kurs", d.kurs],
++                      [d.tt, "kurstimer", d.timer],
++                      [d.td, "deltakere", d.delt],
++                    ] as const
++                  ).map(([v, navn, av]) => (
++                    <div
++                      key={navn}
++                      className="border-t-2 border-foreground pt-1.5"
++                    >
++                      <b className="block font-serif text-2xl tabular-nums">
++                        −{nf.format(v)}
++                      </b>
++                      <small className="block text-sm text-muted-foreground">
++                        {navn} av {nf.format(av)}
++                      </small>
++                    </div>
++                  ))}
++                </div>
++              </div>
++
++              <div>
++                <Label>Tapt tilskudd per studieforbund</Label>
++                <div className="grid gap-1.5">
++                  {d.fb.map(([navn, v]) => (
++                    <div
++                      key={navn}
++                      className="grid grid-cols-[7.5rem_minmax(0,1fr)_5.5rem] items-center gap-2 text-sm sm:grid-cols-[9.5rem_minmax(0,1fr)_6.5rem]"
++                    >
++                      <span>{navn}</span>
++                      <span className="h-3 bg-muted">
++                        <i
++                          className="block h-full bg-primary"
++                          style={{
++                            width: `${((v / maxFb) * 100).toFixed(1)}%`,
++                          }}
++                        />
++                      </span>
++                      <span className="text-right tabular-nums">
++                        {fmt("kr", v)}
++                      </span>
++                    </div>
++                  ))}
++                </div>
++              </div>
+ 
+-          <div>
+-            <Label>Tapt tilskudd per studieforbund</Label>
+-            <div className="grid gap-1.5">
+-              {d.fb.map(([name, v]) => (
++              <div>
++                <Label>Til lokalmedier</Label>
+                 <div
+-                  key={name}
+-                  className="grid grid-cols-[7.5rem_minmax(0,1fr)_5.5rem] items-center gap-2 text-sm sm:grid-cols-[9.5rem_minmax(0,1fr)_6.5rem]"
++                  ref={quoteRef}
++                  className="border-l-[3px] border-primary bg-background px-3.5 py-2.5 text-[15px]"
+                 >
+-                  <span>{name}</span>
+-                  <span className="h-3 bg-muted">
+-                    <i
+-                      className={cn("block h-full", ACCENT_BG)}
+-                      style={{ width: `${((v / maxFb) * 100).toFixed(1)}%` }}
+-                    />
+-                  </span>
+-                  <span className="text-right tabular-nums">{fmt("kr", v)}</span>
++                  {sentence(d)}
+                 </div>
+-              ))}
+-            </div>
+-          </div>
++                <Button className="mt-3" onClick={kopier}>
++                  {copied === "ok"
++                    ? "Kopiert"
++                    : copied === "manual"
++                      ? "Merket, kopier selv"
++                      : "Kopier teksten"}
++                </Button>
++              </div>
++
++              {fylkeHist.length > 0 && (
++                <div>
++                  <Label>Dette står på spill i {d.n}</Label>
++                  <Lenkeliste
++                    kant="border-[#009890]"
++                    items={fylkeHist.map((h) => ({
++                      tittel: h.tittel,
++                      url: h.url,
++                      under: [h.sted, datoKort(h.dato)]
++                        .filter(Boolean)
++                        .join(" · "),
++                    }))}
++                  />
++                </div>
++              )}
+ 
+-          <div>
+-            <Label>Til lokalmedier</Label>
+-            <div
+-              ref={quoteRef}
+-              className={cn("border-l-[3px] bg-background px-3.5 py-2.5 text-[15px]", ACCENT_BORDER)}
+-            >
+-              {sentence(d)}
+-            </div>
+-            <Button className="mt-3" onClick={copy}>
+-              {copied === "ok"
+-                ? "Kopiert"
+-                : copied === "manual"
+-                  ? "Merket, kopier selv"
+-                  : "Kopier teksten"}
+-            </Button>
++              {(lokale.length > 0 || nasjonale.length > 0) && (
++                <div>
++                  {lokale.length > 0 && (
++                    <>
++                      <Label>Saker fra {d.n}</Label>
++                      <Lenkeliste
++                        kant="border-primary"
++                        items={lokale.map((n) => ({
++                          tittel: n.tittel,
++                          url: n.url,
++                          under: [n.kilde, datoKort(n.dato)]
++                            .filter(Boolean)
++                            .join(" · "),
++                        }))}
++                      />
++                    </>
++                  )}
++                  {nasjonale.length > 0 && (
++                    <>
++                      <Label className={lokale.length ? "mt-4" : ""}>
++                        Nasjonale saker
++                      </Label>
++                      <Lenkeliste
++                        kant="border-border"
++                        items={nasjonale.slice(0, 5).map((n) => ({
++                          tittel: n.tittel,
++                          url: n.url,
++                          under: [n.kilde, datoKort(n.dato)]
++                            .filter(Boolean)
++                            .join(" · "),
++                        }))}
++                      />
++                      {nasjonale.length > 5 && (
++                        <Button
++                          variant="outline"
++                          size="sm"
++                          className="mt-3"
++                          onClick={() => {
++                            setVisning("nyheter");
++                            scrollTo({ top: 0, behavior: "smooth" });
++                          }}
++                        >
++                          Se alle {nasjonale.length} saker
++                        </Button>
++                      )}
++                    </>
++                  )}
++                </div>
++              )}
++            </Card>
+           </div>
+ 
+-          {(local.length > 0 || nat.length > 0) && (
+-            <div>
+-              {local.length > 0 && (
+-                <>
+-                  <Label>Saker fra {d.n}</Label>
+-                  <NewsList items={local} />
+-                </>
+-              )}
+-              {nat.length > 0 && (
+-                <>
+-                  <Label className={local.length ? "mt-4" : ""}>Nasjonale saker</Label>
+-                  <NewsList items={nat} muted />
+-                </>
+-              )}
++          <section>
++            <Label>Alle fylker</Label>
++            <div className="overflow-x-auto">
++              <table className="w-full border-collapse text-sm tabular-nums">
++                <thead>
++                  <tr className="border-b text-muted-foreground">
++                    <th className="px-1 py-1.5 text-left font-semibold">
++                      Fylke
++                    </th>
++                    <th className="px-1 py-1.5 text-right font-semibold">
++                      {LABEL[metric]}
++                    </th>
++                  </tr>
++                </thead>
++                <tbody>
++                  {rader.map((r) => (
++                    <tr
++                      key={r.id}
++                      onClick={() => velg(r.id, { scroll: true })}
++                      className={cn(
++                        "cursor-pointer border-b hover:bg-muted/50",
++                        r.id === sel && "font-semibold text-primary",
++                      )}
++                    >
++                      <td className="px-1 py-1.5">{r.n}</td>
++                      <td className="px-1 py-1.5 text-right">
++                        {fmt(metric, r[metric])}
++                      </td>
++                    </tr>
++                  ))}
++                </tbody>
++              </table>
+             </div>
+-          )}
+-        </Card>
+-      </div>
+-
+-      {/* Ranking */}
+-      <section>
+-        <Label>Alle fylker</Label>
+-        <div className="overflow-x-auto">
+-          <table className="w-full border-collapse text-sm tabular-nums">
+-            <thead>
+-              <tr className="border-b text-muted-foreground">
+-                <th className="px-1 py-1.5 text-left font-semibold">Fylke</th>
+-                <th className="px-1 py-1.5 text-right font-semibold">{LABEL[metric]}</th>
+-              </tr>
+-            </thead>
+-            <tbody>
+-              {rows.map((r) => (
+-                <tr
+-                  key={r.id}
+-                  onClick={() => {
+-                    setSel(r.id);
+-                    panelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+-                  }}
+-                  className={cn(
+-                    "cursor-pointer border-b hover:bg-muted/50",
+-                    r.id === sel && cn("font-semibold", ACCENT),
+-                  )}
+-                >
+-                  <td className="px-1 py-1.5">{r.n}</td>
+-                  <td className="px-1 py-1.5 text-right">{fmt(metric, r[metric])}</td>
+-                </tr>
+-              ))}
+-            </tbody>
+-          </table>
++          </section>
++
++          <p className="max-w-prose text-sm text-muted-foreground">
++            Grunnlag: {kutt.kilde} Deltakere telles per kurs. Tallene oppdateres
++            fra{" "}
++            <a
++              className="underline"
++              href="https://github.com/Stianjuell/Studieforbundskutt-data"
++            >
++              Vofos datalager
++            </a>
++            .
++          </p>
+         </div>
+-      </section>
+-
+-      <p className="max-w-prose text-sm text-muted-foreground">
+-        Grunnlag: SSBs kursstatistikk for 2025 (samme tall som vofo.no/statistikk) og Vofos
+-        beregning av kuttet per studieforbund. Hvert forbund mister sitt kutt fordelt på fylkene
+-        etter hvor forbundet hadde kurstimene sine, og det potensielle tapet i aktivitet
+-        forutsetter at aktiviteten faller like mye som tilskuddet. Kuttet er lagt likt på alle
+-        forbund og alle tilskudd innenfor hvert departement. Deltakere telles per kurs.
+-      </p>
++      ) : (
++        <section className="grid gap-6">
++          <p className="max-w-prose text-muted-foreground">
++            Saker om kuttene til studieforbundene. Lenkene åpner saken hos
++            kilden.
++          </p>
++          <div className="grid gap-5 [grid-template-columns:repeat(auto-fill,minmax(min(100%,18rem),1fr))]">
++            {sortert.slice(0, visAlle ? undefined : 30).map((n) => (
++              <a
++                key={n.url}
++                href={erHttps(n.url) ? n.url : "#"}
++                target="_blank"
++                rel="noopener noreferrer"
++                className="group grid grid-rows-[auto_1fr] overflow-hidden rounded-lg border bg-card text-card-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
++              >
++                <div className="relative aspect-video bg-primary/10">
++                  <span className="absolute inset-x-3 bottom-2.5 font-serif text-xl font-bold leading-tight text-primary">
++                    {n.kilde}
++                  </span>
++                  {erHttps(n.bilde) && (
++                    // eslint-disable-next-line @next/next/no-img-element
++                    <img
++                      src={n.bilde}
++                      alt=""
++                      loading="lazy"
++                      referrerPolicy="no-referrer"
++                      className="absolute inset-0 h-full w-full object-cover"
++                      onError={(e) => e.currentTarget.remove()}
++                    />
++                  )}
++                </div>
++                <div className="grid content-start gap-1.5 p-4">
++                  <div className="flex flex-wrap gap-2 text-xs uppercase tracking-wider text-muted-foreground">
++                    <b className="font-semibold text-primary">{n.kilde}</b>
++                    <span>{datoKort(n.dato)}</span>
++                  </div>
++                  <h3 className="text-balance font-serif text-lg font-bold leading-snug group-hover:underline">
++                    {n.tittel}
++                  </h3>
++                  {n.sammendrag && (
++                    <p className="text-sm text-muted-foreground">
++                      {n.sammendrag}
++                    </p>
++                  )}
++                </div>
++              </a>
++            ))}
++          </div>
++          {!visAlle && sortert.length > 30 && (
++            <Button
++              variant="outline"
++              className="justify-self-start"
++              onClick={() => setVisAlle(true)}
++            >
++              Vis alle {sortert.length} saker
++            </Button>
++          )}
++          <p className={cn("text-sm", TEAL)}>
++            <a
++              className="underline"
++              href="#"
++              onClick={(e) => {
++                e.preventDefault();
++                setVisning("kart");
++              }}
++            >
++              Tilbake til kartet
++            </a>
++          </p>
++        </section>
++      )}
+     </div>
+   );
+ }
+diff --git a/app/(www)/kart/lib.ts b/app/(www)/kart/lib.ts
+new file mode 100644
+index 0000000..8fe2558
+--- /dev/null
++++ b/app/(www)/kart/lib.ts
+@@ -0,0 +1,254 @@
++// Felles typer og beregninger for Konsekvenskartet. Brukes både på server og klient.
++// Dataene ligger i https://github.com/Stianjuell/Studieforbundskutt-data og oppdateres derfra.
++
++export const DATA_URL =
++  "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main";
++
++/** Hvor ofte siden henter nye data (sekunder). */
++export const OPPDATER_SEK = 900;
++
++export type Departement = "KUD" | "KD";
++
++export type Rad = {
++  f: string; // fylkesnummer
++  s: string; // studieforbund
++  d: Departement;
++  kurs: number;
++  timer: number;
++  delt: number;
++  kr: number; // tapt tilskudd
++  tk: number; // potensielt tap av kurs
++  tt: number; // potensielt tap av kurstimer
++  td: number; // potensielt tap av deltakere
++};
++
++export type Kutt = {
++  oppdatert: string;
++  kutt: Record<Departement, number>;
++  kilde: string;
++  fylker: { id: string; n: string }[];
++  rader: Rad[];
++};
++
++export type Kart = { w: number; h: number; p: Record<string, string> };
++
++export type Nyhet = {
++  tittel: string;
++  url: string;
++  kilde: string;
++  dato?: string;
++  sammendrag?: string;
++  viktig?: boolean;
++  bilde?: string;
++  fylker?: string[];
++  sted?: string;
++  lat?: number;
++  lon?: number;
++  nederst?: boolean;
++};
++
++export type Historie = {
++  tittel: string;
++  url: string;
++  dato: string;
++  fylke: string;
++  sted?: string;
++  lat?: number;
++  lon?: number;
++  ingress?: string;
++  bilde?: string;
++};
++
++export type Konsekvensdata = {
++  kutt: Kutt;
++  kart: Kart;
++  nyheter: Nyhet[];
++  historier: Historie[];
++};
++
++export type Metric = "kr" | "tk" | "tt" | "td";
++
++export type Fylke = {
++  id: string;
++  n: string;
++  kurs: number;
++  timer: number;
++  delt: number;
++  kr: number;
++  tk: number;
++  tt: number;
++  td: number;
++  fb: [string, number][];
++};
++
++export const LABEL: Record<Metric, string> = {
++  kr: "Tapt tilskudd",
++  tk: "Potensielt tap av kurs",
++  tt: "Potensielt tap av kurstimer",
++  td: "Potensielt tap av deltakere",
++};
++
++export const nf = new Intl.NumberFormat("nb-NO");
++
++export const mill = (v: number) =>
++  `${(v / 1e6).toLocaleString("nb-NO", { maximumFractionDigits: 1 })} mill.`;
++
++export const fmt = (m: Metric, v: number) =>
++  m === "kr"
++    ? v >= 1e6
++      ? `${mill(v)} kr`
++      : `${nf.format(v)} kr`
++    : nf.format(v);
++
++export const datoKort = (iso?: string) =>
++  iso
++    ? new Date(`${iso}T12:00`).toLocaleDateString("nb-NO", {
++        day: "numeric",
++        month: "short",
++      })
++    : "";
++
++export function beregnFylker(kutt: Kutt): Fylke[] {
++  return kutt.fylker.map((m) => {
++    const o = { kurs: 0, timer: 0, delt: 0, kr: 0, tk: 0, tt: 0, td: 0 };
++    const fb: Record<string, number> = {};
++    for (const r of kutt.rader) {
++      if (r.f !== m.id) continue;
++      o.kurs += r.kurs;
++      o.timer += r.timer;
++      o.delt += r.delt;
++      o.kr += r.kr;
++      o.tk += r.tk;
++      o.tt += r.tt;
++      o.td += r.td;
++      if (r.kr > 0) fb[r.s] = (fb[r.s] ?? 0) + r.kr;
++    }
++    return {
++      ...m,
++      ...o,
++      kr: Math.round(o.kr),
++      tk: Math.round(o.tk),
++      tt: Math.round(o.tt),
++      td: Math.round(o.td),
++      fb: Object.entries(fb).sort((a, b) => b[1] - a[1]),
++    };
++  });
++}
++
++export type Forbund = {
++  s: string;
++  kr: number;
++  kurs: number;
++  delt: number;
++  tk: number;
++  td: number;
++};
++
++export function beregnForbund(kutt: Kutt): Forbund[] {
++  const m: Record<string, Forbund> = {};
++  for (const r of kutt.rader) {
++    const o = (m[r.s] ??= { s: r.s, kr: 0, kurs: 0, delt: 0, tk: 0, td: 0 });
++    o.kr += r.kr;
++    o.kurs += r.kurs;
++    o.delt += r.delt;
++    o.tk += r.tk;
++    o.td += r.td;
++  }
++  return Object.values(m).sort((a, b) => b.kr - a.kr);
++}
++
++export function breaks(fylker: Fylke[], metric: Metric) {
++  const v = fylker.map((d) => d[metric]).sort((a, b) => a - b);
++  return [0.2, 0.4, 0.6, 0.8].map((q) => v[Math.floor(q * (v.length - 1))]);
++}
++
++export function bucket(v: number, b: number[]) {
++  let i = 0;
++  while (i < b.length && v > b[i]) i++;
++  return i;
++}
++
++export const slug = (n: string) =>
++  n
++    .toLowerCase()
++    .replace(/æ/g, "ae")
++    .replace(/ø/g, "o")
++    .replace(/å/g, "a")
++    .replace(/[^a-z0-9]+/g, "-")
++    .replace(/^-|-$/g, "");
++
++export const erHttps = (u?: string): u is string =>
++  !!u && /^https:\/\//.test(u);
++
++export function sorterNyheter(n: Nyhet[]) {
++  return [...n].sort(
++    (a, b) =>
++      Number(!!a.nederst) - Number(!!b.nederst) ||
++      (b.dato ?? "").localeCompare(a.dato ?? "") ||
++      Number(!!b.viktig) - Number(!!a.viktig),
++  );
++}
++
++// Kartet er projisert i UTM 33 (EPSG:25833) og skalert til SVG-koordinater.
++const PROJ = { minx: -60250, maxy: 7939090, s: 0.0005104862381418301 };
++
++function utm33(lat: number, lon: number): [number, number] {
++  const a = 6378137,
++    f = 1 / 298.257222101,
++    k0 = 0.9996,
++    e2 = f * (2 - f),
++    ep2 = e2 / (1 - e2),
++    r = Math.PI / 180;
++  const phi = lat * r,
++    lam = (lon - 15) * r,
++    N = a / Math.sqrt(1 - e2 * Math.sin(phi) ** 2),
++    T = Math.tan(phi) ** 2,
++    C = ep2 * Math.cos(phi) ** 2,
++    A = Math.cos(phi) * lam;
++  const M =
++    a *
++    ((1 - e2 / 4 - (3 * e2 * e2) / 64 - (5 * e2 ** 3) / 256) * phi -
++      ((3 * e2) / 8 + (3 * e2 * e2) / 32 + (45 * e2 ** 3) / 1024) *
++        Math.sin(2 * phi) +
++      ((15 * e2 * e2) / 256 + (45 * e2 ** 3) / 1024) * Math.sin(4 * phi) -
++      ((35 * e2 ** 3) / 3072) * Math.sin(6 * phi));
++  const x =
++    k0 *
++      N *
++      (A +
++        ((1 - T + C) * A ** 3) / 6 +
++        ((5 - 18 * T + T * T + 72 * C - 58 * ep2) * A ** 5) / 120) +
++    500000;
++  const y =
++    k0 *
++    (M +
++      N *
++        Math.tan(phi) *
++        ((A * A) / 2 +
++          ((5 - T + 9 * C + 4 * C * C) * A ** 4) / 24 +
++          ((61 - 58 * T + T * T + 600 * C - 330 * ep2) * A ** 6) / 720));
++  return [x, y];
++}
++
++export function tilXY(lat: number, lon: number): [number, number] {
++  const [x, y] = utm33(lat, lon);
++  return [(x - PROJ.minx) * PROJ.s, (PROJ.maxy - y) * PROJ.s];
++}
++
++export const FYLKESBY: Record<string, [number, number]> = {
++  Østfold: [59.22, 10.93],
++  Akershus: [59.96, 11.05],
++  Oslo: [59.91, 10.75],
++  Innlandet: [60.79, 11.07],
++  Buskerud: [59.74, 10.2],
++  Vestfold: [59.27, 10.41],
++  Telemark: [59.21, 9.61],
++  Agder: [58.15, 7.99],
++  Rogaland: [58.97, 5.73],
++  Vestland: [60.39, 5.32],
++  "Møre og Romsdal": [62.47, 6.15],
++  Trøndelag: [63.43, 10.39],
++  Nordland: [67.28, 14.4],
++  Troms: [69.65, 18.96],
++  Finnmark: [69.97, 23.27],
++};
+diff --git a/app/(www)/kart/norgeskart.tsx b/app/(www)/kart/norgeskart.tsx
+new file mode 100644
+index 0000000..51e3caa
+--- /dev/null
++++ b/app/(www)/kart/norgeskart.tsx
+@@ -0,0 +1,36 @@
++import { cn } from "@/lib/utils";
++
++import type { Kart } from "./lib";
++
++/** Lite, statisk Norgeskart. Brukes i karusellen og i forsideblokken. */
++export function Norgeskart({
++  kart,
++  markert,
++  fyll,
++  className,
++}: {
++  kart: Kart;
++  markert?: string;
++  fyll?: Record<string, string>;
++  className?: string;
++}) {
++  return (
++    <svg
++      viewBox={`0 0 ${kart.w} ${kart.h}`}
++      aria-hidden="true"
++      className={cn("block h-full w-full", className)}
++    >
++      {Object.entries(kart.p).map(([id, d]) => (
++        <path
++          key={id}
++          d={d}
++          strokeLinejoin="round"
++          className={cn(
++            "stroke-primary [stroke-width:1] [vector-effect:non-scaling-stroke]",
++            fyll?.[id] ?? (id === markert ? "fill-white" : "fill-[#8A1A2D]"),
++          )}
++        />
++      ))}
++    </svg>
++  );
++}
+diff --git a/app/(www)/kart/page.tsx b/app/(www)/kart/page.tsx
+index a2d19fe..fee8338 100644
+--- a/app/(www)/kart/page.tsx
++++ b/app/(www)/kart/page.tsx
+@@ -1,30 +1,51 @@
+ import { Metadata } from "next";
+ 
+-import { Konsekvenskart } from "./konsekvenskart";
+ import {
+   PageHeader,
+   PageHeaderDescription,
+   PageHeaderHeading,
+ } from "@/components/page-header";
+ 
++import { hentKonsekvensdata } from "./data";
++import { Konsekvenskart } from "./konsekvenskart";
++import { mill } from "./lib";
++
++// Dataene hentes fra GitHub og oppdateres hvert 15. minutt (ISR).
++export const revalidate = 900;
++
+ export const metadata: Metadata = {
+   title: "Konsekvenskartet",
+   description:
+     "Hva kuttet i tilskuddet til studieforbundene betyr for kurs, kurstimer og deltakere i hvert fylke.",
+ };
+ 
+-export default function Page() {
++export default async function Page() {
++  const data = await hentKonsekvensdata();
++  const total = data
++    ? Object.values(data.kutt.kutt).reduce((a, b) => a + b, 0)
++    : 0;
++
+   return (
+     <div className="container pb-12">
+       <PageHeader>
+         <PageHeaderHeading>Hva kuttet koster i ditt fylke</PageHeaderHeading>
+         <PageHeaderDescription>
+-          Regjeringen foreslår å kutte tilskuddet til studieforbundene med 69 millioner kroner.
+-          Kartet viser hva det kan bety for kurs, kurstimer og deltakere i hvert fylke.
++          Regjeringen foreslår å kutte tilskuddet til studieforbundene med{" "}
++          {total
++            ? `${mill(total).replace(" mill.", "")} millioner`
++            : "om lag 70 millioner"}{" "}
++          kroner. Kartet viser hva det kan bety for kurs, kurstimer og deltakere
++          i hvert fylke.
+         </PageHeaderDescription>
+       </PageHeader>
+ 
+-      <Konsekvenskart />
++      {data ? (
++        <Konsekvenskart {...data} />
++      ) : (
++        <p className="text-center text-muted-foreground">
++          Kartet kunne ikke lastes akkurat nå. Prøv igjen om litt.
++        </p>
++      )}
+     </div>
+   );
+ }
+diff --git a/components/konsekvenskart-banner.tsx b/components/konsekvenskart-banner.tsx
+new file mode 100644
+index 0000000..5d6b004
+--- /dev/null
++++ b/components/konsekvenskart-banner.tsx
+@@ -0,0 +1,81 @@
++import Link from "next/link";
++
++import { Button } from "@/components/ui/button";
++import { hentKonsekvensdata } from "@/app/(www)/kart/data";
++import { beregnFylker, breaks, bucket, mill, nf } from "@/app/(www)/kart/lib";
++import { Norgeskart } from "@/app/(www)/kart/norgeskart";
++
++// Fulle klassenavn så Tailwind finner dem.
++const FYLL = [
++  "fill-[#C9566A]",
++  "fill-[#D97A8B]",
++  "fill-[#E8A3B0]",
++  "fill-[#F4CDD4]",
++  "fill-white",
++];
++
++/** Blokk til forsiden som lenker til /kart. Tallene hentes fra datalageret. */
++export async function KonsekvenskartBanner() {
++  const data = await hentKonsekvensdata();
++  if (!data) return null;
++  const fylker = beregnFylker(data.kutt);
++  const b = breaks(fylker, "kr");
++  const fyll = Object.fromEntries(
++    fylker.map((f) => [f.id, FYLL[bucket(f.kr, b)]]),
++  );
++  const total = data.kutt.kutt.KUD + data.kutt.kutt.KD;
++  const sum = (k: "tk" | "td") => fylker.reduce((a, f) => a + f[k], 0);
++
++  return (
++    <section
++      aria-labelledby="kkb-h"
++      className="grid items-center gap-6 overflow-hidden rounded-lg bg-primary p-6 text-primary-foreground md:grid-cols-[3fr_2fr] md:p-12"
++    >
++      <div>
++        <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
++          Statsbudsjettet 2027
++        </p>
++        <h2
++          id="kkb-h"
++          className="mb-3 font-serif text-3xl font-bold leading-tight md:text-5xl"
++        >
++          Hva kuttet koster i ditt fylke
++        </h2>
++        <p className="max-w-[46ch] text-primary-foreground/90 md:text-lg">
++          Regjeringen foreslår å kutte {mill(total).replace(" mill.", "")}{" "}
++          millioner kroner i studieforbundene. Se hva det kan bety for kurs og
++          deltakere der du bor.
++        </p>
++        <div className="my-6 flex flex-wrap gap-x-9 gap-y-4">
++          <div>
++            <b className="block font-serif text-4xl leading-none">
++              {nf.format(sum("tk"))}
++            </b>
++            <span className="mt-1 block text-sm text-primary-foreground/90">
++              kurs kan forsvinne
++            </span>
++          </div>
++          <div>
++            <b className="block font-serif text-4xl leading-none">
++              {nf.format(sum("td"))}
++            </b>
++            <span className="mt-1 block text-sm text-primary-foreground/90">
++              deltakere kan miste tilbudet
++            </span>
++          </div>
++        </div>
++        <Button asChild variant="secondary" size="lg">
++          <Link href="/kart">Se konsekvenskartet</Link>
++        </Button>
++      </div>
++      <Link
++        href="/kart"
++        tabIndex={-1}
++        aria-hidden="true"
++        className="hidden h-80 md:block"
++      >
++        <Norgeskart kart={data.kart} fyll={fyll} />
++      </Link>
++    </section>
++  );
++}

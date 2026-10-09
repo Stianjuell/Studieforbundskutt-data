@@ -69,7 +69,7 @@ function Fakta({
   children,
   className,
 }: {
-  over: string;
+  over?: string;
   tittel?: string;
   children?: React.ReactNode;
   className?: string;
@@ -81,9 +81,11 @@ function Fakta({
         className,
       )}
     >
-      <p className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
-        {over}
-      </p>
+      {over && (
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
+          {over}
+        </p>
+      )}
       {tittel && (
         <h3 className="max-w-[24ch] text-balance font-serif text-3xl font-bold leading-tight md:text-4xl group-data-[fs=true]:text-6xl">
           {tittel}
@@ -419,7 +421,8 @@ export function Karusell({
       "tabell",
       <Fakta
         over="Studieforbundene nasjonalt"
-        tittel="Kuttet og konsekvensene per studieforbund"
+        tittel="Konsekvensene per studieforbund"
+        className="gap-3 md:py-8"
       >
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-[13px] tabular-nums group-data-[fs=true]:text-xl">
@@ -489,11 +492,11 @@ export function Karusell({
     for (const f of fyl) {
       fakta(
         `fylke-${f.id}`,
-        <Fakta
-          over={`Fylke for fylke · ${f.n}`}
-          className="md:grid md:grid-cols-[3fr_2fr] md:items-center"
-        >
+        <Fakta className="md:grid md:grid-cols-[3fr_2fr] md:items-center">
           <div className="grid gap-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
+              Fylke for fylke · {f.n}
+            </p>
             <h3 className="max-w-[24ch] text-balance font-serif text-3xl font-bold leading-tight md:text-4xl group-data-[fs=true]:text-6xl">
               {mill(f.kr)} kroner mindre til kurs i {f.n}
             </h3>
@@ -524,7 +527,7 @@ export function Karusell({
               </Button>
             </div>
           </div>
-          <div className="hidden h-full max-h-[26rem] md:block group-data-[fs=true]:max-h-none">
+          <div className="hidden h-[20rem] md:block group-data-[fs=true]:h-[60vh]">
             <Norgeskart kart={kart} markert={f.id} />
           </div>
         </Fakta>,
@@ -655,7 +658,7 @@ export function Karusell({
       ref={seksjon}
       data-fs={fs}
       aria-labelledby="bevar-h"
-      className="group grid gap-3 data-[fs=true]:flex data-[fs=true]:flex-col data-[fs=true]:bg-background data-[fs=true]:p-6"
+      className="group grid min-w-0 gap-3 data-[fs=true]:flex data-[fs=true]:flex-col data-[fs=true]:bg-background data-[fs=true]:p-6"
     >
       <h2
         id="bevar-h"
@@ -672,7 +675,7 @@ export function Karusell({
       <Carousel
         setApi={setApi}
         opts={{ loop: true }}
-        className="group-data-[fs=true]:min-h-0 group-data-[fs=true]:flex-1 [&>div>div]:h-full [&>div]:h-full"
+        className="min-w-0 group-data-[fs=true]:min-h-0 group-data-[fs=true]:flex-1 [&>div>div]:h-full [&>div]:h-full"
       >
         <CarouselContent className="items-stretch">
           {lysbilder.map((l, i) => (

@@ -72,7 +72,7 @@ export async function KonsekvenskartBanner() {
         href="/kart"
         tabIndex={-1}
         aria-hidden="true"
-        className="hidden max-h-80 md:block"
+        className="hidden h-80 md:block"
       >
         <Norgeskart kart={data.kart} fyll={fyll} />
       </Link>

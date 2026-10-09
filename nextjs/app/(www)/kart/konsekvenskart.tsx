@@ -745,15 +745,13 @@ export function Konsekvenskart(initial: Konsekvensdata) {
                       </Label>
                       <Lenkeliste
                         kant="border-border"
-                        items={nasjonale
-                          .slice(0, 5)
-                          .map((n) => ({
-                            tittel: n.tittel,
-                            url: n.url,
-                            under: [n.kilde, datoKort(n.dato)]
-                              .filter(Boolean)
-                              .join(" · "),
-                          }))}
+                        items={nasjonale.slice(0, 5).map((n) => ({
+                          tittel: n.tittel,
+                          url: n.url,
+                          under: [n.kilde, datoKort(n.dato)]
+                            .filter(Boolean)
+                            .join(" · "),
+                        }))}
                       />
                       {nasjonale.length > 5 && (
                         <Button
