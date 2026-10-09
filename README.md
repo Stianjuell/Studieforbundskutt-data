@@ -1,0 +1,2 @@
+# Studieforbundskutt-data
+Studieforbundskutt-data
