@@ -34,8 +34,8 @@ export default async function Page() {
           {total
             ? `${mill(total).replace(" mill.", "")} millioner`
             : "om lag 70 millioner"}{" "}
-          kroner. Kartet viser hva det kan bety for kurs, kurstimer og deltakere
-          i hvert fylke.
+          kroner. Det er om lag en firedel av hele tilskuddet. Kartet viser hva
+          det kan bety for kurs, kurstimer og deltakere i hvert fylke.
         </PageHeaderDescription>
       </PageHeader>
 

@@ -43,8 +43,8 @@ export async function KonsekvenskartBanner() {
         </h2>
         <p className="max-w-[46ch] text-primary-foreground/90 md:text-lg">
           Regjeringen foreslår å kutte {mill(total).replace(" mill.", "")}{" "}
-          millioner kroner i studieforbundene. Se hva det kan bety for kurs og
-          deltakere der du bor.
+          millioner kroner i studieforbundene, om lag en firedel av tilskuddet.
+          Se hva det kan bety for kurs og deltakere der du bor.
         </p>
         <div className="my-6 flex flex-wrap gap-x-9 gap-y-4">
           <div>
