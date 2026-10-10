@@ -574,7 +574,7 @@ export function Konsekvenskart(initial: Konsekvensdata) {
                         className={cn(
                           "cursor-pointer stroke-card [stroke-width:2] [vector-effect:non-scaling-stroke] hover:fill-foreground focus-visible:fill-foreground focus-visible:outline-none",
                           g.l.every((p) => p.nasjonal)
-                            ? "fill-card stroke-primary [stroke-width:2.5]"
+                            ? "fill-white stroke-foreground [stroke-width:2.5]"
                             : nyhet
                               ? "fill-primary"
                               : "fill-[#009890]",
@@ -671,7 +671,7 @@ export function Konsekvenskart(initial: Konsekvensdata) {
                   Lokale mediesaker
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <i className="inline-block h-2.5 w-2.5 rounded-full border-2 border-primary bg-card" />{" "}
+                  <i className="inline-block h-2.5 w-2.5 rounded-full border-2 border-foreground bg-white" />{" "}
                   Nasjonale saker, spredt utover kartet
                 </span>
                 <span>Trykk på en prikk for å lese.</span>

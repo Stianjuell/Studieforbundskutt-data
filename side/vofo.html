@@ -92,7 +92,7 @@ svg path.sel{stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke}
 .card p{margin:0;font-size:14.5px;color:var(--muted)}
 svg .pin{fill:var(--teal);stroke:var(--surface);stroke-width:2;vector-effect:non-scaling-stroke;cursor:pointer}
 svg .pin.news{fill:var(--accent)}
-svg .pin.nasj{fill:var(--surface);stroke:var(--accent);stroke-width:2.5}
+svg .pin.nasj{fill:#fff;stroke:var(--ink);stroke-width:2.5}
 .pop{position:absolute;left:8px;right:8px;bottom:8px;max-height:55%;overflow:auto;background:var(--surface);border:1px solid var(--line);box-shadow:0 6px 24px rgba(0,0,0,.18);padding:12px 14px;z-index:2}
 .pophead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
 .pophead b{font-family:var(--display);font-stretch:85%;font-size:20px}
@@ -108,7 +108,7 @@ svg .pin.nasj{fill:var(--surface);stroke:var(--accent);stroke-width:2.5}
 .ptag.ph{background:var(--teal);color:#fff}
 .ptag.pn{background:var(--accent);color:var(--accent-ink)}
 svg .pin:hover,svg .pin:focus-visible{fill:var(--accent);outline:none}
-.pinnote{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:6px}
+.pinnote{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;font-size:12px;color:var(--muted);margin-top:6px}.pinnote span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .local.hist li{border-left-color:var(--teal)}
 .share{display:grid;gap:6px}
 .shrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -280,7 +280,7 @@ svg .pin:hover,svg .pin:focus-visible{fill:var(--accent);outline:none}
     <div class="mapbox">
       <div class="mapwrap"><button class="zoomout" id="zoomout" hidden>Vis hele landet</button><svg id="map" role="img" aria-label="Kart over Norge farget etter tap per fylke"></svg><div class="pop" id="pop" role="dialog" aria-label="Saker fra stedet" hidden></div></div>
       <div class="legend" id="legend"></div>
-      <div class="pinnote"><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" class="pin"/></svg> Historier fra lagene <svg width="14" height="14" aria-hidden="true" style="margin-left:10px"><circle cx="7" cy="7" r="5" class="pin news"/></svg> Lokale mediesaker <svg width="14" height="14" aria-hidden="true" style="margin-left:10px"><circle cx="7" cy="7" r="5" class="pin news nasj"/></svg> Nasjonale saker, spredt utover kartet. Trykk for å lese.</div>
+      <div class="pinnote"><span><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" class="pin"/></svg> Historier fra lagene</span><span><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" class="pin news"/></svg> Lokale mediesaker</span><span><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" class="pin news nasj"/></svg> Nasjonale saker, spredt utover kartet</span><span>Trykk for å lese.</span></div>
     </div>
     <article class="panel" id="panel" aria-live="polite"></article>
   </div>
