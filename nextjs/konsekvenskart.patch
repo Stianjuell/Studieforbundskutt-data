@@ -50,40 +50,18 @@ index 0000000..cf9a1bb
 +}
 diff --git a/app/(www)/kart/karusell.module.css b/app/(www)/kart/karusell.module.css
 new file mode 100644
-index 0000000..468df2f
+index 0000000..2200e39
 --- /dev/null
 +++ b/app/(www)/kart/karusell.module.css
-@@ -0,0 +1,64 @@
+@@ -0,0 +1,41 @@
 +/* Animasjoner til ordlysbildet i karusellen. Resten av stilen ligger i Tailwind-klassene. */
 +
-+.marquee {
-+  display: inline-flex;
-+  animation: mq 70s linear infinite;
-+}
-+.marqueeRevers {
-+  animation-direction: reverse;
-+  animation-duration: 85s;
-+}
-+.marquee span {
-+  padding-right: 0.3em;
-+}
-+@keyframes mq {
-+  to {
-+    transform: translateX(-50%);
-+  }
-+}
-+
-+.kontur {
-+  color: transparent;
-+  -webkit-text-stroke: 1px rgb(255 255 255 / 0.22);
-+}
-+
-+/* 18 ord, 1,8 sekunder hver: 32,4 sekunder per runde. */
++/* 19 ord, 1,8 sekunder hver: 34,2 sekunder per runde. */
 +.ord {
 +  grid-area: 1 / 1;
 +  opacity: 0;
 +  transform: translateY(100%);
-+  animation: ord 32.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
++  animation: ord 34.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
 +}
 +@keyframes ord {
 +  0% {
@@ -94,11 +72,11 @@ index 0000000..468df2f
 +    opacity: 1;
 +    transform: translateY(0);
 +  }
-+  4.72% {
++  4.47% {
 +    opacity: 1;
 +    transform: translateY(0);
 +  }
-+  5.56% {
++  5.26% {
 +    opacity: 0;
 +    transform: translateY(-100%);
 +  }
@@ -109,7 +87,6 @@ index 0000000..468df2f
 +}
 +
 +@media (prefers-reduced-motion: reduce) {
-+  .marquee,
 +  .ord {
 +    animation: none;
 +  }
@@ -120,10 +97,10 @@ index 0000000..468df2f
 +}
 diff --git a/app/(www)/kart/karusell.tsx b/app/(www)/kart/karusell.tsx
 new file mode 100644
-index 0000000..34200e8
+index 0000000..fbefaf6
 --- /dev/null
 +++ b/app/(www)/kart/karusell.tsx
-@@ -0,0 +1,770 @@
+@@ -0,0 +1,747 @@
 +"use client";
 +
 +import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -163,7 +140,6 @@ index 0000000..34200e8
 +const VEDTAK = new Date("2026-12-15T12:00:00");
 +
 +const ORD = [
-+  "kor",
 +  "korps",
 +  "husflid",
 +  "jakt",
@@ -173,6 +149,8 @@ index 0000000..34200e8
 +  "førstehjelp",
 +  "trosopplæring",
 +  "politikk",
++  "organisasjon",
++  "lederskap",
 +  "dans",
 +  "teater",
 +  "kystkultur",
@@ -280,32 +258,8 @@ index 0000000..34200e8
 +}
 +
 +function OrdBilde({ deltakere }: { deltakere: number }) {
-+  const rad1 =
-+    ORD.map((o) => o[0].toUpperCase() + o.slice(1)).join(" · ") + " · ";
-+  const rad2 =
-+    [...ORD]
-+      .reverse()
-+      .map((o) => o[0].toUpperCase() + o.slice(1))
-+      .join(" · ") + " · ";
-+  const rekke = (tekst: string, revers?: boolean, plass?: string) => (
-+    <div
-+      aria-hidden="true"
-+      className={cn(
-+        "pointer-events-none absolute inset-x-0 overflow-hidden whitespace-nowrap font-serif text-6xl font-bold leading-none md:text-8xl group-data-[fs=true]:text-[10rem]",
-+        styles.kontur,
-+        plass,
-+      )}
-+    >
-+      <div className={cn(styles.marquee, revers && styles.marqueeRevers)}>
-+        <span>{tekst}</span>
-+        <span>{tekst}</span>
-+      </div>
-+    </div>
-+  );
 +  return (
 +    <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-lg bg-[radial-gradient(120%_90%_at_15%_50%,#B8263F_0%,hsl(var(--primary))_45%,#7E1528_100%)] p-6 text-primary-foreground md:px-10 md:py-7">
-+      {rekke(rad1, false, "-top-2")}
-+      {rekke(rad2, true, "bottom-0")}
 +      <div className="relative z-10 grid gap-3">
 +        <p className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
 +          Læring i hele landet
@@ -4896,7 +4850,7 @@ index 0000000..51e3caa
 +  );
 +}
 diff --git a/app/(www)/kart/page.tsx b/app/(www)/kart/page.tsx
-index a2d19fe..fee8338 100644
+index a2d19fe..17fe4cf 100644
 --- a/app/(www)/kart/page.tsx
 +++ b/app/(www)/kart/page.tsx
 @@ -1,30 +1,51 @@
@@ -4932,7 +4886,8 @@ index a2d19fe..fee8338 100644
    return (
      <div className="container pb-12">
        <PageHeader>
-         <PageHeaderHeading>Hva kuttet koster i ditt fylke</PageHeaderHeading>
+-        <PageHeaderHeading>Hva kuttet koster i ditt fylke</PageHeaderHeading>
++        <PageHeaderHeading>Hva kuttet koster</PageHeaderHeading>
          <PageHeaderDescription>
 -          Regjeringen foreslår å kutte tilskuddet til studieforbundene med 69 millioner kroner.
 -          Kartet viser hva det kan bety for kurs, kurstimer og deltakere i hvert fylke.
@@ -4958,7 +4913,7 @@ index a2d19fe..fee8338 100644
  }
 diff --git a/components/konsekvenskart-banner.tsx b/components/konsekvenskart-banner.tsx
 new file mode 100644
-index 0000000..5d6b004
+index 0000000..f7d9cb5
 --- /dev/null
 +++ b/components/konsekvenskart-banner.tsx
 @@ -0,0 +1,81 @@
@@ -5003,7 +4958,7 @@ index 0000000..5d6b004
 +          id="kkb-h"
 +          className="mb-3 font-serif text-3xl font-bold leading-tight md:text-5xl"
 +        >
-+          Hva kuttet koster i ditt fylke
++          Hva kuttet koster
 +        </h2>
 +        <p className="max-w-[46ch] text-primary-foreground/90 md:text-lg">
 +          Regjeringen foreslår å kutte {mill(total).replace(" mill.", "")}{" "}

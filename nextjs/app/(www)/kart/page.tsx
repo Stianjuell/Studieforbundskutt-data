@@ -28,7 +28,7 @@ export default async function Page() {
   return (
     <div className="container pb-12">
       <PageHeader>
-        <PageHeaderHeading>Hva kuttet koster i ditt fylke</PageHeaderHeading>
+        <PageHeaderHeading>Hva kuttet koster</PageHeaderHeading>
         <PageHeaderDescription>
           Regjeringen foreslår å kutte tilskuddet til studieforbundene med{" "}
           {total

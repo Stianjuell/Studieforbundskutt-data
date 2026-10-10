@@ -39,7 +39,7 @@ export async function KonsekvenskartBanner() {
           id="kkb-h"
           className="mb-3 font-serif text-3xl font-bold leading-tight md:text-5xl"
         >
-          Hva kuttet koster i ditt fylke
+          Hva kuttet koster
         </h2>
         <p className="max-w-[46ch] text-primary-foreground/90 md:text-lg">
           Regjeringen foreslår å kutte {mill(total).replace(" mill.", "")}{" "}

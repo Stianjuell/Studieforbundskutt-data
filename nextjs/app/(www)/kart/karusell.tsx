@@ -37,7 +37,6 @@ const PAUSE_ETTER_BRUK = 15000; // ms pause etter at noen blar selv
 const VEDTAK = new Date("2026-12-15T12:00:00");
 
 const ORD = [
-  "kor",
   "korps",
   "husflid",
   "jakt",
@@ -47,6 +46,8 @@ const ORD = [
   "førstehjelp",
   "trosopplæring",
   "politikk",
+  "organisasjon",
+  "lederskap",
   "dans",
   "teater",
   "kystkultur",
@@ -154,32 +155,8 @@ function Stolper({ rader }: { rader: [string, number][] }) {
 }
 
 function OrdBilde({ deltakere }: { deltakere: number }) {
-  const rad1 =
-    ORD.map((o) => o[0].toUpperCase() + o.slice(1)).join(" · ") + " · ";
-  const rad2 =
-    [...ORD]
-      .reverse()
-      .map((o) => o[0].toUpperCase() + o.slice(1))
-      .join(" · ") + " · ";
-  const rekke = (tekst: string, revers?: boolean, plass?: string) => (
-    <div
-      aria-hidden="true"
-      className={cn(
-        "pointer-events-none absolute inset-x-0 overflow-hidden whitespace-nowrap font-serif text-6xl font-bold leading-none md:text-8xl group-data-[fs=true]:text-[10rem]",
-        styles.kontur,
-        plass,
-      )}
-    >
-      <div className={cn(styles.marquee, revers && styles.marqueeRevers)}>
-        <span>{tekst}</span>
-        <span>{tekst}</span>
-      </div>
-    </div>
-  );
   return (
     <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-lg bg-[radial-gradient(120%_90%_at_15%_50%,#B8263F_0%,hsl(var(--primary))_45%,#7E1528_100%)] p-6 text-primary-foreground md:px-10 md:py-7">
-      {rekke(rad1, false, "-top-2")}
-      {rekke(rad2, true, "bottom-0")}
       <div className="relative z-10 grid gap-3">
         <p className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
           Læring i hele landet
