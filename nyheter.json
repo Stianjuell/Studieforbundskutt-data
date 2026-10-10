@@ -2,14 +2,19 @@
  {
   "tittel": "Nei til kutt på 70 millioner kroner til studieforbundene og frivillig voksenopplæring",
   "url": "https://www.vofo.no/aktuelt/nei-til-kutt-pa-70-millioner-kroner-til-studieforbundene-og-frivillig-voksenopplaering",
-  "kilde": "Vofo",
+  "kilde": "NJFF Akershus",
   "dato": "2026-10-09",
-  "sammendrag": "Vofo reagerer sterkt på forslaget om å kutte 70 mill. kr i støtten til studieforbundene. Kuttet vil ifølge Vofo få alvorlige konsekvenser for tusenvis av deltakere, frivillige og lokallag over hele landet.",
+  "sammendrag": "Norges Jeger- og Fiskerforbund Akershus og Bjørkelangen Jeger- og Fiskeforening reagerer sterkt på forslaget om å kutte 70 millioner kroner i støtten til studieforbundene. Kuttet vil få alvorlige konsekvenser for deltakere, frivillige og lokallag over hele landet.",
   "viktig": false,
   "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/vofo-nei-til-kutt-70-millioner.jpg",
-  "fylker": [],
+  "fylker": [
+   "Akershus"
+  ],
   "kategori": "Organisasjonene",
-  "forbund": []
+  "forbund": [],
+  "sted": "Bjørkelangen",
+  "lat": 59.886,
+  "lon": 11.563
  },
  {
   "tittel": "Stort kutt i tilskudd for studieforbundene!",
