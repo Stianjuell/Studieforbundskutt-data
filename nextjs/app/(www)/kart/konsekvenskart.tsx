@@ -59,7 +59,30 @@ type Pin = {
   tekst?: string;
   kilde?: string;
   bilde?: string;
+  nasjonal?: boolean;
 };
+
+// Nasjonale saker spres utover kartet, én per sted, så de blir synlige.
+const NASJ: [number, number][] = [
+  [61.12, 10.47],
+  [58.46, 8.77],
+  [64.01, 11.5],
+  [59.41, 5.27],
+  [66.31, 14.14],
+  [59.67, 9.65],
+  [68.8, 16.54],
+  [61.45, 5.85],
+  [70.07, 29.75],
+  [59.12, 11.39],
+  [63.11, 7.73],
+  [59.05, 10.03],
+  [70.66, 23.68],
+  [60.8, 10.69],
+  [68.44, 17.43],
+  [59.56, 9.26],
+  [60.14, 11.17],
+  [60.17, 10.26],
+];
 
 type VB = { x: number; y: number; w: number; h: number };
 
@@ -283,6 +306,27 @@ export function Konsekvenskart(initial: Konsekvensdata) {
         bilde: h.bilde,
       });
     }
+    sorterNyheter(nyheter)
+      .filter((n) => !n.fylker?.length && typeof n.lat !== "number")
+      .forEach((n, i) => {
+        const [la, lo] = NASJ[i % NASJ.length];
+        const r = Math.floor(i / NASJ.length);
+        const [x, y] = tilXY(la + r * 0.3, lo + r * 0.4);
+        ut.push({
+          type: "nyhet",
+          nasjonal: true,
+          tittel: n.tittel,
+          url: n.url,
+          dato: n.dato,
+          fylke: "",
+          sted: "Nasjonal sak",
+          x,
+          y,
+          tekst: n.sammendrag,
+          kilde: n.kilde,
+          bilde: n.bilde,
+        });
+      });
     for (const n of nyheter) {
       const fy = n.fylker?.length === 1 ? n.fylker[0] : undefined;
       let lat = n.lat,
@@ -318,7 +362,7 @@ export function Konsekvenskart(initial: Konsekvensdata) {
 
   const visPop = (l: Pin[]) => {
     const f = fylker.find((x) => x.n === l[0].fylke);
-    if (f) velg(f.id);
+    if (f && !l.every((p) => p.nasjonal)) velg(f.id);
     setPop(
       [...l].sort(
         (a, c) =>
@@ -529,7 +573,11 @@ export function Konsekvenskart(initial: Konsekvensdata) {
                         }}
                         className={cn(
                           "cursor-pointer stroke-card [stroke-width:2] [vector-effect:non-scaling-stroke] hover:fill-foreground focus-visible:fill-foreground focus-visible:outline-none",
-                          nyhet ? "fill-primary" : "fill-[#009890]",
+                          g.l.every((p) => p.nasjonal)
+                            ? "fill-card stroke-primary [stroke-width:2.5]"
+                            : nyhet
+                              ? "fill-primary"
+                              : "fill-[#009890]",
                         )}
                       >
                         <title>
@@ -580,7 +628,11 @@ export function Konsekvenskart(initial: Konsekvensdata) {
                                 : "bg-[#009890]",
                             )}
                           >
-                            {p.type === "nyhet" ? "I mediene" : "Historie"}
+                            {p.nasjonal
+                              ? "Nasjonal sak"
+                              : p.type === "nyhet"
+                                ? "I mediene"
+                                : "Historie"}
                           </span>
                           <a
                             href={erHttps(p.url) ? p.url : "#"}
@@ -617,6 +669,10 @@ export function Konsekvenskart(initial: Konsekvensdata) {
                 <span className="flex items-center gap-1.5">
                   <i className="inline-block h-2.5 w-2.5 rounded-full bg-primary" />{" "}
                   Lokale mediesaker
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <i className="inline-block h-2.5 w-2.5 rounded-full border-2 border-primary bg-card" />{" "}
+                  Nasjonale saker, spredt utover kartet
                 </span>
                 <span>Trykk på en prikk for å lese.</span>
               </div>

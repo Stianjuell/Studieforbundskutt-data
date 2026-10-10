@@ -157,7 +157,8 @@
   "viktig": false,
   "fylker": [],
   "kategori": "Organisasjonene",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/folkorg-statsbudsjett-2027.jpg"
  },
  {
   "tittel": "Dette betyr statsbudsjettet for frivilligheten",

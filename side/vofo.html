@@ -92,6 +92,7 @@ svg path.sel{stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke}
 .card p{margin:0;font-size:14.5px;color:var(--muted)}
 svg .pin{fill:var(--teal);stroke:var(--surface);stroke-width:2;vector-effect:non-scaling-stroke;cursor:pointer}
 svg .pin.news{fill:var(--accent)}
+svg .pin.nasj{fill:var(--surface);stroke:var(--accent);stroke-width:2.5}
 .pop{position:absolute;left:8px;right:8px;bottom:8px;max-height:55%;overflow:auto;background:var(--surface);border:1px solid var(--line);box-shadow:0 6px 24px rgba(0,0,0,.18);padding:12px 14px;z-index:2}
 .pophead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
 .pophead b{font-family:var(--display);font-stretch:85%;font-size:20px}
@@ -279,7 +280,7 @@ svg .pin:hover,svg .pin:focus-visible{fill:var(--accent);outline:none}
     <div class="mapbox">
       <div class="mapwrap"><button class="zoomout" id="zoomout" hidden>Vis hele landet</button><svg id="map" role="img" aria-label="Kart over Norge farget etter tap per fylke"></svg><div class="pop" id="pop" role="dialog" aria-label="Saker fra stedet" hidden></div></div>
       <div class="legend" id="legend"></div>
-      <div class="pinnote"><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" class="pin"/></svg> Historier fra lagene <svg width="14" height="14" aria-hidden="true" style="margin-left:10px"><circle cx="7" cy="7" r="5" class="pin news"/></svg> Lokale mediesaker. Trykk for å lese.</div>
+      <div class="pinnote"><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" class="pin"/></svg> Historier fra lagene <svg width="14" height="14" aria-hidden="true" style="margin-left:10px"><circle cx="7" cy="7" r="5" class="pin news"/></svg> Lokale mediesaker <svg width="14" height="14" aria-hidden="true" style="margin-left:10px"><circle cx="7" cy="7" r="5" class="pin news nasj"/></svg> Nasjonale saker, spredt utover kartet. Trykk for å lese.</div>
     </div>
     <article class="panel" id="panel" aria-live="polite"></article>
   </div>
@@ -345,13 +346,22 @@ const PROJ={minx:-60250,maxy:7939090,s:0.0005104862381418301};
 function toXY(lat,lon){const [x,y]=utm33(lat,lon);return [(x-PROJ.minx)*PROJ.s,(PROJ.maxy-y)*PROJ.s]}
 const pinLayer=document.createElementNS("http://www.w3.org/2000/svg","g"); pinLayer.id="pins"; svg.appendChild(pinLayer);
 const FYLKESBY={"Østfold":[59.22,10.93],"Akershus":[59.96,11.05],"Oslo":[59.91,10.75],"Innlandet":[60.79,11.07],"Buskerud":[59.74,10.20],"Vestfold":[59.27,10.41],"Telemark":[59.21,9.61],"Agder":[58.15,7.99],"Rogaland":[58.97,5.73],"Vestland":[60.39,5.32],"Møre og Romsdal":[62.47,6.15],"Trøndelag":[63.43,10.39],"Nordland":[67.28,14.40],"Troms":[69.65,18.96],"Finnmark":[69.97,23.27]};
+const NASJ=[["Lillehammer",61.12,10.47],["Arendal",58.46,8.77],["Steinkjer",64.01,11.50],["Haugesund",59.41,5.27],["Mo i Rana",66.31,14.14],["Kongsberg",59.67,9.65],["Harstad",68.80,16.54],["Førde",61.45,5.85],["Vadsø",70.07,29.75],["Halden",59.12,11.39],["Kristiansund",63.11,7.73],["Larvik",59.05,10.03],["Hammerfest",70.66,23.68],["Gjøvik",60.80,10.69],["Narvik",68.44,17.43],["Notodden",59.56,9.26],["Jessheim",60.14,11.17],["Hønefoss",60.17,10.26]];
 function pinItems(){
   const out=HIST.filter(h=>typeof h.lat==="number"&&typeof h.lon==="number").map(h=>({type:"h",tittel:h.tittel,url:h.url,dato:h.dato,fylke:h.fylke,sted:h.sted,lat:h.lat,lon:h.lon,tekst:h.ingress||"",bilde:h.bilde}));
+  const nasj=[];
   (window.__news||[]).forEach(n=>{
     const fy=Array.isArray(n.fylker)&&n.fylker.length===1?n.fylker[0]:null;
     let lat=n.lat,lon=n.lon,sted=n.sted;
-    if(typeof lat!=="number"||typeof lon!=="number"){ if(!fy||!FYLKESBY[fy])return; [lat,lon]=FYLKESBY[fy]; sted=fy; }
+    if(typeof lat!=="number"||typeof lon!=="number"){
+      if(!Array.isArray(n.fylker)||!n.fylker.length){nasj.push(n);return;}
+      if(!fy||!FYLKESBY[fy])return; [lat,lon]=FYLKESBY[fy]; sted=fy; }
     out.push({type:"n",tittel:n.tittel,url:n.url,dato:n.dato,fylke:fy||(Array.isArray(n.fylker)?n.fylker[0]:""),sted:sted||fy,lat,lon,tekst:n.sammendrag||"",kilde:n.kilde,bilde:n.bilde});
+  });
+  // Nasjonale saker spres utover kartet, én per sted, så de blir synlige. De velger ikke noe fylke.
+  nasj.sort((a,b)=>((a.nederst?1:0)-(b.nederst?1:0))||(b.dato||"").localeCompare(a.dato||"")).forEach((n,i)=>{
+    const [s,la,lo]=NASJ[i%NASJ.length], r=Math.floor(i/NASJ.length);
+    out.push({type:"n",nasjonal:true,tittel:n.tittel,url:n.url,dato:n.dato,fylke:"",sted:"Nasjonal sak",lat:la+r*0.3,lon:lo+r*0.4,tekst:n.sammendrag||"",kilde:n.kilde,bilde:n.bilde});
   });
   return out;
 }
@@ -361,16 +371,16 @@ function drawPins(){
   pinItems().forEach(h=>{const [x,y]=toXY(h.lat,h.lon);const k=x.toFixed(0)+","+y.toFixed(0);(groups[k]=groups[k]||{x,y,l:[]}).l.push(h)});
   Object.values(groups).forEach(g=>{
     const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
-    const hasNews=g.l.some(i=>i.type==="n");
+    const hasNews=g.l.some(i=>i.type==="n"), nasjonal=g.l.every(i=>i.nasjonal);
     c.setAttribute("cx",g.x.toFixed(1)); c.setAttribute("cy",g.y.toFixed(1)); c.dataset.r=Math.min(5+g.l.length*1.6,12); c.setAttribute("r",(+c.dataset.r*(VB?VB.w/GEO.w:1)).toFixed(2));
-    c.setAttribute("class","pin"+(hasNews?" news":"")); c.setAttribute("tabindex","0");
+    c.setAttribute("class","pin"+(hasNews?" news":"")+(nasjonal?" nasj":"")); c.setAttribute("tabindex","0");
     const fid=(DATA.find(d=>d.n===g.l[0].fylke)||{}).id;
-    const go=()=>{if(fid)select(fid);showPop(g.l)};
+    const go=()=>{if(fid&&!nasjonal)select(fid);showPop(g.l)};
     c.addEventListener("click",e=>{e.stopPropagation();go()});
     c.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
     const nh=g.l.filter(i=>i.type==="h").length, nn=g.l.length-nh;
     const t=document.createElementNS("http://www.w3.org/2000/svg","title");
-    t.textContent=g.l[0].sted+": "+[nh?nh+(nh===1?" historie":" historier"):"",nn?nn+(nn===1?" mediesak":" mediesaker"):""].filter(Boolean).join(" og "); c.appendChild(t);
+    t.textContent=nasjonal?"Nasjonal sak: "+g.l[0].tittel:g.l[0].sted+": "+[nh?nh+(nh===1?" historie":" historier"):"",nn?nn+(nn===1?" mediesak":" mediesaker"):""].filter(Boolean).join(" og "); c.appendChild(t);
     pinLayer.appendChild(c);
   });
 }
@@ -378,7 +388,7 @@ function showPop(list){
   const box=document.getElementById("pop"); if(!box)return;
   const e=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const l=[...list].sort((a,b)=>(a.type===b.type?0:a.type==="n"?-1:1)||(b.dato||"").localeCompare(a.dato||""));
-  box.innerHTML=`<div class="pophead"><b>${e(l[0].sted)}</b><button id="popx" aria-label="Lukk">×</button></div><ul>${l.map(i=>`<li>${/^https:\/\//.test(i.bilde||"")?`<img class="pimg" src="${e(im(i.bilde))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<span class="ptag ${i.type==="n"?"pn":"ph"}">${i.type==="n"?"I mediene":"Historie"}</span><a href="${/^https:\/\//.test(i.url||"")?e(i.url):"#"}" target="_blank" rel="noopener">${e(i.tittel)}</a><small>${i.kilde?e(i.kilde)+" · ":""}${i.dato?new Date(i.dato+"T12:00").toLocaleDateString("nb-NO",{day:"numeric",month:"short",year:"numeric"}):""}</small>${i.tekst?`<p>${e(i.tekst)}</p>`:""}</li>`).join("")}</ul>`;
+  box.innerHTML=`<div class="pophead"><b>${e(l[0].sted)}</b><button id="popx" aria-label="Lukk">×</button></div><ul>${l.map(i=>`<li>${/^https:\/\//.test(i.bilde||"")?`<img class="pimg" src="${e(im(i.bilde))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<span class="ptag ${i.type==="n"?"pn":"ph"}">${i.nasjonal?"Nasjonal sak":i.type==="n"?"I mediene":"Historie"}</span><a href="${/^https:\/\//.test(i.url||"")?e(i.url):"#"}" target="_blank" rel="noopener">${e(i.tittel)}</a><small>${i.kilde?e(i.kilde)+" · ":""}${i.dato?new Date(i.dato+"T12:00").toLocaleDateString("nb-NO",{day:"numeric",month:"short",year:"numeric"}):""}</small>${i.tekst?`<p>${e(i.tekst)}</p>`:""}</li>`).join("")}</ul>`;
   box.hidden=false;
   document.getElementById("popx").onclick=()=>{box.hidden=true};
 }

@@ -882,10 +882,10 @@ index 0000000..2a81c64
 +  );
 +}
 diff --git a/app/(www)/kart/konsekvenskart.tsx b/app/(www)/kart/konsekvenskart.tsx
-index 463caf5..3d26e72 100644
+index 463caf5..2ec6a4f 100644
 --- a/app/(www)/kart/konsekvenskart.tsx
 +++ b/app/(www)/kart/konsekvenskart.tsx
-@@ -1,2548 +1,347 @@
+@@ -1,2548 +1,391 @@
 -// src/components/konsekvenskart.tsx
  "use client";
  
@@ -3334,25 +3334,6 @@ index 463caf5..3d26e72 100644
 -});
 -
 -type Metric = "kr" | "tk" | "tt" | "td";
--
--export type NewsItem = {
--  tittel: string;
--  url: string;
--  kilde: string;
--  dato?: string; // YYYY-MM-DD
--  fylker?: string[];
--  viktig?: boolean;
--  nederst?: boolean;
--};
--
--const LABEL: Record<Metric, string> = {
--  kr: "Tapt tilskudd",
--  tk: "Potensielt tap av kurs",
--  tt: "Potensielt tap av kurstimer",
--  td: "Potensielt tap av deltakere",
--};
--
--// Full class strings so Tailwind can see them. Light → dark in one string.
 +import { Karusell } from "./karusell";
 +import {
 +  beregnFylker,
@@ -3377,46 +3358,32 @@ index 463caf5..3d26e72 100644
 +} from "./lib";
 +
 +// Fulle klassenavn så Tailwind finner dem. Lys og mørk modus i samme streng.
- const FILL = [
--  "fill-[#f3d9d2] dark:fill-[#3f2a2e]",
--  "fill-[#e6a99c] dark:fill-[#6e3138]",
--  "fill-[#d27466] dark:fill-[#a33a45]",
--  "fill-[#b3263a] dark:fill-[#d65463]",
--  "fill-[#7c1424] dark:fill-[#f08c97]",
++const FILL = [
 +  "fill-[#F8E9EC] dark:fill-[#3A1F25]",
 +  "fill-[#EBB3BE] dark:fill-[#6B2633]",
 +  "fill-[#D16A7E] dark:fill-[#A41F35]",
 +  "fill-[#A41F35] dark:fill-[#D8576C]",
 +  "fill-[#6E1222] dark:fill-[#F2A5B2]",
- ];
- const SWATCH = [
--  "bg-[#f3d9d2] dark:bg-[#3f2a2e]",
--  "bg-[#e6a99c] dark:bg-[#6e3138]",
--  "bg-[#d27466] dark:bg-[#a33a45]",
--  "bg-[#b3263a] dark:bg-[#d65463]",
--  "bg-[#7c1424] dark:bg-[#f08c97]",
++];
++const SWATCH = [
 +  "bg-[#F8E9EC] dark:bg-[#3A1F25]",
 +  "bg-[#EBB3BE] dark:bg-[#6B2633]",
 +  "bg-[#D16A7E] dark:bg-[#A41F35]",
 +  "bg-[#A41F35] dark:bg-[#D8576C]",
 +  "bg-[#6E1222] dark:bg-[#F2A5B2]",
- ];
--const ACCENT = "text-[#b3263a] dark:text-[#ec6a78]";
--const ACCENT_BG = "bg-[#b3263a] dark:bg-[#ec6a78]";
--const ACCENT_BORDER = "border-[#b3263a] dark:border-[#ec6a78]";
++];
 +const TEAL = "text-[#009890] dark:text-[#3CC4BB]";
  
--const nf = new Intl.NumberFormat("nb-NO");
--const fmt = (m: Metric, v: number) =>
--  m === "kr"
--    ? v >= 1e6
--      ? `${(v / 1e6).toLocaleString("nb-NO", { maximumFractionDigits: 1 })} mill. kr`
--      : `${nf.format(v)} kr`
--    : nf.format(v);
+-export type NewsItem = {
 +type Pin = {
 +  type: "historie" | "nyhet";
-+  tittel: string;
-+  url: string;
+   tittel: string;
+   url: string;
+-  kilde: string;
+-  dato?: string; // YYYY-MM-DD
+-  fylker?: string[];
+-  viktig?: boolean;
+-  nederst?: boolean;
 +  dato?: string;
 +  fylke: string;
 +  sted: string;
@@ -3425,7 +3392,62 @@ index 463caf5..3d26e72 100644
 +  tekst?: string;
 +  kilde?: string;
 +  bilde?: string;
-+};
++  nasjonal?: boolean;
+ };
+ 
+-const LABEL: Record<Metric, string> = {
+-  kr: "Tapt tilskudd",
+-  tk: "Potensielt tap av kurs",
+-  tt: "Potensielt tap av kurstimer",
+-  td: "Potensielt tap av deltakere",
+-};
+-
+-// Full class strings so Tailwind can see them. Light → dark in one string.
+-const FILL = [
+-  "fill-[#f3d9d2] dark:fill-[#3f2a2e]",
+-  "fill-[#e6a99c] dark:fill-[#6e3138]",
+-  "fill-[#d27466] dark:fill-[#a33a45]",
+-  "fill-[#b3263a] dark:fill-[#d65463]",
+-  "fill-[#7c1424] dark:fill-[#f08c97]",
++// Nasjonale saker spres utover kartet, én per sted, så de blir synlige.
++const NASJ: [number, number][] = [
++  [61.12, 10.47],
++  [58.46, 8.77],
++  [64.01, 11.5],
++  [59.41, 5.27],
++  [66.31, 14.14],
++  [59.67, 9.65],
++  [68.8, 16.54],
++  [61.45, 5.85],
++  [70.07, 29.75],
++  [59.12, 11.39],
++  [63.11, 7.73],
++  [59.05, 10.03],
++  [70.66, 23.68],
++  [60.8, 10.69],
++  [68.44, 17.43],
++  [59.56, 9.26],
++  [60.14, 11.17],
++  [60.17, 10.26],
+ ];
+-const SWATCH = [
+-  "bg-[#f3d9d2] dark:bg-[#3f2a2e]",
+-  "bg-[#e6a99c] dark:bg-[#6e3138]",
+-  "bg-[#d27466] dark:bg-[#a33a45]",
+-  "bg-[#b3263a] dark:bg-[#d65463]",
+-  "bg-[#7c1424] dark:bg-[#f08c97]",
+-];
+-const ACCENT = "text-[#b3263a] dark:text-[#ec6a78]";
+-const ACCENT_BG = "bg-[#b3263a] dark:bg-[#ec6a78]";
+-const ACCENT_BORDER = "border-[#b3263a] dark:border-[#ec6a78]";
+-
+-const nf = new Intl.NumberFormat("nb-NO");
+-const fmt = (m: Metric, v: number) =>
+-  m === "kr"
+-    ? v >= 1e6
+-      ? `${(v / 1e6).toLocaleString("nb-NO", { maximumFractionDigits: 1 })} mill. kr`
+-      : `${nf.format(v)} kr`
+-    : nf.format(v);
  
 -const sum = (k: Exclude<Metric, never>) =>
 -  FYLKER.reduce((a, d) => a + d[k], 0);
@@ -3676,6 +3698,27 @@ index 463caf5..3d26e72 100644
 +        bilde: h.bilde,
 +      });
 +    }
++    sorterNyheter(nyheter)
++      .filter((n) => !n.fylker?.length && typeof n.lat !== "number")
++      .forEach((n, i) => {
++        const [la, lo] = NASJ[i % NASJ.length];
++        const r = Math.floor(i / NASJ.length);
++        const [x, y] = tilXY(la + r * 0.3, lo + r * 0.4);
++        ut.push({
++          type: "nyhet",
++          nasjonal: true,
++          tittel: n.tittel,
++          url: n.url,
++          dato: n.dato,
++          fylke: "",
++          sted: "Nasjonal sak",
++          x,
++          y,
++          tekst: n.sammendrag,
++          kilde: n.kilde,
++          bilde: n.bilde,
++        });
++      });
 +    for (const n of nyheter) {
 +      const fy = n.fylker?.length === 1 ? n.fylker[0] : undefined;
 +      let lat = n.lat,
@@ -3711,7 +3754,7 @@ index 463caf5..3d26e72 100644
 +
 +  const visPop = (l: Pin[]) => {
 +    const f = fylker.find((x) => x.n === l[0].fylke);
-+    if (f) velg(f.id);
++    if (f && !l.every((p) => p.nasjonal)) velg(f.id);
 +    setPop(
 +      [...l].sort(
 +        (a, c) =>
@@ -3745,7 +3788,7 @@ index 463caf5..3d26e72 100644
        const el = quoteRef.current;
        if (el) {
          const r = document.createRange();
-@@ -2553,263 +352,545 @@ export function Konsekvenskart({ news = [] }: { news?: NewsItem[] }) {
+@@ -2553,263 +396,557 @@ export function Konsekvenskart({ news = [] }: { news?: NewsItem[] }) {
        }
        flash("manual");
      };
@@ -4050,7 +4093,11 @@ index 463caf5..3d26e72 100644
 +                        }}
 +                        className={cn(
 +                          "cursor-pointer stroke-card [stroke-width:2] [vector-effect:non-scaling-stroke] hover:fill-foreground focus-visible:fill-foreground focus-visible:outline-none",
-+                          nyhet ? "fill-primary" : "fill-[#009890]",
++                          g.l.every((p) => p.nasjonal)
++                            ? "fill-card stroke-primary [stroke-width:2.5]"
++                            : nyhet
++                              ? "fill-primary"
++                              : "fill-[#009890]",
 +                        )}
 +                      >
 +                        <title>
@@ -4101,7 +4148,11 @@ index 463caf5..3d26e72 100644
 +                                : "bg-[#009890]",
 +                            )}
 +                          >
-+                            {p.type === "nyhet" ? "I mediene" : "Historie"}
++                            {p.nasjonal
++                              ? "Nasjonal sak"
++                              : p.type === "nyhet"
++                                ? "I mediene"
++                                : "Historie"}
 +                          </span>
 +                          <a
 +                            href={erHttps(p.url) ? p.url : "#"}
@@ -4138,6 +4189,10 @@ index 463caf5..3d26e72 100644
 +                <span className="flex items-center gap-1.5">
 +                  <i className="inline-block h-2.5 w-2.5 rounded-full bg-primary" />{" "}
 +                  Lokale mediesaker
++                </span>
++                <span className="flex items-center gap-1.5">
++                  <i className="inline-block h-2.5 w-2.5 rounded-full border-2 border-primary bg-card" />{" "}
++                  Nasjonale saker, spredt utover kartet
 +                </span>
 +                <span>Trykk på en prikk for å lese.</span>
 +              </div>
