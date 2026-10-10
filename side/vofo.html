@@ -238,6 +238,34 @@ svg .pin:hover,svg .pin:focus-visible{fill:var(--accent);outline:none}
 .bevar.fs .rot .pre,.bevar:fullscreen .rot .pre{font-size:clamp(28px,3.4vw,56px)}
 .bevar.fs .mq,.bevar:fullscreen .mq{font-size:clamp(90px,13vw,220px)}
 @media (prefers-reduced-motion:reduce){.mq>div{animation:none}.rw span{animation:none}.rw span:first-child{opacity:1;transform:none}}
+
+/* Kompakt karusell (ikke fullskjerm) */
+.bevar:not(.fs):not(:fullscreen) .slide{height:400px;overflow:hidden}
+.bevar:not(.fs):not(:fullscreen) .slide .sim{aspect-ratio:auto;height:100%}
+.bevar:not(.fs):not(:fullscreen) .slide .stx{padding:18px 22px;gap:8px}
+.bevar:not(.fs):not(:fullscreen) .slide h3{font-size:clamp(20px,2.1vw,25px)}
+.bevar:not(.fs):not(:fullscreen) .slide p{font-size:14.5px;-webkit-line-clamp:4}
+.bevar:not(.fs):not(:fullscreen) .slide.fakta{padding:22px clamp(18px,3vw,36px);gap:10px}
+.bevar:not(.fs):not(:fullscreen) .slide.fakta h3{font-size:clamp(21px,2.3vw,28px)}
+.bevar:not(.fs):not(:fullscreen) .fnum b{font-size:clamp(28px,3.6vw,44px)}
+.bevar:not(.fs):not(:fullscreen) .fnum span{font-size:14px}
+.bevar:not(.fs):not(:fullscreen) .fbars>div{font-size:12.5px;margin-bottom:3px}
+.bevar:not(.fs):not(:fullscreen) .ftab table{font-size:11.5px}
+.bevar:not(.fs):not(:fullscreen) .ftab td,.bevar:not(.fs):not(:fullscreen) .ftab th{padding-top:1px;padding-bottom:1px}
+.bevar:not(.fs):not(:fullscreen) .fkol b{font-size:clamp(26px,3vw,36px)}
+.bevar:not(.fs):not(:fullscreen) .fkol span{font-size:14px}
+.bevar:not(.fs):not(:fullscreen) .fmap{max-height:340px}
+.bevar:not(.fs):not(:fullscreen) .ord{}
+.bevar:not(.fs):not(:fullscreen) .rw{font-size:clamp(46px,7vw,92px)}
+.bevar:not(.fs):not(:fullscreen) .mq{font-size:clamp(48px,7vw,100px)}
+.bevar:not(.fs):not(:fullscreen) .fcount b{font-size:clamp(40px,5.5vw,64px)}
+.bevar:not(.fs):not(:fullscreen) .ftime b{font-size:20px}
+.bevar:not(.fs):not(:fullscreen) .ftime span{font-size:13.5px}
+.bevar:not(.fs):not(:fullscreen) .slide.fakta .fnote{font-size:12px}
+.bevar:not(.fs):not(:fullscreen) .slide.fakta:has(.ftab) h3{font-size:22px}
+.bevar:not(.fs):not(:fullscreen) .slide.fakta:has(.ftab) .fnote{display:none}
+.bevar:not(.fs):not(:fullscreen) .ftab{flex:none;overflow:visible}
+@media (max-width:760px){.bevar:not(.fs):not(:fullscreen) .slide{height:auto;min-height:0;max-height:none}.bevar:not(.fs):not(:fullscreen) .slide .sim{aspect-ratio:16/9;height:auto}}
 @media (max-width:760px){.main{grid-template-columns:1fr}.mapbox{position:static}svg{max-height:60vh}.totals{grid-template-columns:repeat(2,minmax(0,1fr))}.bar{grid-template-columns:7.5em minmax(0,1fr) 5.5em}}
 @media (prefers-reduced-motion:reduce){svg path{transition:none}}
 </style>

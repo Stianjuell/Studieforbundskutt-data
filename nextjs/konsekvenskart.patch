@@ -120,10 +120,10 @@ index 0000000..468df2f
 +}
 diff --git a/app/(www)/kart/karusell.tsx b/app/(www)/kart/karusell.tsx
 new file mode 100644
-index 0000000..2a81c64
+index 0000000..34200e8
 --- /dev/null
 +++ b/app/(www)/kart/karusell.tsx
-@@ -0,0 +1,757 @@
+@@ -0,0 +1,770 @@
 +"use client";
 +
 +import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -203,7 +203,7 @@ index 0000000..2a81c64
 +  return (
 +    <div
 +      className={cn(
-+        "flex h-full min-h-[22rem] flex-col justify-center gap-4 rounded-lg bg-primary p-6 text-primary-foreground md:p-12",
++        "flex h-full flex-col justify-center gap-3 overflow-hidden rounded-lg bg-primary p-6 text-primary-foreground md:px-10 md:py-7",
 +        className,
 +      )}
 +    >
@@ -227,7 +227,7 @@ index 0000000..2a81c64
 +    <div className="grid gap-5 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
 +      {tall.map(([n, l]) => (
 +        <div key={l}>
-+          <b className="block font-serif text-4xl font-bold leading-none tabular-nums md:text-6xl group-data-[fs=true]:text-8xl">
++          <b className="block font-serif text-4xl font-bold leading-none tabular-nums md:text-5xl group-data-[fs=true]:text-8xl">
 +            {n}
 +          </b>
 +          <span className="mt-1 block text-base text-primary-foreground/90 group-data-[fs=true]:text-2xl">
@@ -239,9 +239,20 @@ index 0000000..2a81c64
 +  );
 +}
 +
-+function Fotnote({ children }: { children: React.ReactNode }) {
++function Fotnote({
++  children,
++  skjul,
++}: {
++  children: React.ReactNode;
++  skjul?: boolean;
++}) {
 +  return (
-+    <p className="max-w-prose text-sm text-primary-foreground/75 group-data-[fs=true]:text-lg">
++    <p
++      className={cn(
++        "max-w-prose text-sm text-primary-foreground/75 group-data-[fs=true]:text-lg",
++        skjul && "hidden group-data-[fs=true]:block",
++      )}
++    >
 +      {children}
 +    </p>
 +  );
@@ -292,7 +303,7 @@ index 0000000..2a81c64
 +    </div>
 +  );
 +  return (
-+    <div className="relative flex h-full min-h-[22rem] flex-col justify-center overflow-hidden rounded-lg bg-[radial-gradient(120%_90%_at_15%_50%,#B8263F_0%,hsl(var(--primary))_45%,#7E1528_100%)] p-6 text-primary-foreground md:p-12">
++    <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-lg bg-[radial-gradient(120%_90%_at_15%_50%,#B8263F_0%,hsl(var(--primary))_45%,#7E1528_100%)] p-6 text-primary-foreground md:px-10 md:py-7">
 +      {rekke(rad1, false, "-top-2")}
 +      {rekke(rad2, true, "bottom-0")}
 +      <div className="relative z-10 grid gap-3">
@@ -304,7 +315,7 @@ index 0000000..2a81c64
 +        </p>
 +        <span
 +          aria-label={ORD.join(", ")}
-+          className="inline-grid h-[1.12em] overflow-hidden font-serif text-6xl font-bold italic leading-[1.1] tracking-tight md:text-8xl group-data-[fs=true]:text-[11rem]"
++          className="inline-grid h-[1.12em] overflow-hidden font-serif text-5xl font-bold italic leading-[1.1] tracking-tight md:text-7xl group-data-[fs=true]:text-[11rem]"
 +        >
 +          {ORD.map((o, i) => (
 +            <span
@@ -340,7 +351,7 @@ index 0000000..2a81c64
 +}) {
 +  return (
 +    <div className="grid h-full overflow-hidden rounded-lg border bg-card text-card-foreground md:grid-cols-[7fr_5fr]">
-+      <div className="relative aspect-video bg-primary/10 md:aspect-auto md:min-h-[22rem]">
++      <div className="relative aspect-video bg-primary/10 md:aspect-auto md:min-h-0">
 +        <span className="absolute inset-x-4 bottom-3 font-serif text-2xl font-bold text-primary">
 +          {h.sted || h.fylke}
 +        </span>
@@ -545,13 +556,12 @@ index 0000000..2a81c64
 +    );
 +    fakta(
 +      "tabell",
-+      <Fakta
-+        over="Studieforbundene nasjonalt"
-+        tittel="Konsekvensene per studieforbund"
-+        className="gap-3 md:py-8"
-+      >
++      <Fakta over="Studieforbundene nasjonalt" className="gap-2 md:py-6">
++        <h3 className="font-serif text-2xl font-bold leading-tight group-data-[fs=true]:text-5xl">
++          Konsekvensene per studieforbund
++        </h3>
 +        <div className="overflow-x-auto">
-+          <table className="w-full border-collapse text-[13px] tabular-nums group-data-[fs=true]:text-xl">
++          <table className="w-full border-collapse text-[12px] tabular-nums group-data-[fs=true]:text-xl">
 +            <thead>
 +              <tr className="border-b border-white/40 text-primary-foreground/75">
 +                <th className="py-1 pr-2 text-left font-semibold">
@@ -575,20 +585,22 @@ index 0000000..2a81c64
 +            <tbody>
 +              {forbund.map((f) => (
 +                <tr key={f.s} className="border-b border-white/15">
-+                  <td className="py-0.5 pr-2 font-semibold">{f.s}</td>
-+                  <td className="px-2 py-0.5 text-right font-semibold">
++                  <td className="py-px group-data-[fs=true]:py-1 pr-2 font-semibold">
++                    {f.s}
++                  </td>
++                  <td className="px-2 py-px group-data-[fs=true]:py-1 text-right font-semibold">
 +                    {mill(f.kr)}
 +                  </td>
-+                  <td className="hidden px-2 py-0.5 text-right text-primary-foreground/80 sm:table-cell">
++                  <td className="hidden px-2 py-px group-data-[fs=true]:py-1 text-right text-primary-foreground/80 sm:table-cell">
 +                    {nf.format(f.kurs)}
 +                  </td>
-+                  <td className="px-2 py-0.5 text-right font-semibold">
++                  <td className="px-2 py-px group-data-[fs=true]:py-1 text-right font-semibold">
 +                    {nf.format(Math.round(f.tk))}
 +                  </td>
-+                  <td className="hidden px-2 py-0.5 text-right text-primary-foreground/80 sm:table-cell">
++                  <td className="hidden px-2 py-px group-data-[fs=true]:py-1 text-right text-primary-foreground/80 sm:table-cell">
 +                    {nf.format(f.delt)}
 +                  </td>
-+                  <td className="py-0.5 pl-2 text-right font-semibold">
++                  <td className="py-px group-data-[fs=true]:py-1 pl-2 text-right font-semibold">
 +                    {nf.format(Math.round(f.td))}
 +                  </td>
 +                </tr>
@@ -596,7 +608,7 @@ index 0000000..2a81c64
 +            </tbody>
 +          </table>
 +        </div>
-+        <Fotnote>
++        <Fotnote skjul>
 +          Potensielt tap hvis aktiviteten faller like mye som tilskuddet. Kilde:
 +          SSBs kursstatistikk for 2025 og Vofos beregning av kuttet per
 +          studieforbund.
@@ -623,7 +635,7 @@ index 0000000..2a81c64
 +            <p className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
 +              Fylke for fylke · {f.n}
 +            </p>
-+            <h3 className="max-w-[24ch] text-balance font-serif text-3xl font-bold leading-tight md:text-4xl group-data-[fs=true]:text-6xl">
++            <h3 className="max-w-[24ch] text-balance font-serif text-2xl font-bold leading-tight md:text-3xl group-data-[fs=true]:text-6xl">
 +              {mill(f.kr)} kroner mindre til kurs i {f.n}
 +            </h3>
 +            <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-4 gap-y-1">
@@ -635,14 +647,14 @@ index 0000000..2a81c64
 +                ] as const
 +              ).map(([v, l]) => (
 +                <div key={l} className="contents">
-+                  <b className="text-right font-serif text-3xl font-bold leading-none tabular-nums md:text-5xl group-data-[fs=true]:text-7xl">
++                  <b className="text-right font-serif text-2xl font-bold leading-none tabular-nums md:text-4xl group-data-[fs=true]:text-7xl">
 +                    {nf.format(v)}
 +                  </b>
 +                  <span className="group-data-[fs=true]:text-2xl">{l}</span>
 +                </div>
 +              ))}
 +            </div>
-+            <Fotnote>
++            <Fotnote skjul>
 +              Potensielt tap hvis aktiviteten faller like mye som tilskuddet. I
 +              2025 hadde {f.n} {nf.format(f.kurs)} kurs og {nf.format(f.delt)}{" "}
 +              deltakere i studieforbundene.
@@ -653,7 +665,7 @@ index 0000000..2a81c64
 +              </Button>
 +            </div>
 +          </div>
-+          <div className="hidden h-[20rem] md:block group-data-[fs=true]:h-[60vh]">
++          <div className="hidden h-[18rem] md:block group-data-[fs=true]:h-[60vh]">
 +            <Norgeskart kart={kart} markert={f.id} />
 +          </div>
 +        </Fakta>,
@@ -807,6 +819,7 @@ index 0000000..2a81c64
 +          {lysbilder.map((l, i) => (
 +            <CarouselItem
 +              key={l.key}
++              className="md:h-[25rem] group-data-[fs=true]:md:h-full"
 +              aria-label={`${i + 1} av ${lysbilder.length}`}
 +            >
 +              {l.type === "fakta" ? (
