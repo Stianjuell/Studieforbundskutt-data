@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Map as KartIkon, Newspaper, X } from "lucide-react";
+import { Flag, Map as KartIkon, Newspaper, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -148,7 +148,7 @@ export function Konsekvenskart(initial: Konsekvensdata) {
   const { kutt, kart } = initial;
   const [nyheter, setNyheter] = useState<Nyhet[]>(initial.nyheter);
   const [historier, setHistorier] = useState<Historie[]>(initial.historier);
-  const [visning, setVisning] = useState<"kart" | "nyheter">("kart");
+  const [visning, setVisning] = useState<"kart" | "nyheter" | "krav">("kart");
   const [metric, setMetric] = useState<Metric>("kr");
   const [sel, setSel] = useState("50");
   const [pop, setPop] = useState<Pin[] | null>(null);
@@ -285,6 +285,7 @@ export function Konsekvenskart(initial: Konsekvensdata) {
     const t = setTimeout(() => {
       const h = location.hash.slice(1);
       if (h === "nyheter") setVisning("nyheter");
+      if (h === "krav") setVisning("krav");
       const f = fylker.find((x) => slug(x.n) === h);
       if (f) velg(f.id);
     }, 0);
@@ -406,6 +407,7 @@ export function Konsekvenskart(initial: Konsekvensdata) {
           [
             ["kart", "Konsekvenskartet", KartIkon],
             ["nyheter", "Nyheter", Newspaper],
+            ["krav", "Hva krever vi", Flag],
           ] as const
         ).map(([v, t, Ikon]) => (
           <button
@@ -418,18 +420,21 @@ export function Konsekvenskart(initial: Konsekvensdata) {
                 history.replaceState(
                   null,
                   "",
-                  v === "nyheter" ? "#nyheter" : `#${slug(d.n)}`,
+                  v === "kart" ? `#${slug(d.n)}` : `#${v}`,
                 );
               } catch {}
             }}
             className={cn(
-              "inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-3 text-base font-bold transition-colors sm:flex-none sm:px-6 sm:text-lg",
+              "inline-flex min-w-0 flex-auto items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-1 py-2.5 text-[13px] font-bold min-[441px]:px-2 min-[441px]:text-sm transition-colors sm:flex-none sm:gap-2 sm:px-6 sm:py-3 sm:text-lg",
               visning === v
                 ? "bg-primary text-primary-foreground"
                 : "text-foreground hover:bg-muted",
             )}
           >
-            <Ikon className="h-5 w-5" aria-hidden="true" />
+            <Ikon
+              className="hidden h-4 w-4 min-[441px]:block sm:h-5 sm:w-5"
+              aria-hidden="true"
+            />
             {t}
           </button>
         ))}
@@ -861,6 +866,60 @@ export function Konsekvenskart(initial: Konsekvensdata) {
             .
           </p>
         </div>
+      ) : visning === "krav" ? (
+        <section
+          role="tabpanel"
+          aria-labelledby="krav-h"
+          className="grid gap-5 rounded-lg bg-[radial-gradient(120%_90%_at_15%_50%,#B8263F_0%,hsl(var(--primary))_45%,#7E1528_100%)] p-6 text-primary-foreground md:p-14"
+        >
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary-foreground/85">
+            Vofos krav
+          </p>
+          <h2
+            id="krav-h"
+            className="font-serif text-4xl font-bold leading-none md:text-6xl"
+          >
+            Dette er det vi krever
+          </h2>
+          <p className="max-w-[40ch] text-xl md:text-2xl">
+            Full reversering av kuttet, med prisjustering.
+          </p>
+          <div className="mt-1 grid gap-4 sm:grid-cols-2">
+            {(
+              [
+                [
+                  "42,7 mill. kr",
+                  "økning under Kultur- og likestillingsdepartementet",
+                ],
+                ["34,3 mill. kr", "økning under Kunnskapsdepartementet"],
+              ] as const
+            ).map(([tall, tekst]) => (
+              <div
+                key={tall}
+                className="grid gap-1.5 border-t-4 border-white pt-3"
+              >
+                <b className="font-serif text-5xl leading-none md:text-7xl">
+                  {tall}
+                </b>
+                <span className="text-lg text-primary-foreground/90">
+                  {tekst}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => {
+                setVisning("kart");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              Se hva kuttet koster
+            </Button>
+          </div>
+        </section>
       ) : (
         <section className="grid gap-6">
           <p className="max-w-prose text-muted-foreground">
