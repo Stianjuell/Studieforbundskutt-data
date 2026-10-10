@@ -47,7 +47,7 @@ const ORD = [
   "trosopplæring",
   "politikk",
   "organisasjon",
-  "lederskap",
+  "trenerrollen",
   "dans",
   "teater",
   "kystkultur",

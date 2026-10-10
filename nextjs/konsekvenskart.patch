@@ -97,7 +97,7 @@ index 0000000..2200e39
 +}
 diff --git a/app/(www)/kart/karusell.tsx b/app/(www)/kart/karusell.tsx
 new file mode 100644
-index 0000000..fbefaf6
+index 0000000..20fbc75
 --- /dev/null
 +++ b/app/(www)/kart/karusell.tsx
 @@ -0,0 +1,747 @@
@@ -150,7 +150,7 @@ index 0000000..fbefaf6
 +  "trosopplæring",
 +  "politikk",
 +  "organisasjon",
-+  "lederskap",
++  "trenerrollen",
 +  "dans",
 +  "teater",
 +  "kystkultur",
