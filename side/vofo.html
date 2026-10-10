@@ -219,6 +219,13 @@ svg .pin:hover,svg .pin:focus-visible{fill:var(--accent);outline:none}
 .bevar.fs .fmap,.bevar:fullscreen .fmap{max-height:none}
 .bevar.fs .ftab table,.bevar:fullscreen .ftab table{font-size:clamp(14px,1.45vw,22px)}
 @media (max-width:760px){.slide.fyl{grid-template-columns:1fr}.fmap{max-height:180px}.ftab .hm{display:none}.ftab table{font-size:12.5px}}
+.slide.sitat .stx{gap:14px}.bevar:not(.fs):not(:fullscreen) .slide.sitat blockquote{font-size:clamp(21px,2.1vw,29px)}.bevar:not(.fs):not(:fullscreen) .slide.sitat .stx{gap:10px}.slide.sitat .sim img{object-position:50% 30%}
+.slide.sitat .stx .fover{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#A41F35;font-weight:600}
+.slide.sitat blockquote{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(24px,2.6vw,36px);line-height:1.2;color:var(--ink);text-wrap:balance}
+.slide.sitat blockquote::before{content:"«";color:#A41F35}.slide.sitat blockquote::after{content:"»";color:#A41F35}
+.slide.sitat .hvem{font-weight:600}.slide.sitat .hvor{font-size:14px;color:var(--muted)}
+.bevar.fs .slide.sitat blockquote,.bevar:fullscreen .slide.sitat blockquote{font-size:clamp(34px,3.6vw,64px)}
+.bevar.fs .slide.sitat .hvor,.bevar:fullscreen .slide.sitat .hvor{font-size:22px}
 .slide.fakta.ordsl{position:relative;overflow:hidden;justify-content:center;background:radial-gradient(120% 90% at 15% 50%,#B8263F 0%,#A41F35 45%,#7E1528 100%)}
 .mq{position:absolute;left:0;right:0;overflow:hidden;white-space:nowrap;pointer-events:none;font-family:var(--display);font-weight:700;font-size:clamp(56px,9vw,130px);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.22);z-index:0}
 .mq1{top:-.1em}.mq2{bottom:-.02em}
@@ -446,7 +453,7 @@ function renderCarousel(){
   const pairs={}; DATA.forEach(d=>{const s=hs.find(h=>h.fylke===d.n&&!used.has(h)); if(s){pairs[d.id]=s;used.add(s)}});
   const pool=hs.filter(h=>!used.has(h)); let pi=0; const take=n=>{for(let k=0;k<n&&pi<pool.length;k++)items.push(pool[pi++])};
   const q=Math.ceil(pool.length/4);
-  items.push(F.aar); take(q); items.push(F.bredde); take(q);
+  items.push(F.aar); take(q); items.push(F.bredde, F.sitat); take(q);
   items.push(F.spill, F.kons); take(q); items.push(F.forbund, F.tabell); take(q);
   items.push(F.fylker); [...DATA].sort((a,b)=>b.kr-a.kr).forEach(d=>{items.push(F.fylke[d.id]); if(pairs[d.id])items.push(pairs[d.id]);});
   take(pool.length); items.push(F.snu);
@@ -480,7 +487,8 @@ function faktaSlides(){
     sl("Kuttet per fylke","Kuttet treffer alle fylker",bars(fy.map(d=>[d.n,d.kr]),ymax)+`<div class="sbtn"><button data-kart="1">Utforsk kartet</button></div>`),
     sl("Veien til vedtak","Dette skal vi snu",`<div class="fcount"><b>${dager}</b><span>${dager===1?"dag":"dager"} igjen til Stortinget vedtar budsjettet</span></div><div class="ftime"><div><b>Oktober</b><span>Budsjetthøringer i Stortingets komiteer. Organisasjonene gir innspill.</span></div><div><b>November</b><span>Forhandlinger om budsjettet. Rammevedtak i Stortinget senest 27. november.</span></div><div><b>Desember</b><span>Endelig vedtak av budsjettet for 2027 senest 15. desember.</span></div></div><p class="ftx">Hver sak, hvert møte og hver historie kan flytte en stemme.</p>`)
   ];
-  return {aar:L[0],bredde:L[1],spill:L[2],kons:L[3],forbund:L[4],fylker:L[5],snu:L[6],tabell,fylke};
+  const sitat=`<article class="slide sitat" role="group" aria-roledescription="lysbilde" aria-label="__N__"><div class="sim"><img src="${im("https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/gharahkhani-arskonferanse-2026.jpg")}" alt="Stortingspresident Masud Gharahkhani" loading="lazy"></div><div class="stx"><div class="fover">Læring og demokrati</div><blockquote>Sammen med studieforbundene spiller dere en avgjørende rolle for det norske samfunnet og demokratiet.</blockquote><div><div class="hvem">Masud Gharahkhani, stortingspresident</div><div class="hvor">Videohilsen til Vofos årskonferanse 29. mai 2026, da voksenopplæringsloven fylte 50 år.</div></div><div class="sbtn"><a href="https://www.vofo.no/aktuelt/voksenopplaering-demokrati-og-samfunnsrolle" target="_blank" rel="noopener">Les om årskonferansen</a></div></div></article>`;
+  return {aar:L[0],bredde:L[1],spill:L[2],kons:L[3],forbund:L[4],fylker:L[5],snu:L[6],tabell,fylke,sitat};
 }
 function storySlide(h,i,n){
   const e=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));

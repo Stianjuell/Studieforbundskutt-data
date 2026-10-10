@@ -22,6 +22,7 @@ import {
 import styles from "./karusell.module.css";
 import {
   beregnForbund,
+  DATA_URL,
   erHttps,
   mill,
   nf,
@@ -184,6 +185,52 @@ function OrdBilde({ deltakere }: { deltakere: number }) {
           i alle landets kommuner. Statstilskuddet til studieforbundene gjør det
           mulig.
         </p>
+      </div>
+    </div>
+  );
+}
+
+function SitatBilde() {
+  return (
+    <div className="grid h-full overflow-hidden rounded-lg border bg-card text-card-foreground md:grid-cols-[7fr_5fr]">
+      <div className="relative aspect-video bg-primary/10 md:aspect-auto md:min-h-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`${DATA_URL}/img/gharahkhani-arskonferanse-2026.jpg`}
+          alt="Stortingspresident Masud Gharahkhani"
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover object-[50%_30%]"
+        />
+      </div>
+      <div className="flex flex-col justify-center gap-3 p-6 md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+          Læring og demokrati
+        </p>
+        <blockquote className="text-balance font-serif text-2xl font-bold leading-tight md:text-3xl group-data-[fs=true]:text-6xl">
+          <span className="text-primary">«</span>Sammen med studieforbundene
+          spiller dere en avgjørende rolle for det norske samfunnet og
+          demokratiet.<span className="text-primary">»</span>
+        </blockquote>
+        <div>
+          <p className="font-semibold group-data-[fs=true]:text-2xl">
+            Masud Gharahkhani, stortingspresident
+          </p>
+          <p className="text-sm text-muted-foreground group-data-[fs=true]:text-xl">
+            Videohilsen til Vofos årskonferanse 29. mai 2026, da
+            voksenopplæringsloven fylte 50 år.
+          </p>
+        </div>
+        <div className="mt-1">
+          <Button asChild>
+            <a
+              href="https://www.vofo.no/aktuelt/voksenopplaering-demokrati-og-samfunnsrolle"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Les om årskonferansen
+            </a>
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -357,6 +404,7 @@ export function Karusell({
     );
     ta(q);
     fakta("ord", <OrdBilde deltakere={sum("delt")} />);
+    fakta("sitat", <SitatBilde />);
     ta(q);
     fakta(
       "spill",
