@@ -594,16 +594,9 @@ function select(id){
     </div></div>
     <div><p class="lbl">Tapt tilskudd per studieforbund</p><div class="bars">${Object.entries(d.fb).map(([k,v])=>`<div class="bar"><span>${k}</span><span class="t"><i style="width:${(v/max*100).toFixed(1)}%"></i></span><span>${fmt("kr",v)}</span></div>`).join("")}</div></div>
     <div><p class="lbl">Til lokalmedier</p><div class="quote" id="q">${sentence(d)}</div></div>
-    <button class="copy" id="copy">Kopier teksten</button>
     ${HASFORM?`<div class="share"><a class="tip" href="#send-inn">Har laget deres en historie fra ${d.n}? Send den inn</a></div>`:""}
     <div id="hist"></div>
     <div id="lokal"></div>`;
-  document.getElementById("copy").addEventListener("click",e=>{
-    const btn=e.currentTarget, txt=sentence(d);
-    const done=()=>{btn.textContent="Kopiert";setTimeout(()=>btn.textContent="Kopier teksten",1600)};
-    try{navigator.clipboard.writeText(txt).then(done,()=>selectText())}catch(_){selectText()}
-    function selectText(){const r=document.createRange();r.selectNodeContents(document.getElementById("q"));const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Merket, kopier selv"}
-  });
   if(!initial){try{history.replaceState(null,"","#"+slug(d.n))}catch(_){}}
   if(zoomOnSelect)zoomTo(id);
   renderLocal();

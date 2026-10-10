@@ -153,12 +153,10 @@ export function Konsekvenskart(initial: Konsekvensdata) {
   const [sel, setSel] = useState("50");
   const [pop, setPop] = useState<Pin[] | null>(null);
   const [visAlle, setVisAlle] = useState(false);
-  const [copied, setCopied] = useState<"idle" | "ok" | "manual">("idle");
   const [vb, setVb] = useState<VB>({ x: 0, y: 0, w: kart.w, h: kart.h });
   const panelRef = useRef<HTMLDivElement>(null);
   const kartRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
-  const quoteRef = useRef<HTMLDivElement>(null);
   const anim = useRef(0);
 
   const fylker = useMemo(() => beregnFylker(kutt), [kutt]);
@@ -394,29 +392,6 @@ export function Konsekvenskart(initial: Konsekvensdata) {
   const fylkeHist = historier
     .filter((h) => h.fylke === d.n)
     .sort((a, c) => c.dato.localeCompare(a.dato));
-
-  function kopier() {
-    const flash = (s: "ok" | "manual") => {
-      setCopied(s);
-      setTimeout(() => setCopied("idle"), 1600);
-    };
-    const manuell = () => {
-      const el = quoteRef.current;
-      if (el) {
-        const r = document.createRange();
-        r.selectNodeContents(el);
-        const s = window.getSelection();
-        s?.removeAllRanges();
-        s?.addRange(r);
-      }
-      flash("manual");
-    };
-    if (navigator.clipboard)
-      navigator.clipboard
-        .writeText(sentence(d))
-        .then(() => flash("ok"), manuell);
-    else manuell();
-  }
 
   const k = vb.w / kart.w; // skalering av prikker ved zoom
 
@@ -766,19 +741,9 @@ export function Konsekvenskart(initial: Konsekvensdata) {
 
               <div>
                 <Label>Til lokalmedier</Label>
-                <div
-                  ref={quoteRef}
-                  className="border-l-[3px] border-primary bg-background px-3.5 py-2.5 text-[15px]"
-                >
+                <div className="border-l-[3px] border-primary bg-background px-3.5 py-2.5 text-[15px]">
                   {sentence(d)}
                 </div>
-                <Button className="mt-3" onClick={kopier}>
-                  {copied === "ok"
-                    ? "Kopiert"
-                    : copied === "manual"
-                      ? "Merket, kopier selv"
-                      : "Kopier teksten"}
-                </Button>
               </div>
 
               {fylkeHist.length > 0 && (
