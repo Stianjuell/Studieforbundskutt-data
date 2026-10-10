@@ -30,6 +30,7 @@ import {
   type Historie,
   type Kart,
   type Kutt,
+  type Nyhet,
 } from "./lib";
 import { Norgeskart } from "./norgeskart";
 
@@ -61,7 +62,8 @@ const ORD = [
 
 type Lysbilde =
   | { type: "fakta"; key: string; node: React.ReactNode }
-  | { type: "historie"; key: string; h: Historie };
+  | { type: "historie"; key: string; h: Historie }
+  | { type: "nyhet"; key: string; n: Nyhet };
 
 /* ---------- Byggeklosser ---------- */
 
@@ -236,6 +238,68 @@ function SitatBilde() {
   );
 }
 
+function NyhetBilde({
+  n,
+  fylkeId,
+  onKart,
+}: {
+  n: Nyhet;
+  fylkeId?: string;
+  onKart: (id: string) => void;
+}) {
+  const fylke = n.fylker?.length === 1 ? n.fylker[0] : undefined;
+  return (
+    <div className="grid h-full overflow-hidden rounded-lg border bg-card text-card-foreground md:grid-cols-[7fr_5fr]">
+      <div className="relative aspect-video bg-primary/10 md:aspect-auto md:min-h-0">
+        <span className="absolute inset-x-4 bottom-3 font-serif text-2xl font-bold text-primary">
+          {n.kilde}
+        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={n.bilde}
+          alt=""
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          className="absolute inset-0 h-full w-full object-cover"
+          onError={(e) => e.currentTarget.remove()}
+        />
+      </div>
+      <div className="flex flex-col justify-center gap-3 p-6 md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+          I mediene · {n.kilde}
+          {n.dato ? ` · ${datoLang(n.dato)}` : ""}
+        </p>
+        <h3 className="text-balance font-serif text-2xl font-bold leading-tight md:text-3xl group-data-[fs=true]:text-5xl">
+          {n.tittel}
+        </h3>
+        {n.sammendrag && (
+          <p className="line-clamp-4 text-muted-foreground group-data-[fs=true]:text-xl">
+            {n.sammendrag}
+          </p>
+        )}
+        <div className="mt-1 flex flex-wrap gap-2">
+          <Button asChild>
+            <a href={n.url} target="_blank" rel="noopener noreferrer">
+              Les saken
+            </a>
+          </Button>
+          {fylkeId && fylke && (
+            <Button variant="outline" onClick={() => onKart(fylkeId)}>
+              Se {fylke} i kartet
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const datoLang = (iso: string) =>
+  new Date(`${iso}T12:00`).toLocaleDateString("nb-NO", {
+    day: "numeric",
+    month: "long",
+  });
+
 function HistorieBilde({
   h,
   fylkeId,
@@ -306,12 +370,14 @@ export function Karusell({
   kart,
   fylker,
   historier,
+  nyheter,
   onVelgFylke,
 }: {
   kutt: Kutt;
   kart: Kart;
   fylker: Fylke[];
   historier: Historie[];
+  nyheter: Nyhet[];
   onVelgFylke: (id: string, scroll?: boolean) => void;
 }) {
   const seksjon = useRef<HTMLElement>(null);
@@ -382,6 +448,26 @@ export function Karusell({
     };
     const fakta = (key: string, node: React.ReactNode) =>
       ut.push({ type: "fakta", key, node });
+    // Saker fra nyhetslista: de med bilde, viktige og nyeste først, maks 8.
+    const nyh = nyheter
+      .filter(
+        (n) =>
+          erHttps(n.url) &&
+          erHttps(n.bilde) &&
+          !n.nederst &&
+          !/\.svg(\?|$)/i.test(n.bilde ?? ""),
+      )
+      .sort(
+        (a, b) =>
+          Number(!!b.viktig) - Number(!!a.viktig) ||
+          (b.dato ?? "").localeCompare(a.dato ?? ""),
+      )
+      .slice(0, 8);
+    let ni = 0;
+    const tn = (k = 1) => {
+      for (let j = 0; j < k && ni < nyh.length; j++, ni++)
+        ut.push({ type: "nyhet", key: `n-${nyh[ni].url}`, n: nyh[ni] });
+    };
 
     fakta(
       "aar",
@@ -402,9 +488,11 @@ export function Karusell({
         </Fotnote>
       </Fakta>,
     );
+    tn();
     ta(q);
     fakta("ord", <OrdBilde deltakere={sum("delt")} />);
     fakta("sitat", <SitatBilde />);
+    tn();
     ta(q);
     fakta(
       "spill",
@@ -443,6 +531,7 @@ export function Karusell({
         </Fotnote>
       </Fakta>,
     );
+    tn();
     ta(q);
     fakta(
       "forbund",
@@ -514,6 +603,7 @@ export function Karusell({
         </Fotnote>
       </Fakta>,
     );
+    tn();
     ta(q);
     fakta(
       "fylker",
@@ -526,7 +616,7 @@ export function Karusell({
         </div>
       </Fakta>,
     );
-    for (const f of fyl) {
+    for (const [fi, f] of fyl.entries()) {
       fakta(
         `fylke-${f.id}`,
         <Fakta className="md:grid md:grid-cols-[3fr_2fr] md:items-center">
@@ -571,8 +661,10 @@ export function Karusell({
       );
       if (par[f.id])
         ut.push({ type: "historie", key: par[f.id].url, h: par[f.id] });
+      if (fi % 3 === 2) tn();
     }
     ta(rest.length);
+    tn(nyh.length);
     fakta(
       "snu",
       <Fakta over="Veien til vedtak" tittel="Dette skal vi snu">
@@ -618,7 +710,7 @@ export function Karusell({
       </Fakta>,
     );
     return ut;
-  }, [kutt, kart, fylker, historier, dager, onVelg]);
+  }, [kutt, kart, fylker, historier, nyheter, dager, onVelg]);
 
   // Teller og autoavspilling
   useEffect(() => {
@@ -723,6 +815,18 @@ export function Karusell({
             >
               {l.type === "fakta" ? (
                 l.node
+              ) : l.type === "nyhet" ? (
+                <NyhetBilde
+                  n={l.n}
+                  fylkeId={
+                    l.n.fylker?.length === 1 ? idFor(l.n.fylker[0]) : undefined
+                  }
+                  onKart={(id) => {
+                    if (document.fullscreenElement)
+                      document.exitFullscreen().catch(() => {});
+                    onVelg(id, true);
+                  }}
+                />
               ) : (
                 <HistorieBilde
                   h={l.h}

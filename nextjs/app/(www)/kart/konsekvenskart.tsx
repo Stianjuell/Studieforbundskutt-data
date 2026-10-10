@@ -447,6 +447,7 @@ export function Konsekvenskart(initial: Konsekvensdata) {
             kart={kart}
             fylker={fylker}
             historier={historier}
+            nyheter={nyheter}
             onVelgFylke={(id, scroll) => velg(id, { scroll })}
           />
 
