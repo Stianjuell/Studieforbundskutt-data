@@ -849,10 +849,10 @@ index 0000000..20fbc75
 +  );
 +}
 diff --git a/app/(www)/kart/konsekvenskart.tsx b/app/(www)/kart/konsekvenskart.tsx
-index 463caf5..7b6c6af 100644
+index 463caf5..f953fa7 100644
 --- a/app/(www)/kart/konsekvenskart.tsx
 +++ b/app/(www)/kart/konsekvenskart.tsx
-@@ -1,2548 +1,391 @@
+@@ -1,2548 +1,406 @@
 -// src/components/konsekvenskart.tsx
  "use client";
  
@@ -3407,7 +3407,7 @@ index 463caf5..7b6c6af 100644
 -const ACCENT = "text-[#b3263a] dark:text-[#ec6a78]";
 -const ACCENT_BG = "bg-[#b3263a] dark:bg-[#ec6a78]";
 -const ACCENT_BORDER = "border-[#b3263a] dark:border-[#ec6a78]";
--
+ 
 -const nf = new Intl.NumberFormat("nb-NO");
 -const fmt = (m: Metric, v: number) =>
 -  m === "kr"
@@ -3415,6 +3415,12 @@ index 463caf5..7b6c6af 100644
 -      ? `${(v / 1e6).toLocaleString("nb-NO", { maximumFractionDigits: 1 })} mill. kr`
 -      : `${nf.format(v)} kr`
 -    : nf.format(v);
++// Nasjonale saker fra studieforbund med kjent hovedkontor plasseres der.
++const HOVEDKONTOR: Record<string, [string, number, number]> = {
++  "Studieforbundet kultur og tradisjon": ["Vågå", 61.875, 9.1],
++  "Frilynt Norge": ["Sandefjord", 59.131, 10.216],
++  "Studieforbundet Livslang Læring": ["Bamble", 59.03, 9.7],
++};
  
 -const sum = (k: Exclude<Metric, never>) =>
 -  FYLKER.reduce((a, d) => a + d[k], 0);
@@ -3665,12 +3671,20 @@ index 463caf5..7b6c6af 100644
 +        bilde: h.bilde,
 +      });
 +    }
++    let spredt = 0;
 +    sorterNyheter(nyheter)
 +      .filter((n) => !n.fylker?.length && typeof n.lat !== "number")
-+      .forEach((n, i) => {
-+        const [la, lo] = NASJ[i % NASJ.length];
-+        const r = Math.floor(i / NASJ.length);
-+        const [x, y] = tilXY(la + r * 0.3, lo + r * 0.4);
++      .forEach((n) => {
++        const hk = n.kilde ? HOVEDKONTOR[n.kilde] : undefined;
++        let la: number, lo: number;
++        if (hk) [, la, lo] = hk;
++        else {
++          const i = spredt++;
++          const r = Math.floor(i / NASJ.length);
++          la = NASJ[i % NASJ.length][0] + r * 0.3;
++          lo = NASJ[i % NASJ.length][1] + r * 0.4;
++        }
++        const [x, y] = tilXY(la, lo);
 +        ut.push({
 +          type: "nyhet",
 +          nasjonal: true,
@@ -3678,7 +3692,7 @@ index 463caf5..7b6c6af 100644
 +          url: n.url,
 +          dato: n.dato,
 +          fylke: "",
-+          sted: "Nasjonal sak",
++          sted: hk ? `Nasjonal sak, ${hk[0]}` : "Nasjonal sak",
 +          x,
 +          y,
 +          tekst: n.sammendrag,
@@ -3755,7 +3769,7 @@ index 463caf5..7b6c6af 100644
        const el = quoteRef.current;
        if (el) {
          const r = document.createRange();
-@@ -2553,263 +396,562 @@ export function Konsekvenskart({ news = [] }: { news?: NewsItem[] }) {
+@@ -2553,263 +411,562 @@ export function Konsekvenskart({ news = [] }: { news?: NewsItem[] }) {
        }
        flash("manual");
      };

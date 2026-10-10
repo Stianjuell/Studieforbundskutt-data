@@ -84,6 +84,13 @@ const NASJ: [number, number][] = [
   [60.17, 10.26],
 ];
 
+// Nasjonale saker fra studieforbund med kjent hovedkontor plasseres der.
+const HOVEDKONTOR: Record<string, [string, number, number]> = {
+  "Studieforbundet kultur og tradisjon": ["Vågå", 61.875, 9.1],
+  "Frilynt Norge": ["Sandefjord", 59.131, 10.216],
+  "Studieforbundet Livslang Læring": ["Bamble", 59.03, 9.7],
+};
+
 type VB = { x: number; y: number; w: number; h: number };
 
 const sentence = (d: Fylke) =>
@@ -306,12 +313,20 @@ export function Konsekvenskart(initial: Konsekvensdata) {
         bilde: h.bilde,
       });
     }
+    let spredt = 0;
     sorterNyheter(nyheter)
       .filter((n) => !n.fylker?.length && typeof n.lat !== "number")
-      .forEach((n, i) => {
-        const [la, lo] = NASJ[i % NASJ.length];
-        const r = Math.floor(i / NASJ.length);
-        const [x, y] = tilXY(la + r * 0.3, lo + r * 0.4);
+      .forEach((n) => {
+        const hk = n.kilde ? HOVEDKONTOR[n.kilde] : undefined;
+        let la: number, lo: number;
+        if (hk) [, la, lo] = hk;
+        else {
+          const i = spredt++;
+          const r = Math.floor(i / NASJ.length);
+          la = NASJ[i % NASJ.length][0] + r * 0.3;
+          lo = NASJ[i % NASJ.length][1] + r * 0.4;
+        }
+        const [x, y] = tilXY(la, lo);
         ut.push({
           type: "nyhet",
           nasjonal: true,
@@ -319,7 +334,7 @@ export function Konsekvenskart(initial: Konsekvensdata) {
           url: n.url,
           dato: n.dato,
           fylke: "",
-          sted: "Nasjonal sak",
+          sted: hk ? `Nasjonal sak, ${hk[0]}` : "Nasjonal sak",
           x,
           y,
           tekst: n.sammendrag,

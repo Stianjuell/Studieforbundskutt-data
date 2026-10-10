@@ -380,6 +380,8 @@ function toXY(lat,lon){const [x,y]=utm33(lat,lon);return [(x-PROJ.minx)*PROJ.s,(
 const pinLayer=document.createElementNS("http://www.w3.org/2000/svg","g"); pinLayer.id="pins"; svg.appendChild(pinLayer);
 const FYLKESBY={"Østfold":[59.22,10.93],"Akershus":[59.96,11.05],"Oslo":[59.91,10.75],"Innlandet":[60.79,11.07],"Buskerud":[59.74,10.20],"Vestfold":[59.27,10.41],"Telemark":[59.21,9.61],"Agder":[58.15,7.99],"Rogaland":[58.97,5.73],"Vestland":[60.39,5.32],"Møre og Romsdal":[62.47,6.15],"Trøndelag":[63.43,10.39],"Nordland":[67.28,14.40],"Troms":[69.65,18.96],"Finnmark":[69.97,23.27]};
 const NASJ=[["Lillehammer",61.12,10.47],["Arendal",58.46,8.77],["Steinkjer",64.01,11.50],["Haugesund",59.41,5.27],["Mo i Rana",66.31,14.14],["Kongsberg",59.67,9.65],["Harstad",68.80,16.54],["Førde",61.45,5.85],["Vadsø",70.07,29.75],["Halden",59.12,11.39],["Kristiansund",63.11,7.73],["Larvik",59.05,10.03],["Hammerfest",70.66,23.68],["Gjøvik",60.80,10.69],["Narvik",68.44,17.43],["Notodden",59.56,9.26],["Jessheim",60.14,11.17],["Hønefoss",60.17,10.26]];
+// Nasjonale saker fra studieforbund med kjent hovedkontor plasseres der.
+const HK={"Studieforbundet kultur og tradisjon":["Vågå",61.875,9.100],"Frilynt Norge":["Sandefjord",59.131,10.216],"Studieforbundet Livslang Læring":["Bamble",59.030,9.700]};
 function pinItems(){
   const out=HIST.filter(h=>typeof h.lat==="number"&&typeof h.lon==="number").map(h=>({type:"h",tittel:h.tittel,url:h.url,dato:h.dato,fylke:h.fylke,sted:h.sted,lat:h.lat,lon:h.lon,tekst:h.ingress||"",bilde:h.bilde}));
   const nasj=[];
@@ -387,7 +389,10 @@ function pinItems(){
     const fy=Array.isArray(n.fylker)&&n.fylker.length===1?n.fylker[0]:null;
     let lat=n.lat,lon=n.lon,sted=n.sted;
     if(typeof lat!=="number"||typeof lon!=="number"){
-      if(!Array.isArray(n.fylker)||!n.fylker.length){nasj.push(n);return;}
+      if(!Array.isArray(n.fylker)||!n.fylker.length){
+        const hk=HK[n.kilde];
+        if(hk){out.push({type:"n",nasjonal:true,tittel:n.tittel,url:n.url,dato:n.dato,fylke:"",sted:"Nasjonal sak, "+hk[0],lat:hk[1],lon:hk[2],tekst:n.sammendrag||"",kilde:n.kilde,bilde:n.bilde});return;}
+        nasj.push(n);return;}
       if(!fy||!FYLKESBY[fy])return; [lat,lon]=FYLKESBY[fy]; sted=fy; }
     out.push({type:"n",tittel:n.tittel,url:n.url,dato:n.dato,fylke:fy||(Array.isArray(n.fylker)?n.fylker[0]:""),sted:sted||fy,lat,lon,tekst:n.sammendrag||"",kilde:n.kilde,bilde:n.bilde});
   });
