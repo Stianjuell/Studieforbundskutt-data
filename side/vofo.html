@@ -75,9 +75,14 @@ svg path.sel{stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke}
 .rank tr{cursor:pointer}.rank tr.sel td{font-weight:600;color:var(--accent)}
 .tablewrap{overflow-x:auto}
 .foot{font-size:13px;color:var(--muted);max-width:75ch}
-.views{display:flex;gap:4px;border-bottom:1px solid var(--line)}
-.views button{font:600 15px var(--body);padding:10px 14px;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);cursor:pointer;margin-bottom:-1px}
-.views button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.views{display:flex;gap:6px;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;justify-self:start;max-width:100%}
+.views button{font:700 18px var(--body);padding:12px 26px;background:none;border:0;border-radius:999px;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:9px;white-space:nowrap}
+.views button:hover{background:var(--bg)}
+.views button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+.views button svg{width:20px;height:20px;flex:none}
+.views button svg path{stroke:currentColor;stroke-width:2;fill:none;cursor:inherit}
+.views button svg path:hover{stroke:currentColor}
+@media (max-width:520px){.views{justify-self:stretch}.views button{flex:1;justify-content:center;padding:11px 12px;font-size:16px}}
 .news{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px}
 .card{background:var(--surface);border:1px solid var(--line);display:grid;grid-template-rows:auto 1fr;min-width:0;color:inherit;text-decoration:none}
 .card:hover h3{text-decoration:underline;text-decoration-color:var(--accent)}
@@ -249,8 +254,8 @@ svg .pin:hover,svg .pin:focus-visible{fill:var(--accent);outline:none}
   </header>
 
   <nav class="views" role="tablist" aria-label="Visning">
-    <button id="v-kart" role="tab" aria-selected="true" aria-controls="kartvisning">Konsekvenskartet</button>
-    <button id="v-nyheter" role="tab" aria-selected="false" aria-controls="nyhetsvisning">I mediene</button>
+    <button id="v-kart" role="tab" aria-selected="true" aria-controls="kartvisning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>Konsekvenskartet</span></button>
+    <button id="v-nyheter" role="tab" aria-selected="false" aria-controls="nyhetsvisning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z"/><path d="M17 9h3v8a2 2 0 0 1-2 2"/><path d="M8 9h5M8 13h5"/></svg><span>Nyheter</span></button>
   </nav>
   <div id="kartvisning" role="tabpanel" style="display:grid;gap:24px">
   <section class="bevar" id="bevar" aria-labelledby="bevar-h" aria-roledescription="karusell">
@@ -388,7 +393,7 @@ function showPop(list){
   const box=document.getElementById("pop"); if(!box)return;
   const e=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const l=[...list].sort((a,b)=>(a.type===b.type?0:a.type==="n"?-1:1)||(b.dato||"").localeCompare(a.dato||""));
-  box.innerHTML=`<div class="pophead"><b>${e(l[0].sted)}</b><button id="popx" aria-label="Lukk">×</button></div><ul>${l.map(i=>`<li>${/^https:\/\//.test(i.bilde||"")?`<img class="pimg" src="${e(im(i.bilde))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<span class="ptag ${i.type==="n"?"pn":"ph"}">${i.nasjonal?"Nasjonal sak":i.type==="n"?"I mediene":"Historie"}</span><a href="${/^https:\/\//.test(i.url||"")?e(i.url):"#"}" target="_blank" rel="noopener">${e(i.tittel)}</a><small>${i.kilde?e(i.kilde)+" · ":""}${i.dato?new Date(i.dato+"T12:00").toLocaleDateString("nb-NO",{day:"numeric",month:"short",year:"numeric"}):""}</small>${i.tekst?`<p>${e(i.tekst)}</p>`:""}</li>`).join("")}</ul>`;
+  box.innerHTML=`<div class="pophead"><b>${e(l[0].sted)}</b><button id="popx" aria-label="Lukk">×</button></div><ul>${l.map(i=>`<li>${/^https:\/\//.test(i.bilde||"")?`<img class="pimg" src="${e(im(i.bilde))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<span class="ptag ${i.type==="n"?"pn":"ph"}">${i.nasjonal?"Nasjonal sak":i.type==="n"?"Nyhet":"Historie"}</span><a href="${/^https:\/\//.test(i.url||"")?e(i.url):"#"}" target="_blank" rel="noopener">${e(i.tittel)}</a><small>${i.kilde?e(i.kilde)+" · ":""}${i.dato?new Date(i.dato+"T12:00").toLocaleDateString("nb-NO",{day:"numeric",month:"short",year:"numeric"}):""}</small>${i.tekst?`<p>${e(i.tekst)}</p>`:""}</li>`).join("")}</ul>`;
   box.hidden=false;
   document.getElementById("popx").onclick=()=>{box.hidden=true};
 }

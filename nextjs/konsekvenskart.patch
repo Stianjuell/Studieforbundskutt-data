@@ -882,7 +882,7 @@ index 0000000..2a81c64
 +  );
 +}
 diff --git a/app/(www)/kart/konsekvenskart.tsx b/app/(www)/kart/konsekvenskart.tsx
-index 463caf5..3b18521 100644
+index 463caf5..7b6c6af 100644
 --- a/app/(www)/kart/konsekvenskart.tsx
 +++ b/app/(www)/kart/konsekvenskart.tsx
 @@ -1,2548 +1,391 @@
@@ -891,7 +891,7 @@ index 463caf5..3b18521 100644
  
 -import { useMemo, useRef, useState } from "react";
 +import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-+import { X } from "lucide-react";
++import { Map as KartIkon, Newspaper, X } from "lucide-react";
  
  import { cn } from "@/lib/utils";
  import { Button } from "@/components/ui/button";
@@ -3788,7 +3788,7 @@ index 463caf5..3b18521 100644
        const el = quoteRef.current;
        if (el) {
          const r = document.createRange();
-@@ -2553,263 +396,557 @@ export function Konsekvenskart({ news = [] }: { news?: NewsItem[] }) {
+@@ -2553,263 +396,562 @@ export function Konsekvenskart({ news = [] }: { news?: NewsItem[] }) {
        }
        flash("manual");
      };
@@ -3845,17 +3845,20 @@ index 463caf5..3b18521 100644
 -      <section
 -        aria-label="Hele landet"
 -        className="grid grid-cols-2 gap-px border bg-border md:grid-cols-4"
--      >
 +    <div className="grid gap-8">
-+      <div role="tablist" aria-label="Visning" className="flex gap-1 border-b">
++      <div
++        role="tablist"
++        aria-label="Visning"
++        className="flex max-w-full gap-1.5 justify-self-stretch rounded-full border bg-card p-1.5 sm:justify-self-start"
+       >
          {(
            [
 -            ["kr", "mindre i statstilskudd"],
 -            ["tk", "potensielt tap av kurs"],
 -            ["tt", "potensielt tap av kurstimer"],
 -            ["td", "potensielt tap av deltakere"],
-+            ["kart", "Konsekvenskartet"],
-+            ["nyheter", "I mediene"],
++            ["kart", "Konsekvenskartet", KartIkon],
++            ["nyheter", "Nyheter", Newspaper],
            ] as const
 -        ).map(([k, text]) => (
 -          <div key={k} className="bg-card px-3.5 py-3">
@@ -3877,7 +3880,7 @@ index 463caf5..3b18521 100644
 -            aria-pressed={metric === m}
 -            className="rounded-full"
 -            onClick={() => setMetric(m)}
-+        ).map(([v, t]) => (
++        ).map(([v, t, Ikon]) => (
 +          <button
 +            key={v}
 +            role="tab"
@@ -3893,14 +3896,15 @@ index 463caf5..3b18521 100644
 +              } catch {}
 +            }}
 +            className={cn(
-+              "-mb-px border-b-[3px] px-3.5 py-2.5 font-semibold text-muted-foreground transition-colors",
++              "inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-3 text-base font-bold transition-colors sm:flex-none sm:px-6 sm:text-lg",
 +              visning === v
-+                ? "border-primary text-foreground"
-+                : "border-transparent hover:text-foreground",
++                ? "bg-primary text-primary-foreground"
++                : "text-foreground hover:bg-muted",
 +            )}
            >
 -            {LABEL[m]}
 -          </Button>
++            <Ikon className="h-5 w-5" aria-hidden="true" />
 +            {t}
 +          </button>
          ))}
@@ -4151,7 +4155,7 @@ index 463caf5..3b18521 100644
 +                            {p.nasjonal
 +                              ? "Nasjonal sak"
 +                              : p.type === "nyhet"
-+                                ? "I mediene"
++                                ? "Nyhet"
 +                                : "Historie"}
 +                          </span>
 +                          <a

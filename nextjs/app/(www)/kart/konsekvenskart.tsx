@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { Map as KartIkon, Newspaper, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -407,13 +407,17 @@ export function Konsekvenskart(initial: Konsekvensdata) {
 
   return (
     <div className="grid gap-8">
-      <div role="tablist" aria-label="Visning" className="flex gap-1 border-b">
+      <div
+        role="tablist"
+        aria-label="Visning"
+        className="flex max-w-full gap-1.5 justify-self-stretch rounded-full border bg-card p-1.5 sm:justify-self-start"
+      >
         {(
           [
-            ["kart", "Konsekvenskartet"],
-            ["nyheter", "I mediene"],
+            ["kart", "Konsekvenskartet", KartIkon],
+            ["nyheter", "Nyheter", Newspaper],
           ] as const
-        ).map(([v, t]) => (
+        ).map(([v, t, Ikon]) => (
           <button
             key={v}
             role="tab"
@@ -429,12 +433,13 @@ export function Konsekvenskart(initial: Konsekvensdata) {
               } catch {}
             }}
             className={cn(
-              "-mb-px border-b-[3px] px-3.5 py-2.5 font-semibold text-muted-foreground transition-colors",
+              "inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-3 text-base font-bold transition-colors sm:flex-none sm:px-6 sm:text-lg",
               visning === v
-                ? "border-primary text-foreground"
-                : "border-transparent hover:text-foreground",
+                ? "bg-primary text-primary-foreground"
+                : "text-foreground hover:bg-muted",
             )}
           >
+            <Ikon className="h-5 w-5" aria-hidden="true" />
             {t}
           </button>
         ))}
@@ -631,7 +636,7 @@ export function Konsekvenskart(initial: Konsekvensdata) {
                             {p.nasjonal
                               ? "Nasjonal sak"
                               : p.type === "nyhet"
-                                ? "I mediene"
+                                ? "Nyhet"
                                 : "Historie"}
                           </span>
                           <a
