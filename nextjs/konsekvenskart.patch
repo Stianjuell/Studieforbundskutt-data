@@ -5052,7 +5052,7 @@ index 0000000..51e3caa
 +  );
 +}
 diff --git a/app/(www)/kart/page.tsx b/app/(www)/kart/page.tsx
-index a2d19fe..2dde948 100644
+index a2d19fe..9f79e52 100644
 --- a/app/(www)/kart/page.tsx
 +++ b/app/(www)/kart/page.tsx
 @@ -1,30 +1,51 @@
@@ -5089,7 +5089,7 @@ index a2d19fe..2dde948 100644
      <div className="container pb-12">
        <PageHeader>
 -        <PageHeaderHeading>Hva kuttet koster i ditt fylke</PageHeaderHeading>
-+        <PageHeaderHeading>Hva kuttet koster</PageHeaderHeading>
++        <PageHeaderHeading>Dette koster kuttet</PageHeaderHeading>
          <PageHeaderDescription>
 -          Regjeringen foreslår å kutte tilskuddet til studieforbundene med 69 millioner kroner.
 -          Kartet viser hva det kan bety for kurs, kurstimer og deltakere i hvert fylke.
@@ -5115,7 +5115,7 @@ index a2d19fe..2dde948 100644
  }
 diff --git a/components/konsekvenskart-banner.tsx b/components/konsekvenskart-banner.tsx
 new file mode 100644
-index 0000000..8aee509
+index 0000000..4a18bcb
 --- /dev/null
 +++ b/components/konsekvenskart-banner.tsx
 @@ -0,0 +1,81 @@
@@ -5160,7 +5160,7 @@ index 0000000..8aee509
 +          id="kkb-h"
 +          className="mb-3 font-serif text-3xl font-bold leading-tight md:text-5xl"
 +        >
-+          Hva kuttet koster
++          Dette koster kuttet
 +        </h2>
 +        <p className="max-w-[46ch] text-primary-foreground/90 md:text-lg">
 +          Regjeringen foreslår å kutte {mill(total).replace(" mill.", "")}{" "}
