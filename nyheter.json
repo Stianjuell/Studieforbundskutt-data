@@ -70,13 +70,14 @@
   "url": "https://www.facebook.com/NasjonalforeningenTrondelag",
   "kilde": "Nasjonalforeningen for folkehelsen Trøndelag",
   "dato": "2026-10-12",
-  "sammendrag": "Nasjonalforeningen for folkehelsen i Trøndelag sier på Facebook at de støtter kampen mot kuttet til studieforbundene i statsbudsjettet for 2027. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "sammendrag": "Nasjonalforeningen for folkehelsen i Trøndelag støtter på Facebook kampen mot kuttet til studieforbundene i statsbudsjettet for 2027, og deler Konsekvenskartet.",
   "viktig": false,
   "fylker": [
    "Trøndelag"
   ],
   "kategori": "Organisasjonene",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/nasjonalforeningen-trondelag.jpg"
  },
  {
   "tittel": "Kutt i Funkis-støtten rammer de minste foreningene hardest",
