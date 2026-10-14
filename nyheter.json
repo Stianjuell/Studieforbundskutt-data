@@ -1,5 +1,17 @@
 [
  {
+  "tittel": "Et kompetansebudsjett for fortiden",
+  "url": "https://www.khrono.no/et-kompetansebudsjett-for-fortiden/1091447",
+  "kilde": "Khrono",
+  "dato": "2026-10-13",
+  "sammendrag": "Vofos generalsekretær Stian Juell skriver i et debattinnlegg at regjeringens nye kompetansebudsjett er en god idé, men at den samtidig kutter rundt en fjerdedel av tilskuddet til studieforbundene. Han peker på halveringen under Kunnskapsdepartementet og kuttet på 37,5 millioner under Kulturdepartementet og mener ferdighetene framtiden trenger læres i fellesskap.",
+  "viktig": false,
+  "bilde": "https://image.khrono.no/1091454.jpg?imageId=1091454&x=0&y=13.52&cropw=100&croph=47.78&panox=0&panoy=13.52&panow=100&panoh=47.78&width=1200&height=683",
+  "fylker": [],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Statsbudsjettet 2027: Dramatiske konsekvenser for frivillig musikkliv",
   "url": "https://www.korpsnett.no/nyheter/statsbudsjettet-2027-dramatiske-konsekvenser-for-frivillig-musikkliv",
   "kilde": "Korpsnett Norge",
@@ -8,6 +20,20 @@
   "viktig": false,
   "bilde": "https://i2.vrs.gd/musikk/Korpsnett-Norge/Nyhetsbilder/Morten-Skaarer-styreleder-Korpsnett-Norge-foto-Fartein-Rudjord.jpg?width=1200&height=630&format=jpg&quality=80&crop=3000%2C1575%2C0%2C210",
   "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Vofo på Akershus-budsjetthøring",
+  "url": "https://www.vofo.no/aktuelt/vofo-pa-akershus-budsjetthoring",
+  "kilde": "Vofo",
+  "dato": "2026-10-13",
+  "sammendrag": "Vofo støtter fylkesrådets budsjettforslag i Akershus, men advarer i budsjetthøringen om at regjeringens kutt på 70 millioner kroner til studieforbundene vil gi studieforbundene i Akershus rundt 7,2 millioner kroner mindre. Vofo ber fylkespolitikerne bidra til at kuttet reverseres.",
+  "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/a34d459202474fcce7a536aacd22f4aa06f73aef-1102x601.png?rect=0,12,1102,579&w=1200&h=630&fit=max&auto=format",
+  "fylker": [
+   "Akershus"
+  ],
   "kategori": "Organisasjonene",
   "forbund": []
  },
