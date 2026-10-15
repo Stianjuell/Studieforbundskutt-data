@@ -1,19 +1,16 @@
 [
  {
-  "tittel": "Finnmark forventer handling som står i forhold til fylkets betydning",
-  "url": "https://www.radionordkapp.no/pressemelding/finnmark-forventer-handling-som-star-i-forhold-til-fylkets-betydning/",
-  "kilde": "Flertallspartiene i Finnmark fylkesting",
-  "dato": "2026-10-14",
-  "sammendrag": "Flertallspartiene i Finnmark fylkesting krever at kuttene til studieforbundene reverseres og at tilskuddet prisjusteres. De mener kuttene svekker frivilligheten og læringsarenaene i fylket, og at endringer må bygge på evalueringen og dialog med studieforbundene.",
-  "viktig": true,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kp-finnmark-fylkesting.jpg",
+  "tittel": "Vi er dypt uenige i dette kuttforslaget",
+  "url": "https://www.vofo.no/aktuelt/vi-er-dypt-uenige-i-dette-kuttforslaget",
+  "kilde": "Vofo",
+  "dato": "2026-10-15",
+  "sammendrag": "Fylkespolitikere fra Frp, Høyre og Nordkalottfolket i Finnmark advarer mot regjeringens kutt på rundt 70 millioner kroner til studieforbundene. De mener kuttet vil ramme kompetanse, beredskap, samisk og kvensk språk og kultur og små lokalsamfunn i distriktene særlig hardt.",
+  "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/f5a05f6bf58854cd364857fe5333f0f14b557326-718x580.png?rect=0,102,718,377&w=1200&h=630&fit=max&auto=format",
   "fylker": [
    "Finnmark"
   ],
-  "sted": "Vadsø",
-  "lat": 70.07,
-  "lon": 29.75,
-  "kategori": "Myndigheter og Storting",
+  "kategori": "Organisasjonene",
   "forbund": []
  },
  {
@@ -42,6 +39,23 @@
   "lat": 70.07,
   "lon": 29.75,
   "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Finnmark forventer handling som står i forhold til fylkets betydning",
+  "url": "https://www.radionordkapp.no/pressemelding/finnmark-forventer-handling-som-star-i-forhold-til-fylkets-betydning/",
+  "kilde": "Flertallspartiene i Finnmark fylkesting",
+  "dato": "2026-10-14",
+  "sammendrag": "Flertallspartiene i Finnmark fylkesting krever at kuttene til studieforbundene reverseres og at tilskuddet prisjusteres. De mener kuttene svekker frivilligheten og læringsarenaene i fylket, og at endringer må bygge på evalueringen og dialog med studieforbundene.",
+  "viktig": true,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kp-finnmark-fylkesting.jpg",
+  "fylker": [
+   "Finnmark"
+  ],
+  "sted": "Vadsø",
+  "lat": 70.07,
+  "lon": 29.75,
+  "kategori": "Myndigheter og Storting",
   "forbund": []
  },
  {
@@ -115,12 +129,12 @@
   "dato": "2026-10-12",
   "sammendrag": "Nasjonalforeningen for folkehelsen i Trøndelag støtter på Facebook kampen mot kuttet til studieforbundene i statsbudsjettet for 2027, og deler Konsekvenskartet.",
   "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/nasjonalforeningen-trondelag.jpg",
   "fylker": [
    "Trøndelag"
   ],
   "kategori": "Organisasjonene",
-  "forbund": [],
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/nasjonalforeningen-trondelag.jpg"
+  "forbund": []
  },
  {
   "tittel": "Kutt i Funkis-støtten rammer de minste foreningene hardest",
