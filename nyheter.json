@@ -1,5 +1,39 @@
 [
  {
+  "tittel": "Odd om kutta: – Rett og slett demotiverande",
+  "url": "https://www.porten.no/kultur/n/oK9G67/odd-om-kutta-rett-og-slett-demotiverande",
+  "kilde": "Porten",
+  "dato": "2026-10-16",
+  "sammendrag": "Lederen Odd Øren i Årdalstangen Musikklag frykter at regjeringens forslag om å kutte nær 70 millioner kroner til studieforbundene kan ramme korpsene i distriktene hardt. Saken ligger bak betalingsmur og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/17faeb2d-59f4-36d2-ac8d-8328b18eb7ac?fit=crop&q=80&tight=false&w=1200&h=900",
+  "fylker": [
+   "Vestland"
+  ],
+  "sted": "Årdalstangen (Årdal)",
+  "lat": 61.24,
+  "lon": 7.7,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Mitt lille lokalsamfunn betyr mye",
+  "url": "https://www.vofo.no/aktuelt/mitt-lille-lokalsamfunn-betyr-mye",
+  "kilde": "Vofo",
+  "dato": "2026-10-16",
+  "sammendrag": "Tetiana Isakova forteller hvordan frivillige kurs og samarbeid med Eidsvoll Bygdekvinnelag og Eidsvoll Husflidslag hjalp henne inn i det norske samfunnet og fram til egen bedrift. Hun advarer mot regjeringens forslag om å kutte kursstøtten til studieforbundene med 70 millioner kroner.",
+  "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/de0dfc56b8f52bfeb05a99295e24e6b4e49d0683-1374x1145.png?rect=0,213,1374,721&w=1200&h=630&fit=max&auto=format",
+  "fylker": [
+   "Akershus"
+  ],
+  "sted": "Eidsvoll",
+  "lat": 60.33,
+  "lon": 11.26,
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
   "tittel": "Et kutt som rammer mer enn pengeverdien",
   "url": "https://www.musikk.no/rogaland/nyheter/et-kutt-som-rammer-mer-enn-pengeverdien",
   "kilde": "Rogaland musikkråd",
@@ -16,23 +50,6 @@
   "forbund": [
    "Musikkens studieforbund"
   ]
- },
- {
-  "tittel": "Odd om kutta: – Rett og slett demotiverande",
-  "url": "https://www.porten.no/kultur/n/oK9G67/odd-om-kutta-rett-og-slett-demotiverande",
-  "kilde": "Porten",
-  "dato": "2026-10-16",
-  "sammendrag": "Lederen Odd Øren i Årdalstangen Musikklag frykter at regjeringens forslag om å kutte nær 70 millioner kroner til studieforbundene kan ramme korpsene i distriktene hardt. Saken ligger bak betalingsmur og kunne ikke leses i sin helhet.",
-  "viktig": false,
-  "bilde": "https://vcdn.polarismedia.no/17faeb2d-59f4-36d2-ac8d-8328b18eb7ac?fit=crop&q=80&tight=false&w=1200&h=900",
-  "fylker": [
-   "Vestland"
-  ],
-  "sted": "Årdalstangen (Årdal)",
-  "lat": 61.24,
-  "lon": 7.7,
-  "kategori": "Medier",
-  "forbund": []
  },
  {
   "tittel": "Kuttet i foreslått støtte rammer frivilligheten bredt",
@@ -104,6 +121,20 @@
   "sted": "Saltdal",
   "lat": 67.1,
   "lon": 15.39,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "– Finnmark forventer handling",
+  "url": "https://www.altaposten.no/meninger/o/77Q574/finnmark-forventer-handling",
+  "kilde": "Altaposten",
+  "dato": "2026-10-15",
+  "sammendrag": "Geir Enok Thrane legger på vegne av flertallet i Finnmark fylkesting fram en uttalelse som ber regjeringen og Stortinget reversere kuttene til studieforbundene og sikre prisjusterte tilskudd. Flertallet mener kuttene svekker læringsarenaer, frivillighet og kompetansebygging i Finnmark.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/5f3ab2cc-cd76-3a93-a124-bc80f2ed2505?fit=crop&q=80&tight=false&w=1200&h=676",
+  "fylker": [
+   "Finnmark"
+  ],
   "kategori": "Medier",
   "forbund": []
  },
