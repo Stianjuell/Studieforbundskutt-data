@@ -4,11 +4,14 @@
   "url": "https://www.iab.no/",
   "kilde": "Indre Akershus Blad",
   "dato": "2026-10-18",
-  "sammendrag": "Indre Akershus Blad omtaler hvordan kuttet på om lag 70 millioner kroner til studieforbundene i statsbudsjettet for 2027 kan ramme kurstilbudet lokalt, og Voksenopplæringsforbundet advarer om at de små lagene merker det først. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "sammendrag": "Jesper Maj Larsen i Bjørkelangen JFF advarer mot kuttet på om lag 70 millioner kroner til studieforbundene i statsbudsjettet for 2027, og sier frivillige kurs er viktige for å motvirke ensomhet og at de små lagene merker kuttet først. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
   "viktig": false,
   "fylker": [
    "Akershus"
   ],
+  "sted": "Bjørkelangen (Aurskog-Høland)",
+  "lat": 59.89,
+  "lon": 11.57,
   "kategori": "Medier",
   "forbund": []
  },
@@ -53,6 +56,7 @@
   "dato": "2026-10-16",
   "sammendrag": "Liv Tjemsland, daglig leder i Rogaland musikkråd, viser til at kuttet gir 4,8 mill. kr mindre til studieforbundene i Rogaland og over 2 mill. kr mindre til det frivillige musikklivet i fylket. Hun mener kuttet rammer kor, korps og lavterskeltilbud hardest, og krever at det reverseres.",
   "viktig": false,
+  "bilde": "https://i2.vrs.gd/musikk/Rogaland/Foto_Kristin_Myrmel.jpeg?width=1200&height=630&format=jpg&quality=80&crop=2048%2C1076%2C0%2C230",
   "fylker": [
    "Rogaland"
   ],
@@ -114,6 +118,7 @@
   "dato": "2026-10-15",
   "sammendrag": "Studieforbundet Livslang Læring viser at halveringen av tilskuddet under Kunnskapsdepartementet, fra 67,3 til 34,8 millioner kroner, vil ramme beredskapskurs, førstehjelp, digital opplæring for seniorer og opplæring i lokale korps. Forbundet ber Stortinget stanse kuttet.",
   "viktig": false,
+  "bilde": "https://www.sfll.no/wp-content/uploads/2025/09/Stortinget_i_Oslo-1280x853.jpeg",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": [
@@ -121,7 +126,7 @@
   ]
  },
  {
-  "tittel": "– Vi gir ikke opp",
+  "tittel": "Lise og Berit krysser fingrene før konserten: – Vi gir ikke opp",
   "url": "https://www.avisa-gaula.no/",
   "kilde": "Avisa Gaula",
   "dato": "2026-10-15",
@@ -186,6 +191,7 @@
   "dato": "2026-10-14",
   "sammendrag": "Kulturskolerådet er bekymret for kuttet i VO-midlene til studieforbundene. Korps, orkestre og andre lokale samarbeidspartnere for kulturskolene er avhengige av midlene, og kuttet kan gi færre opplæringstilbud, høyere deltakerkostnader og svakere lokale fagmiljøer.",
   "viktig": false,
+  "bilde": "https://www.kulturskoleradet.no/gfx/open.graph.logo.png",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
