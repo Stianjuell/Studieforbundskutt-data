@@ -11,7 +11,7 @@
  },
  {
   "tittel": "Voksenopplæringsforbundet om kuttet i statsbudsjettet",
-  "url": "https://radio.nrk.no/serie/distriktsprogram-moere-og-romsdal-radio/DKMR02020126",
+  "url": "https://radio.nrk.no/serie/distriktsprogram-moere-og-romsdal-radio/DKMR02020126#t=1h9m5s",
   "kilde": "NRK Møre og Romsdal",
   "dato": "2026-10-19",
   "sammendrag": "Ragnar Johansen i Voksenopplæringsforbundet snakket i Distriktsprogram Møre og Romsdal på NRK P1 om statsbudsjettet og forslaget om å kutte tilskuddet til studieforbundene.",
@@ -20,7 +20,7 @@
    "Møre og Romsdal"
   ],
   "kategori": "Medier",
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-nrk-mr-radio-vofo-om-kuttet-i-statsbudsjettet.jpg"
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/nrk-p1.jpg"
  },
  {
   "tittel": "Tilskot er avgjerande for å kunne gjennomføre kurs og opplæring",
@@ -39,6 +39,19 @@
   "kategori": "Medier",
   "forbund": [
    "Studieforbundet kultur og tradisjon"
+  ]
+ },
+ {
+  "tittel": "Betydelige konsekvenser for organisasjonene i Studieforbundet Funkis Akershus",
+  "url": "https://www.vofo.no/aktuelt/betydelige-konsekvenser-for-organisasjonene-i-studieforbundet-funkis-akershus",
+  "kilde": "Vofo",
+  "dato": "2026-10-19",
+  "sammendrag": "Kuttet på 70 millioner kroner til studieforbundene kan få store konsekvenser for organisasjonene i Studieforbundet Funkis Akershus.",
+  "kategori": "Organisasjonene",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/funkis-akershus-kurs.jpg",
+  "fylker": [
+   "Akershus"
   ]
  },
  {
@@ -242,7 +255,7 @@
   "sammendrag": "Kulturskolerådet er bekymret for kuttet i VO-midlene til studieforbundene. Korps, orkestre og andre lokale samarbeidspartnere for kulturskolene er avhengige av midlene, og kuttet kan gi færre opplæringstilbud, høyere deltakerkostnader og svakere lokale fagmiljøer.",
   "viktig": false,
   "kategori": "Organisasjonene",
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-kulturskoleradet-no-statsbudsjettet-2027-nasjonalt-utvikling.jpg"
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kulturskoleradet-kulturdag-trondheim.jpg"
  },
  {
   "tittel": "Flertallsallianse tordner mot statsbudsjettet: Fagre ord hjelper ikke",
@@ -330,7 +343,7 @@
   "forbund": [
    "Studieforbundet natur og miljø"
   ],
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-njff-no-nei-til-kutt-i-stotten-til-studieforbundene.jpg"
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/njff-bjorkelangen-kurs.jpg"
  },
  {
   "tittel": "Nasjonalforeningen støtter kampen for å hindre kutt for Studieforbundet i forslag til Statsbudsjett 2027",
@@ -356,7 +369,7 @@
   "forbund": [
    "Studieforbundet Funkis"
   ],
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-ffm-no-kutt-i-funkis-stotten-rammer-de-minste-foreningene-ha.jpg"
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/ffm-logo.jpg"
  },
  {
   "tittel": "Kutter i tilliten som holder samfunnet sammen",
@@ -547,7 +560,7 @@
   "sammendrag": "Kulturalliansen er svært bekymret for kuttet på nesten 70 millioner kroner til studieforbundene, som gjør det mulig for lag og foreninger å tilby opplæring. Daglig leder Stian Seland mener forslaget svekker vilkårene for kulturfrivilligheten.",
   "viktig": false,
   "kategori": "Organisasjonene",
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-kulturalliansen-no-statsbudsjettet-2027-ikke-et-godt-budsjet.jpg"
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kulturalliansen-logo.jpg"
  },
  {
   "tittel": "UngFunk reagerer på statsbudsjettet 2027",
