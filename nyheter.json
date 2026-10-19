@@ -165,7 +165,7 @@
   "dato": "2026-10-15",
   "sammendrag": "Flertallet i Finnmark fylkesting legger fram en uttalelse om at statsbudsjettet for 2027 ikke svarer på fylkets utfordringer. Blant kravene er at regjeringen og Stortinget reverserer kuttene til studieforbundene og sikrer prisjusterte tilskudd.",
   "viktig": false,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/ifinnmark-fylkesting.jpg",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kp-finnmark-fylkesting.jpg",
   "fylker": [
    "Finnmark"
   ],
@@ -256,7 +256,6 @@
   "dato": "2026-10-14",
   "sammendrag": "Kulturskolerådet er bekymret for kuttet i VO-midlene til studieforbundene. Korps, orkestre og andre lokale samarbeidspartnere for kulturskolene er avhengige av midlene, og kuttet kan gi færre opplæringstilbud, høyere deltakerkostnader og svakere lokale fagmiljøer.",
   "viktig": false,
-  "bilde": "https://www.kulturskoleradet.no/gfx/open.graph.logo.png",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
@@ -320,20 +319,6 @@
   "forbund": []
  },
  {
-  "tittel": "Digital medlemsmøte om kutt i statsbudsjettet",
-  "url": "https://www.kulturogtradisjon.no/post/digital-medlemsm%C3%B8te-om-kutt-i-statsbudsjettet",
-  "kilde": "Studieforbundet kultur og tradisjon",
-  "dato": "2026-10-13",
-  "sammendrag": "Studieforbundet kultur og tradisjon inviterte medlemsorganisasjoner og fylkesledd til et digitalt møte 14. oktober om kuttet i statsbudsjettet 2027. Møtet skulle gi status fra Vofos generalsekretær og legge planer for hvordan organisasjonene kan bidra i budsjettkampen.",
-  "viktig": false,
-  "bilde": "https://static.wixstatic.com/media/4a9374_ec58ff0b879f4b3ea8c0c16a122c5e3a~mv2.png/v1/fill/w_1000,h_667,al_c,q_90,usm_0.66_1.00_0.01/4a9374_ec58ff0b879f4b3ea8c0c16a122c5e3a~mv2.png",
-  "fylker": [],
-  "kategori": "Organisasjonene",
-  "forbund": [
-   "Studieforbundet kultur og tradisjon"
-  ]
- },
- {
   "tittel": "Statsbudsjettet 2027: Dramatiske konsekvenser for frivillig musikkliv",
   "url": "https://www.korpsnett.no/nyheter/statsbudsjettet-2027-dramatiske-konsekvenser-for-frivillig-musikkliv",
   "kilde": "Korpsnett Norge",
@@ -366,7 +351,6 @@
   "dato": "2026-10-13",
   "sammendrag": "Norges Jeger- og Fiskerforbund reagerer sterkt på forslaget om å kutte 70 millioner kroner til studieforbundene og mener kuttet gjør kurs dyrere, gir lavere deltakelse og truer lokale tilbud som motvirker ensomhet. NJFF krever at kuttet trekkes tilbake.",
   "viktig": false,
-  "bilde": "https://www.njff.no/aktuelt/nei-til-kutt-i-stotten-til-studieforbundene/_/image/e2b88540-afe4-401e-a67a-7000acc52e14:586a9ca4038934a13a122b48c21bc315b1e385df/block-1024-768/NJFFlogo.png/",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": [
@@ -394,7 +378,6 @@
   "dato": "2026-10-12",
   "sammendrag": "Foreningen for Muskelsyke advarer om at regjeringens forslag om å kutte 70 millioner kroner fra studieforbundene gir Funkis 8 millioner mindre og kan fjerne mye av kurs- og opplæringstilbudet for funksjonshemmede og kronisk syke. Små medlemsorganisasjoner som er avhengige av studieforbundsmidlene, rammes hardest.",
   "viktig": false,
-  "bilde": "https://ffm.no/wp-content/uploads/2023/01/FFM-ny-logo-rgb.jpg",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": [
@@ -601,7 +584,6 @@
   "dato": "2026-10-07",
   "sammendrag": "Kulturalliansen er svært bekymret for kuttet på nesten 70 millioner kroner til studieforbundene, som gjør det mulig for lag og foreninger å tilby opplæring. Daglig leder Stian Seland mener forslaget svekker vilkårene for kulturfrivilligheten.",
   "viktig": false,
-  "bilde": "https://kulturalliansen.no/wp-content/themes/kulturalliansen-theme/assets/images/site-icons/site-icon-512.png",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
