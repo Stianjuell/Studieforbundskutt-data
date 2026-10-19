@@ -1,5 +1,18 @@
 [
  {
+  "tittel": "Kjemper mot budsjettkutt: – De små lagene merker det først",
+  "url": "https://www.iab.no/",
+  "kilde": "Indre Akershus Blad",
+  "dato": "2026-10-18",
+  "sammendrag": "Indre Akershus Blad omtaler hvordan kuttet på om lag 70 millioner kroner til studieforbundene i statsbudsjettet for 2027 kan ramme kurstilbudet lokalt, og Voksenopplæringsforbundet advarer om at de små lagene merker det først. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Akershus"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Odd om kutta: – Rett og slett demotiverande",
   "url": "https://www.porten.no/kultur/n/oK9G67/odd-om-kutta-rett-og-slett-demotiverande",
   "kilde": "Porten",
@@ -106,6 +119,22 @@
   "forbund": [
    "Studieforbundet Livslang Læring"
   ]
+ },
+ {
+  "tittel": "– Vi gir ikke opp",
+  "url": "https://www.avisa-gaula.no/",
+  "kilde": "Avisa Gaula",
+  "dato": "2026-10-15",
+  "sammendrag": "Avisa Gaula skriver om voksenkorpsene i Melhus, som allerede merker forslaget om kutt i voksenopplæringsmidlene i statsbudsjettet på økonomien. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Trøndelag"
+  ],
+  "sted": "Melhus",
+  "lat": 63.29,
+  "lon": 10.28,
+  "kategori": "Medier",
+  "forbund": []
  },
  {
   "tittel": "Kunnskap er så mangt",
