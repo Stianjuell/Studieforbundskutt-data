@@ -19,7 +19,8 @@
   "fylker": [
    "Møre og Romsdal"
   ],
-  "kategori": "Medier"
+  "kategori": "Medier",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-nrk-mr-radio-vofo-om-kuttet-i-statsbudsjettet.jpg"
  },
  {
   "tittel": "Tilskot er avgjerande for å kunne gjennomføre kurs og opplæring",
@@ -240,7 +241,8 @@
   "dato": "2026-10-14",
   "sammendrag": "Kulturskolerådet er bekymret for kuttet i VO-midlene til studieforbundene. Korps, orkestre og andre lokale samarbeidspartnere for kulturskolene er avhengige av midlene, og kuttet kan gi færre opplæringstilbud, høyere deltakerkostnader og svakere lokale fagmiljøer.",
   "viktig": false,
-  "kategori": "Organisasjonene"
+  "kategori": "Organisasjonene",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-kulturskoleradet-no-statsbudsjettet-2027-nasjonalt-utvikling.jpg"
  },
  {
   "tittel": "Flertallsallianse tordner mot statsbudsjettet: Fagre ord hjelper ikke",
@@ -327,7 +329,8 @@
   "kategori": "Organisasjonene",
   "forbund": [
    "Studieforbundet natur og miljø"
-  ]
+  ],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-njff-no-nei-til-kutt-i-stotten-til-studieforbundene.jpg"
  },
  {
   "tittel": "Nasjonalforeningen støtter kampen for å hindre kutt for Studieforbundet i forslag til Statsbudsjett 2027",
@@ -352,7 +355,8 @@
   "kategori": "Organisasjonene",
   "forbund": [
    "Studieforbundet Funkis"
-  ]
+  ],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-ffm-no-kutt-i-funkis-stotten-rammer-de-minste-foreningene-ha.jpg"
  },
  {
   "tittel": "Kutter i tilliten som holder samfunnet sammen",
@@ -542,7 +546,8 @@
   "dato": "2026-10-07",
   "sammendrag": "Kulturalliansen er svært bekymret for kuttet på nesten 70 millioner kroner til studieforbundene, som gjør det mulig for lag og foreninger å tilby opplæring. Daglig leder Stian Seland mener forslaget svekker vilkårene for kulturfrivilligheten.",
   "viktig": false,
-  "kategori": "Organisasjonene"
+  "kategori": "Organisasjonene",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kort-kulturalliansen-no-statsbudsjettet-2027-ikke-et-godt-budsjet.jpg"
  },
  {
   "tittel": "UngFunk reagerer på statsbudsjettet 2027",
