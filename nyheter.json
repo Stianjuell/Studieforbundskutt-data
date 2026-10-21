@@ -1,5 +1,59 @@
 [
  {
+  "tittel": "Regjeringen kutter i kursene som gjør hundeeiere tryggere",
+  "url": "https://www.nkk.no/nyhetsarkiv/regjeringen-kutter-i-kursene-som-gjor-hundeeiere-tryggere",
+  "kilde": "Norsk Kennel Klub",
+  "dato": "2026-10-20",
+  "sammendrag": "Norsk Kennel Klub skriver at kuttet på 37,2 millioner kroner til studieforbundene kan gi NKKs klubber rundt 450 000 kroner mindre i kurstilskudd gjennom Studieforbundet natur og miljø. Generalsekretær Ingvild Bretten Berg ber Stortinget reversere kuttet.",
+  "viktig": false,
+  "bilde": "https://www.nkk.no/getfile.php/133110126-1792520542/bilder/artikkelbilder/istock-589434932-valp-kontakt-jpg-optimized-original.webp",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet natur og miljø"
+  ]
+ },
+ {
+  "tittel": "Før sommeren måtte de trekke forslaget – nå prøver AP-regjeringen seg igjen",
+  "url": "https://www.adressa.no/",
+  "kilde": "Midtsiden (Adresseavisen)",
+  "dato": "2026-10-20",
+  "sammendrag": "Et debattinnlegg på Midtsiden kritiserer regjeringen for foreslåtte gebyrøkninger og for i tillegg å kutte 70 millioner kroner i støtten til studieforbundene og den frivillige voksenopplæringen. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Østfold musikkråd til medlemsorganisasjonene: Tilskuddet til studieforbund reduseres",
+  "url": "https://www.facebook.com/655979824438504_1630554348865190",
+  "kilde": "Østfold musikkråd (Facebook)",
+  "dato": "2026-10-20",
+  "sammendrag": "Østfold musikkråd orienterer Musikkens studieforbunds medlemsorganisasjoner om at tilskuddet til studieforbund reduseres med 37,2 millioner kroner i regjeringens forslag til statsbudsjett. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Østfold"
+  ],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Musikkens studieforbund"
+  ]
+ },
+ {
+  "tittel": "Ikkje ta tonan frå Hallingdal",
+  "url": "https://www.hallingdolen.no/meiningar/o/qyrMXw/ikkje-ta-tonan-fraa-hallingdal",
+  "kilde": "Hallingdølen",
+  "dato": "2026-10-20",
+  "sammendrag": "Hallingdal Toraderlag reagerer i eit lesarbrev på framlegget om å kutte vaksenopplæringsmidlane gjennom studieforbunda, og seier at det handlar om å halde liv i ein viktig del av kulturarven i Hallingdal. Saken ligg bak betalingsmur og kunne ikkje lesast i sin heilskap.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/114ba98e-c0bd-32dd-951f-b1b12c0c0293?fit=crop&q=80&tight=false&w=1200&h=800",
+  "fylker": [
+   "Buskerud"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Studieforbundenes støtte er avgjørende",
   "url": "https://www.vofo.no/aktuelt/studieforbundenes-stotte-er-avgjorende",
   "kilde": "Vofo",
@@ -12,6 +66,100 @@
   "kategori": "Organisasjonene",
   "forbund": [
    "Musikkens studieforbund"
+  ]
+ },
+ {
+  "tittel": "Rena og omegn lokallag: Staten foreslår kutt, mennesker kan miste fellesskapet",
+  "url": "https://www.facebook.com/111897817974184_1115587177715881",
+  "kilde": "Rena og omegn lokallag av NFF (Facebook)",
+  "dato": "2026-10-20",
+  "sammendrag": "Rena og omegn lokallag av NFF advarer på Facebook om at forslaget om å kutte rundt 70 millioner kroner til studieforbundene i statsbudsjettet for 2027 kan gjøre at mennesker mister fellesskapet i lokallaget. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Innlandet"
+  ],
+  "sted": "Rena (Åmot)",
+  "lat": 61.13,
+  "lon": 11.37,
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Kutt til studieforbund rammer musikklivet i Mysen",
+  "url": "https://indre24.no/2026/10/20/kutt-til-studieforbund-rammer-musikklivet-i-mysen/",
+  "kilde": "Indre24",
+  "dato": "2026-10-20",
+  "sammendrag": "Mysen Mannskor advarer i et leserinnlegg om at kuttet på rundt 70 millioner kroner til studieforbundene vil ramme musikklivet i Mysen, blant annet muligheten til å bruke dirigenter og instruktører. Koret ber Østfolds stortingsrepresentanter om å bidra til å reversere kuttet.",
+  "viktig": false,
+  "bilde": "https://indre24.no/wp-content/uploads/2025/12/Julekonsert-me-Mysen-Damekor-og-Mysen-Mansskor-2025_karinnordlie-1-2.jpg",
+  "fylker": [
+   "Østfold"
+  ],
+  "sted": "Mysen (Indre Østfold)",
+  "lat": 59.57,
+  "lon": 11.33,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "LHL Narvik: Et kurs kan bety at noen kommer seg ut døra",
+  "url": "https://www.facebook.com/472470255953345_122188921952629027",
+  "kilde": "LHL Narvik (Facebook)",
+  "dato": "2026-10-20",
+  "sammendrag": "LHL Narvik skriver på Facebook at kurs gir mestring og fellesskap, og reagerer på at regjeringen foreslår å kutte rundt 69 millioner kroner i støtten til studieforbundene. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Nordland"
+  ],
+  "sted": "Narvik",
+  "lat": 68.44,
+  "lon": 17.43,
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Organisasjonslivet er en del av limet i demokratiet vårt",
+  "url": "https://www.vofo.no/aktuelt/organisasjonslivet-er-en-del-av-limet-i-demokratiet-vart",
+  "kilde": "Vofo",
+  "dato": "2026-10-20",
+  "sammendrag": "Finnmark Arbeiderparti ved Willy Pedersen støtter fylkestingets krav om å stanse kuttene i støtten til kurs og opplæring i frivillige organisasjoner. Vofo anslår at Finnmark kan miste over 850 000 kroner i statlig støtte.",
+  "viktig": false,
+  "fylker": [
+   "Finnmark"
+  ],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Kutt til studieforbund rammer musikklivet i Kristiansund",
+  "url": "https://www.nordmorsposten.no/",
+  "kilde": "Nordmørsposten",
+  "dato": "2026-10-20",
+  "sammendrag": "Nordmørsposten har et innlegg om at forslaget i budsjettet for 2027 om å kutte rundt 70 millioner kroner til studieforbundene vil ramme musikklivet i Kristiansund. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Møre og Romsdal"
+  ],
+  "sted": "Kristiansund",
+  "lat": 63.11,
+  "lon": 7.73,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Skal regjeringa skjere framtidas kyrkjeportalar?",
+  "url": "https://fjuken.no/debatt/o/mKnwE4/skal-regjeringa-skjere-framtidas-kyrkjeportalar",
+  "kilde": "Fjuken",
+  "dato": "2026-10-20",
+  "sammendrag": "Kjærsti Gangsø og Torunn Elise Kveen i Studieforbundet kultur og tradisjon skriv at kuttet på nær 70 millionar kroner til studieforbunda trugar lokale kurs i tradisjonshandverk, musikk og kultur. Dei åtvarar om at små kurs i truga handverksteknikkar blir hardast ramma. Innlegget står også i Gudbrandsdølen Dagningen og Norddalen.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/fc796535-4b11-38b6-8c5a-f8c6f345075d?fit=crop&q=80&tight=false&w=1200&h=800",
+  "fylker": [
+   "Innlandet"
+  ],
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
   ]
  },
  {
