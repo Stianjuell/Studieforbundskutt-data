@@ -27,6 +27,25 @@
   "forbund": []
  },
  {
+  "tittel": "Tilskot er avgjerande for å kunne gjennomføre kurs og opplæring",
+  "url": "https://fjuken.no/debatt/o/kvbXKa/tilskot-er-avgje-rande-for-aa-kunne-gjennom-foere-kurs-og-opplaering",
+  "kilde": "Fjuken",
+  "dato": "2026-10-19",
+  "sammendrag": "Studieforbundet kultur og tradisjon kritiserer forslaget om å kutte om lag 70 millioner kroner til studieforbundene. Kuttet kan føre til at kurs og opplæring i lokale lag ikke blir gjennomført, med Vågå som eksempel.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/d44430cb-e157-3b13-9679-f61ed505aaf2?fit=crop&q=80&tight=false&w=1200&h=900",
+  "fylker": [
+   "Innlandet"
+  ],
+  "sted": "Vågå",
+  "lat": 61.88,
+  "lon": 9.1,
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
+  ]
+ },
+ {
   "tittel": "Voksenopplæringsforbundet om kuttet i statsbudsjettet",
   "url": "https://radio.nrk.no/serie/distriktsprogram-moere-og-romsdal-radio/DKMR02020126#t=1h9m5s",
   "kilde": "NRK Møre og Romsdal",
@@ -71,23 +90,21 @@
   ]
  },
  {
-  "tittel": "Tilskot er avgjerande for å kunne gjennomføre kurs og opplæring",
-  "url": "https://fjuken.no/debatt/o/kvbXKa/tilskot-er-avgje-rande-for-aa-kunne-gjennom-foere-kurs-og-opplaering",
-  "kilde": "Fjuken",
-  "dato": "2026-10-19",
-  "sammendrag": "Studieforbundet kultur og tradisjon kritiserer forslaget om å kutte om lag 70 millioner kroner til studieforbundene. Kuttet kan føre til at kurs og opplæring i lokale lag ikke blir gjennomført, med Vågå som eksempel.",
+  "tittel": "Hemnes Husflidslag reagerer på kuttet til husflidslaget og studieforbundene i statsbudsjettet 2027",
+  "url": "https://www.facebook.com/319473931406680_1577676327719571",
+  "kilde": "Hemnes Husflidslag (Facebook)",
+  "dato": "2026-10-18",
+  "sammendrag": "Hemnes Husflidslag peker på Facebook på at regjeringen vil kutte tilskuddet til Norges Husflidslag med 1,1 millioner kroner og samtidig redusere tilskuddet til studieforbundene i budsjettet for 2027. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://vcdn.polarismedia.no/d44430cb-e157-3b13-9679-f61ed505aaf2?fit=crop&q=80&tight=false&w=1200&h=900",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/hemnes-husflidslag.jpg",
   "fylker": [
-   "Innlandet"
+   "Nordland"
   ],
-  "sted": "Vågå",
-  "lat": 61.88,
-  "lon": 9.1,
-  "kategori": "Medier",
-  "forbund": [
-   "Studieforbundet kultur og tradisjon"
-  ]
+  "sted": "Hemnes",
+  "lat": 66.08,
+  "lon": 13.83,
+  "kategori": "Organisasjonene",
+  "forbund": []
  },
  {
   "tittel": "Kjemper mot budsjettkutt: – De små lagene merker det først",
@@ -107,21 +124,23 @@
   "forbund": []
  },
  {
-  "tittel": "Hemnes Husflidslag reagerer på kuttet til husflidslaget og studieforbundene i statsbudsjettet 2027",
-  "url": "https://www.facebook.com/319473931406680_1577676327719571",
-  "kilde": "Hemnes Husflidslag (Facebook)",
-  "dato": "2026-10-18",
-  "sammendrag": "Hemnes Husflidslag peker på Facebook på at regjeringen vil kutte tilskuddet til Norges Husflidslag med 1,1 millioner kroner og samtidig redusere tilskuddet til studieforbundene i budsjettet for 2027. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "tittel": "Et kutt som rammer mer enn pengeverdien",
+  "url": "https://www.musikk.no/rogaland/nyheter/et-kutt-som-rammer-mer-enn-pengeverdien",
+  "kilde": "Rogaland musikkråd",
+  "dato": "2026-10-16",
+  "sammendrag": "Liv Tjemsland, daglig leder i Rogaland musikkråd, viser til at kuttet gir 4,8 mill. kr mindre til studieforbundene i Rogaland og over 2 mill. kr mindre til det frivillige musikklivet i fylket. Hun mener kuttet rammer kor, korps og lavterskeltilbud hardest, og krever at det reverseres.",
   "viktig": false,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/hemnes-husflidslag.jpg",
+  "bilde": "https://i2.vrs.gd/musikk/Rogaland/Foto_Kristin_Myrmel.jpeg?width=1200&height=630&format=jpg&quality=80&crop=2048%2C1076%2C0%2C230",
   "fylker": [
-   "Nordland"
+   "Rogaland"
   ],
-  "sted": "Hemnes",
-  "lat": 66.08,
-  "lon": 13.83,
+  "sted": "Stavanger",
+  "lat": 58.97,
+  "lon": 5.73,
   "kategori": "Organisasjonene",
-  "forbund": []
+  "forbund": [
+   "Musikkens studieforbund"
+  ]
  },
  {
   "tittel": "Odd om kutta: – Rett og slett demotiverande",
@@ -158,23 +177,35 @@
   "forbund": []
  },
  {
-  "tittel": "Et kutt som rammer mer enn pengeverdien",
-  "url": "https://www.musikk.no/rogaland/nyheter/et-kutt-som-rammer-mer-enn-pengeverdien",
-  "kilde": "Rogaland musikkråd",
-  "dato": "2026-10-16",
-  "sammendrag": "Liv Tjemsland, daglig leder i Rogaland musikkråd, viser til at kuttet gir 4,8 mill. kr mindre til studieforbundene i Rogaland og over 2 mill. kr mindre til det frivillige musikklivet i fylket. Hun mener kuttet rammer kor, korps og lavterskeltilbud hardest, og krever at det reverseres.",
+  "tittel": "– Finnmark forventer handling",
+  "url": "https://www.altaposten.no/meninger/o/77Q574/finnmark-forventer-handling",
+  "kilde": "Altaposten",
+  "dato": "2026-10-15",
+  "sammendrag": "Geir Enok Thrane legger på vegne av flertallet i Finnmark fylkesting fram en uttalelse som ber regjeringen og Stortinget reversere kuttene til studieforbundene og sikre prisjusterte tilskudd. Flertallet mener kuttene svekker læringsarenaer, frivillighet og kompetansebygging i Finnmark.",
   "viktig": false,
-  "bilde": "https://i2.vrs.gd/musikk/Rogaland/Foto_Kristin_Myrmel.jpeg?width=1200&height=630&format=jpg&quality=80&crop=2048%2C1076%2C0%2C230",
+  "bilde": "https://vcdn.polarismedia.no/5f3ab2cc-cd76-3a93-a124-bc80f2ed2505?fit=crop&q=80&tight=false&w=1200&h=676",
   "fylker": [
-   "Rogaland"
+   "Finnmark"
   ],
-  "sted": "Stavanger",
-  "lat": 58.97,
-  "lon": 5.73,
-  "kategori": "Organisasjonene",
-  "forbund": [
-   "Musikkens studieforbund"
-  ]
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Lise og Berit krysser fingrene før konserten: – Vi gir ikke opp",
+  "url": "https://www.avisa-gaula.no/",
+  "kilde": "Avisa Gaula",
+  "dato": "2026-10-15",
+  "sammendrag": "Avisa Gaula skriver om voksenkorpsene i Melhus, som allerede merker forslaget om kutt i voksenopplæringsmidlene i statsbudsjettet på økonomien. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/avisa-gaula-vi-gir-ikke-opp.jpg",
+  "fylker": [
+   "Trøndelag"
+  ],
+  "sted": "Melhus",
+  "lat": 63.29,
+  "lon": 10.28,
+  "kategori": "Medier",
+  "forbund": []
  },
  {
   "tittel": "Kuttet i foreslått støtte rammer frivilligheten bredt",
@@ -189,20 +220,6 @@
   "forbund": [
    "Kristelig Studieforbund"
   ]
- },
- {
-  "tittel": "Vi er dypt uenige i dette kuttforslaget",
-  "url": "https://www.vofo.no/aktuelt/vi-er-dypt-uenige-i-dette-kuttforslaget",
-  "kilde": "Vofo",
-  "dato": "2026-10-15",
-  "sammendrag": "Fylkespolitikere fra Frp, Høyre og Nordkalottfolket i Finnmark advarer mot regjeringens kutt på rundt 70 millioner kroner til studieforbundene. De mener kuttet vil ramme kompetanse, beredskap, samisk og kvensk språk og kultur og små lokalsamfunn i distriktene særlig hardt.",
-  "viktig": false,
-  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/f5a05f6bf58854cd364857fe5333f0f14b557326-718x580.png?rect=0,102,718,377&w=1200&h=630&fit=max&auto=format",
-  "fylker": [
-   "Finnmark"
-  ],
-  "kategori": "Organisasjonene",
-  "forbund": []
  },
  {
   "tittel": "Flertall i Finnmark fylkesting krever økt satsing i statsbudsjettet",
@@ -222,34 +239,15 @@
   "forbund": []
  },
  {
-  "tittel": "Halvering av studieforbundsmidlene rammer blant annet beredskap, digital inkludering og lokale korps",
-  "url": "https://www.sfll.no/halvering-av-studieforbundsmidlene-rammer-blant-annet-beredskap-digital-inkludering-og-lokale-korps/",
-  "kilde": "Studieforbundet Livslang Læring",
+  "tittel": "Vil stanse kutt i støtten til korene",
+  "url": "https://www.kor.no/artikler/vil-stanse-kutt-i-stotten-til-korene",
+  "kilde": "Norges Korforbund",
   "dato": "2026-10-15",
-  "sammendrag": "Studieforbundet Livslang Læring viser at halveringen av tilskuddet under Kunnskapsdepartementet, fra 67,3 til 34,8 millioner kroner, vil ramme beredskapskurs, førstehjelp, digital opplæring for seniorer og opplæring i lokale korps. Forbundet ber Stortinget stanse kuttet.",
+  "sammendrag": "Norges Korforbund har sendt høringsinnspill til Stortinget om statsbudsjettet 2027 og krever at kuttet på til sammen 70 millioner kroner til studieforbundene reverseres. Forbundet advarer om høyere kontingenter og svakere rekruttering i korene og deltar også på muntlig høring.",
   "viktig": false,
-  "bilde": "https://www.sfll.no/wp-content/uploads/2025/09/Stortinget_i_Oslo-1280x853.jpeg",
+  "bilde": "https://cdn.sanity.io/images/2m2bmunq/production/33b0ac0b98f1e1ca28aa45c790537ea981fd8f9a-1311x1311.png?auto=format&fit=max&q=75&w=600",
   "fylker": [],
   "kategori": "Organisasjonene",
-  "forbund": [
-   "Studieforbundet Livslang Læring"
-  ]
- },
- {
-  "tittel": "Lise og Berit krysser fingrene før konserten: – Vi gir ikke opp",
-  "url": "https://www.avisa-gaula.no/",
-  "kilde": "Avisa Gaula",
-  "dato": "2026-10-15",
-  "sammendrag": "Avisa Gaula skriver om voksenkorpsene i Melhus, som allerede merker forslaget om kutt i voksenopplæringsmidlene i statsbudsjettet på økonomien. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
-  "viktig": false,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/avisa-gaula-vi-gir-ikke-opp.jpg",
-  "fylker": [
-   "Trøndelag"
-  ],
-  "sted": "Melhus",
-  "lat": 63.29,
-  "lon": 10.28,
-  "kategori": "Medier",
   "forbund": []
  },
  {
@@ -270,39 +268,41 @@
   "forbund": []
  },
  {
-  "tittel": "– Finnmark forventer handling",
-  "url": "https://www.altaposten.no/meninger/o/77Q574/finnmark-forventer-handling",
-  "kilde": "Altaposten",
+  "tittel": "Halvering av studieforbundsmidlene rammer blant annet beredskap, digital inkludering og lokale korps",
+  "url": "https://www.sfll.no/halvering-av-studieforbundsmidlene-rammer-blant-annet-beredskap-digital-inkludering-og-lokale-korps/",
+  "kilde": "Studieforbundet Livslang Læring",
   "dato": "2026-10-15",
-  "sammendrag": "Geir Enok Thrane legger på vegne av flertallet i Finnmark fylkesting fram en uttalelse som ber regjeringen og Stortinget reversere kuttene til studieforbundene og sikre prisjusterte tilskudd. Flertallet mener kuttene svekker læringsarenaer, frivillighet og kompetansebygging i Finnmark.",
+  "sammendrag": "Studieforbundet Livslang Læring viser at halveringen av tilskuddet under Kunnskapsdepartementet, fra 67,3 til 34,8 millioner kroner, vil ramme beredskapskurs, førstehjelp, digital opplæring for seniorer og opplæring i lokale korps. Forbundet ber Stortinget stanse kuttet.",
   "viktig": false,
-  "bilde": "https://vcdn.polarismedia.no/5f3ab2cc-cd76-3a93-a124-bc80f2ed2505?fit=crop&q=80&tight=false&w=1200&h=676",
+  "bilde": "https://www.sfll.no/wp-content/uploads/2025/09/Stortinget_i_Oslo-1280x853.jpeg",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Livslang Læring"
+  ]
+ },
+ {
+  "tittel": "Vi er dypt uenige i dette kuttforslaget",
+  "url": "https://www.vofo.no/aktuelt/vi-er-dypt-uenige-i-dette-kuttforslaget",
+  "kilde": "Vofo",
+  "dato": "2026-10-15",
+  "sammendrag": "Fylkespolitikere fra Frp, Høyre og Nordkalottfolket i Finnmark advarer mot regjeringens kutt på rundt 70 millioner kroner til studieforbundene. De mener kuttet vil ramme kompetanse, beredskap, samisk og kvensk språk og kultur og små lokalsamfunn i distriktene særlig hardt.",
+  "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/f5a05f6bf58854cd364857fe5333f0f14b557326-718x580.png?rect=0,102,718,377&w=1200&h=630&fit=max&auto=format",
   "fylker": [
    "Finnmark"
   ],
-  "kategori": "Medier",
-  "forbund": []
- },
- {
-  "tittel": "Vil stanse kutt i støtten til korene",
-  "url": "https://www.kor.no/artikler/vil-stanse-kutt-i-stotten-til-korene",
-  "kilde": "Norges Korforbund",
-  "dato": "2026-10-15",
-  "sammendrag": "Norges Korforbund har sendt høringsinnspill til Stortinget om statsbudsjettet 2027 og krever at kuttet på til sammen 70 millioner kroner til studieforbundene reverseres. Forbundet advarer om høyere kontingenter og svakere rekruttering i korene og deltar også på muntlig høring.",
-  "viktig": false,
-  "bilde": "https://cdn.sanity.io/images/2m2bmunq/production/33b0ac0b98f1e1ca28aa45c790537ea981fd8f9a-1311x1311.png?auto=format&fit=max&q=75&w=600",
-  "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
  },
  {
-  "tittel": "Statsbudsjettet 2027: Ber om nasjonalt utviklingsløft for kulturskolen",
-  "url": "https://www.kulturskoleradet.no/nyheter/2026/oktober/statsbudsjettet-2027-ber-om-nasjonalt-utviklingsloft-for-kulturskolen",
-  "kilde": "Kulturskolerådet",
+  "tittel": "Kutt til studieforbundene truer kurs og tegnspråklige møteplasser",
+  "url": "https://www.doveforbundet.no/blog/2026/10/14/kutt-til-studieforbundene-truer-kurs-og-tegnspraklige-moteplasser/",
+  "kilde": "Norges Døveforbund",
   "dato": "2026-10-14",
-  "sammendrag": "Kulturskolerådet er bekymret for kuttet i VO-midlene til studieforbundene. Korps, orkestre og andre lokale samarbeidspartnere for kulturskolene er avhengige av midlene, og kuttet kan gi færre opplæringstilbud, høyere deltakerkostnader og svakere lokale fagmiljøer.",
-  "viktig": false,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kulturskoleradet-kulturdag-trondheim.jpg",
+  "sammendrag": "Norges Døveforbund advarer om at kuttet på 70 millioner kroner til studieforbundene kan gi færre kurs og svakere opplæring for døve og hørselshemmede, særlig i lokalforeningene.",
+  "viktig": true,
+  "bilde": "https://www.doveforbundet.no/content/uploads/2026/10/youtube-video-thumbnail-dsgrInGQuNY-maxresdefault.jpg",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
@@ -325,6 +325,18 @@
   "forbund": []
  },
  {
+  "tittel": "Statsbudsjettet 2027: Ber om nasjonalt utviklingsløft for kulturskolen",
+  "url": "https://www.kulturskoleradet.no/nyheter/2026/oktober/statsbudsjettet-2027-ber-om-nasjonalt-utviklingsloft-for-kulturskolen",
+  "kilde": "Kulturskolerådet",
+  "dato": "2026-10-14",
+  "sammendrag": "Kulturskolerådet er bekymret for kuttet i VO-midlene til studieforbundene. Korps, orkestre og andre lokale samarbeidspartnere for kulturskolene er avhengige av midlene, og kuttet kan gi færre opplæringstilbud, høyere deltakerkostnader og svakere lokale fagmiljøer.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kulturskoleradet-kulturdag-trondheim.jpg",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
   "tittel": "Finnmark forventer handling som står i forhold til fylkets betydning",
   "url": "https://www.radionordkapp.no/pressemelding/finnmark-forventer-handling-som-star-i-forhold-til-fylkets-betydning/",
   "kilde": "Flertallspartiene i Finnmark fylkesting",
@@ -339,18 +351,6 @@
   "lat": 70.07,
   "lon": 29.75,
   "kategori": "Myndigheter og Storting",
-  "forbund": []
- },
- {
-  "tittel": "Kutt til studieforbundene truer kurs og tegnspråklige møteplasser",
-  "url": "https://www.doveforbundet.no/blog/2026/10/14/kutt-til-studieforbundene-truer-kurs-og-tegnspraklige-moteplasser/",
-  "kilde": "Norges Døveforbund",
-  "dato": "2026-10-14",
-  "sammendrag": "Norges Døveforbund advarer om at kuttet på 70 millioner kroner til studieforbundene kan gi færre kurs og svakere opplæring for døve og hørselshemmede, særlig i lokalforeningene.",
-  "viktig": true,
-  "bilde": "https://www.doveforbundet.no/content/uploads/2026/10/youtube-video-thumbnail-dsgrInGQuNY-maxresdefault.jpg",
-  "fylker": [],
-  "kategori": "Organisasjonene",
   "forbund": []
  },
  {
@@ -378,20 +378,6 @@
   "forbund": []
  },
  {
-  "tittel": "Vofo på Akershus-budsjetthøring",
-  "url": "https://www.vofo.no/aktuelt/vofo-pa-akershus-budsjetthoring",
-  "kilde": "Vofo",
-  "dato": "2026-10-13",
-  "sammendrag": "Vofo støtter fylkesrådets budsjettforslag i Akershus, men advarer i budsjetthøringen om at regjeringens kutt på 70 millioner kroner til studieforbundene vil gi studieforbundene i Akershus rundt 7,2 millioner kroner mindre. Vofo ber fylkespolitikerne bidra til at kuttet reverseres.",
-  "viktig": false,
-  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/a34d459202474fcce7a536aacd22f4aa06f73aef-1102x601.png?rect=0,12,1102,579&w=1200&h=630&fit=max&auto=format",
-  "fylker": [
-   "Akershus"
-  ],
-  "kategori": "Organisasjonene",
-  "forbund": []
- },
- {
   "tittel": "Nei til kutt i støtten til studieforbundene",
   "url": "https://www.njff.no/aktuelt/nei-til-kutt-i-stotten-til-studieforbundene",
   "kilde": "NJFF",
@@ -404,6 +390,20 @@
   "forbund": [
    "Studieforbundet natur og miljø"
   ]
+ },
+ {
+  "tittel": "Vofo på Akershus-budsjetthøring",
+  "url": "https://www.vofo.no/aktuelt/vofo-pa-akershus-budsjetthoring",
+  "kilde": "Vofo",
+  "dato": "2026-10-13",
+  "sammendrag": "Vofo støtter fylkesrådets budsjettforslag i Akershus, men advarer i budsjetthøringen om at regjeringens kutt på 70 millioner kroner til studieforbundene vil gi studieforbundene i Akershus rundt 7,2 millioner kroner mindre. Vofo ber fylkespolitikerne bidra til at kuttet reverseres.",
+  "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/a34d459202474fcce7a536aacd22f4aa06f73aef-1102x601.png?rect=0,12,1102,579&w=1200&h=630&fit=max&auto=format",
+  "fylker": [
+   "Akershus"
+  ],
+  "kategori": "Organisasjonene",
+  "forbund": []
  },
  {
   "tittel": "Nasjonalforeningen støtter kampen for å hindre kutt for Studieforbundet i forslag til Statsbudsjett 2027",
@@ -486,18 +486,6 @@
   "forbund": []
  },
  {
-  "tittel": "Statsbudsjettet 2027: Virke etterlyser sterkere satsing på frivilligheten og ideell sektor",
-  "url": "https://www.virke.no/bransjeomrade/helse-og-velferd/#statsbudsjettet2027_Virke",
-  "kilde": "Virke",
-  "dato": "2026-10-09",
-  "sammendrag": "Virke frykter at regjeringens betydelige kutt i tilskuddet til kurs og opplæring gjennom studieforbundene vil svekke frivillige organisasjoners mulighet til å tilby læring og aktivitet over hele landet. Virke er samtidig glad for full momskompensasjon til frivilligheten i 2027.",
-  "viktig": false,
-  "bilde": "https://www.virke.no/globalassets/illustrasjoner/svg/virke-huset-bredt.png",
-  "fylker": [],
-  "kategori": "Organisasjonene",
-  "forbund": []
- },
- {
   "tittel": "Stort kutt i tilskudd for studieforbundene!",
   "url": "https://www.k-stud.no/dramatisk-kutt-for-studieforbundene/",
   "kilde": "Kristelig Studieforbund",
@@ -510,6 +498,18 @@
   "forbund": [
    "Kristelig Studieforbund"
   ]
+ },
+ {
+  "tittel": "Statsbudsjettet 2027: Virke etterlyser sterkere satsing på frivilligheten og ideell sektor",
+  "url": "https://www.virke.no/bransjeomrade/helse-og-velferd/#statsbudsjettet2027_Virke",
+  "kilde": "Virke",
+  "dato": "2026-10-09",
+  "sammendrag": "Virke frykter at regjeringens betydelige kutt i tilskuddet til kurs og opplæring gjennom studieforbundene vil svekke frivillige organisasjoners mulighet til å tilby læring og aktivitet over hele landet. Virke er samtidig glad for full momskompensasjon til frivilligheten i 2027.",
+  "viktig": false,
+  "bilde": "https://www.virke.no/globalassets/illustrasjoner/svg/virke-huset-bredt.png",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
  },
  {
   "tittel": "Nei til kutt på 70 millioner kroner til studieforbundene og frivillig voksenopplæring",
@@ -529,62 +529,6 @@
   "forbund": []
  },
  {
-  "tittel": "Kutt i studieforbundene vil ramme lokalsamfunn hardt",
-  "url": "https://www.vofo.no/aktuelt/kutt-i-studieforbundene-vil-ramme-lokalsamfunn-hardt",
-  "kilde": "Vofo",
-  "dato": "2026-10-08",
-  "sammendrag": "Ledelsen i Vofos fylkesutvalg i Akershus, blant dem nestleder i Studieforbundet Funkis Akershus, advarer om at kuttet på rundt 69 mill. kr får store konsekvenser for lokalsamfunnene i Akershus.",
-  "viktig": false,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/vofo-akershus-ramme-lokalsamfunn.jpg",
-  "fylker": [
-   "Akershus"
-  ],
-  "kategori": "Organisasjonene",
-  "forbund": [
-   "Studieforbundet Funkis"
-  ]
- },
- {
-  "tittel": "Millionkutt vil ramme levende kulturarv over hele landet",
-  "url": "https://husflid.no/millionkutt-vil-ramme-levende-kulturarv-over-hele-landet/",
-  "kilde": "Norges Husflidslag",
-  "dato": "2026-10-08",
-  "sammendrag": "Norges Husflidslag anslår at kuttet i tilskuddet til studieforbundene kan gi lokallagene om lag 1 mill. kr mindre i kurstilskudd, etter at Studieforbundet kultur og tradisjon fordelte 5,5 mill. kr til lagenes kurs i 2025. Organisasjonen får samtidig sitt eget tilskudd redusert fra 16,5 til 15,4 mill. kr.",
-  "viktig": false,
-  "bilde": "https://husflid.no/wp-content/uploads/2026/10/CCoGRnzuO9_VrA.jpg",
-  "fylker": [],
-  "kategori": "Organisasjonene",
-  "forbund": [
-   "Studieforbundet kultur og tradisjon"
-  ]
- },
- {
-  "tittel": "Statsbudsjettet 2027: Flere kutt for det frivillige kulturvernet",
-  "url": "https://kulturvern.no/statsbudsjettet-2027-flere-kutt-for-det-frivillige-kulturvernet/",
-  "kilde": "Norges kulturvernforbund",
-  "dato": "2026-10-08",
-  "sammendrag": "Norges kulturvernforbund peker på flere kutt for det frivillige kulturvernet i budsjettforslaget for 2027, blant dem et betydelig kutt til Voksenopplæringsforbundet og studieforbundene.",
-  "viktig": false,
-  "bilde": "https://kulturvern.no/wp-content/uploads/Forslag-til-statsbudsjettet2.jpg",
-  "fylker": [],
-  "kategori": "Organisasjonene",
-  "forbund": []
- },
- {
-  "tittel": "Statsbudsjettet rammer kristent kurstilbud: Veldig kortsiktig",
-  "url": "https://verdinytt.no/veldig-kortsiktig/19.6248",
-  "kilde": "Verdinytt",
-  "dato": "2026-10-08",
-  "sammendrag": "Kristelig studieforbund mister om lag 4,2 mill. kr i regjeringens budsjettforslag for 2027, og leder Hege Irene Fossum frykter færre kurs og mindre opplæring i distriktene. Saken ligger bak betalingsmur og kunne ikke leses i sin helhet.",
-  "viktig": false,
-  "bilde": "https://verdinytt.no/bilder/web/45e51caec7e90.jpg?v=1791474789",
-  "fylker": [],
-  "kategori": "Medier",
-  "forbund": [
-   "Kristelig studieforbund"
-  ]
- },
- {
   "tittel": "Store kutt kan ramme amatørteater og skolerevyer over hele landet",
   "url": "https://www.frilynt.no/nyheter/store-kutt-kan-ramme-amatoerteater-og-skolerevyer-over-hele-landet/",
   "kilde": "Frilynt Norge",
@@ -599,13 +543,13 @@
   ]
  },
  {
-  "tittel": "Forslag til statsbudsjettet for 2027: Få økonomiske løft for frivilligheten",
-  "url": "https://kysten.no/nyheter/forslag-til-statsbudsjettet-for-2027-få-økonomiske-løft-for-frivilligheten",
-  "kilde": "Forbundet KYSTEN",
+  "tittel": "Millionkutt vil ramme levende kulturarv over hele landet",
+  "url": "https://husflid.no/millionkutt-vil-ramme-levende-kulturarv-over-hele-landet/",
+  "kilde": "Norges Husflidslag",
   "dato": "2026-10-08",
-  "sammendrag": "Forbundet KYSTEN mener budsjettet gir få økonomiske løft for frivilligheten. Kuttet på nærmere 70 mill. kr til studieforbundene kan ramme kurs og opplæring i kystlagene, blant annet gjennom Studieforbundet kultur og tradisjon.",
+  "sammendrag": "Norges Husflidslag anslår at kuttet i tilskuddet til studieforbundene kan gi lokallagene om lag 1 mill. kr mindre i kurstilskudd, etter at Studieforbundet kultur og tradisjon fordelte 5,5 mill. kr til lagenes kurs i 2025. Organisasjonen får samtidig sitt eget tilskudd redusert fra 16,5 til 15,4 mill. kr.",
   "viktig": false,
-  "bilde": "https://kysten.no//media/bilder/_1200x630_crop_center-center_82_none/Forslag-til-statsbudsjettet-2027.png?mtime=1791472633",
+  "bilde": "https://husflid.no/wp-content/uploads/2026/10/CCoGRnzuO9_VrA.jpg",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": [
@@ -627,40 +571,84 @@
   ]
  },
  {
-  "tittel": "Statsbudsjettet 2027: Ikke et godt budsjett for kulturfrivilligheten",
-  "url": "https://kulturalliansen.no/aktuelt/statsbudsjettet-2027-ikke-et-godt-budsjett-for-kulturfrivilligheten/",
-  "kilde": "Kulturalliansen",
-  "dato": "2026-10-07",
-  "sammendrag": "Kulturalliansen er svært bekymret for kuttet på nesten 70 millioner kroner til studieforbundene, som gjør det mulig for lag og foreninger å tilby opplæring. Daglig leder Stian Seland mener forslaget svekker vilkårene for kulturfrivilligheten.",
+  "tittel": "Statsbudsjettet 2027: Flere kutt for det frivillige kulturvernet",
+  "url": "https://kulturvern.no/statsbudsjettet-2027-flere-kutt-for-det-frivillige-kulturvernet/",
+  "kilde": "Norges kulturvernforbund",
+  "dato": "2026-10-08",
+  "sammendrag": "Norges kulturvernforbund peker på flere kutt for det frivillige kulturvernet i budsjettforslaget for 2027, blant dem et betydelig kutt til Voksenopplæringsforbundet og studieforbundene.",
   "viktig": false,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kulturalliansen-logo.jpg",
+  "bilde": "https://kulturvern.no/wp-content/uploads/Forslag-til-statsbudsjettet2.jpg",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
  },
  {
-  "tittel": "UngFunk reagerer på statsbudsjettet 2027",
-  "url": "https://ungefunksjonshemmede.no/nyheter/ungfunk-reagerer-p%C3%A5-statsbudsjettet-2027",
-  "kilde": "Unge funksjonshemmede",
-  "dato": "2026-10-07",
-  "sammendrag": "Unge funksjonshemmede mener statsbudsjettet for 2027 ikke følger opp ambisjonene i likestillingsstrategien for funksjonshemmede. Organisasjonen kritiserer blant annet store kutt i støtten til studieforbundene.",
+  "tittel": "Forslag til statsbudsjettet for 2027: Få økonomiske løft for frivilligheten",
+  "url": "https://kysten.no/nyheter/forslag-til-statsbudsjettet-for-2027-få-økonomiske-løft-for-frivilligheten",
+  "kilde": "Forbundet KYSTEN",
+  "dato": "2026-10-08",
+  "sammendrag": "Forbundet KYSTEN mener budsjettet gir få økonomiske løft for frivilligheten. Kuttet på nærmere 70 mill. kr til studieforbundene kan ramme kurs og opplæring i kystlagene, blant annet gjennom Studieforbundet kultur og tradisjon.",
   "viktig": false,
-  "bilde": "https://ungfunk-site.transforms.svdcdn.com/production/IMG_0690.jpg?w=1200&h=630&fm=jpg&auto=compress&fit=crop&dm=1791373290&s=0f2e0938637045c5e40116f1910044b7",
+  "bilde": "https://kysten.no//media/bilder/_1200x630_crop_center-center_82_none/Forslag-til-statsbudsjettet-2027.png?mtime=1791472633",
   "fylker": [],
   "kategori": "Organisasjonene",
-  "forbund": []
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
+  ]
  },
  {
-  "tittel": "Stort kutt for K-stud: Dårlig frivillighetspolitikk",
-  "url": "https://www.ka.no/sak/article/1921851",
-  "kilde": "KA",
-  "dato": "2026-10-07",
-  "sammendrag": "KA skriver at regjeringen foreslår å kutte 37 mill. kr til studieforbundene over Kulturdepartementets budsjett, noe som rammer Kristelig Studieforbund, og nærmere 70 mill. kr samlet med kuttet i KD. Avdelingsdirektør Jens A. Bjelland kaller det dårlig frivillighetspolitikk.",
+  "tittel": "Statsbudsjettet rammer kristent kurstilbud: Veldig kortsiktig",
+  "url": "https://verdinytt.no/veldig-kortsiktig/19.6248",
+  "kilde": "Verdinytt",
+  "dato": "2026-10-08",
+  "sammendrag": "Kristelig studieforbund mister om lag 4,2 mill. kr i regjeringens budsjettforslag for 2027, og leder Hege Irene Fossum frykter færre kurs og mindre opplæring i distriktene. Saken ligger bak betalingsmur og kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://d1nizz91i54auc.cloudfront.net/_service/300831/display/img_version/9351061/t/1791370012/img_name/42011_300831_953168c972.jpg",
+  "bilde": "https://verdinytt.no/bilder/web/45e51caec7e90.jpg?v=1791474789",
+  "fylker": [],
   "kategori": "Medier",
   "forbund": [
-   "Kristelig Studieforbund"
+   "Kristelig studieforbund"
+  ]
+ },
+ {
+  "tittel": "Kutt i studieforbundene vil ramme lokalsamfunn hardt",
+  "url": "https://www.vofo.no/aktuelt/kutt-i-studieforbundene-vil-ramme-lokalsamfunn-hardt",
+  "kilde": "Vofo",
+  "dato": "2026-10-08",
+  "sammendrag": "Ledelsen i Vofos fylkesutvalg i Akershus, blant dem nestleder i Studieforbundet Funkis Akershus, advarer om at kuttet på rundt 69 mill. kr får store konsekvenser for lokalsamfunnene i Akershus.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/vofo-akershus-ramme-lokalsamfunn.jpg",
+  "fylker": [
+   "Akershus"
+  ],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Funkis"
+  ]
+ },
+ {
+  "tittel": "Drastisk kutt i studieforbundfinansieringen rammer frivillig sektor",
+  "url": "https://www.abelia.no/artikler/til-forsiden-/drastisk-kutt-i-studieforbundfinansieringen-rammer-frivillig-sektor/",
+  "kilde": "Abelia",
+  "dato": "2026-10-07",
+  "sammendrag": "Abelia advarer om at kuttet på 70 millioner kroner til studieforbundene rammer kurs i frivillige organisasjoner, som språkopplæring, førstehjelp og datakurs for eldre. Leder for sivilsamfunn Birgitte Brekke etterlyser også bedre rammevilkår for frivillig sektor i budsjettet.",
+  "viktig": false,
+  "bilde": "https://www.abelia.no/globalassets/fotoware/2026/10/20251202_abelia_birgitte_121127_hr.jpg?width=1200&height=630&mode=crop",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "FFOs reaksjoner på statsbudsjettet 2027",
+  "url": "https://www.ffo.no/aktuelt/nyheter/ffos-reaksjoner-pa-statsbudsjettet-2027",
+  "kilde": "FFO",
+  "dato": "2026-10-07",
+  "sammendrag": "FFO kaller kuttet i rammene til studieforbundene uventet og dramatisk, med et nominelt kutt på 19 prosent. Studieforbundet Funkis og de 110 medlemsorganisasjonene rammes, og FFO advarer om at aktiviteten lokalt vil gå ned.",
+  "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/zidy0zu1/production/880e31a0880e304bf81dd447070f1f757323266f-5370x3516.jpg",
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Funkis"
   ]
  },
  {
@@ -678,115 +666,13 @@
   ]
  },
  {
-  "tittel": "Aktiviteten blomstrer mens tilskuddene kuttes drastisk",
-  "url": "https://www.vofo.no/aktuelt/aktiviteten-blomstrer-mens-tilskuddene-kuttes-drastisk",
-  "kilde": "Vofo",
+  "tittel": "Statsbudsjett for 2027: Ein fyrste kommentar frå dagleg leiar",
+  "url": "https://www.folkorg.no/nyhende/nyhende/2026-10-07-statsbudsjett-for-2027---ein-fyrste-kommentar-fra-dagleg-leiar",
+  "kilde": "FolkOrg",
   "dato": "2026-10-07",
-  "sammendrag": "Vofo om forslaget til statsbudsjett for 2027. Kursaktiviteten i studieforbundene øker, samtidig som tilskuddene kuttes kraftig.",
-  "viktig": true,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/vofo-aktiviteten-blomstrer.jpg?v=2",
-  "kategori": "Organisasjonene",
-  "forbund": []
- },
- {
-  "tittel": "Vil øke kulturbudsjettet med 946 millioner",
-  "url": "https://subjekt.no/2026/10/07/slik-blir-kulturbudsjettet-for-2027/",
-  "kilde": "Subjekt",
-  "dato": "2026-10-07",
-  "sammendrag": "Subjekt gjennomgår kulturbudsjettet for 2027 og skriver at studieforbundene taper mest. Saken ligger bak betalingsmur og kunne ikke leses i sin helhet.",
+  "sammendrag": "Dagleg leiar i FolkOrg, organisasjonen for folkemusikk og folkedans, kommenterer forslaget til statsbudsjett for 2027. Saken kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://subjekt.no/content/uploads/2026/03/NTB_mMhELjhyQ6o-scaled.jpg",
-  "fylker": [],
-  "kategori": "Medier",
-  "forbund": []
- },
- {
-  "tittel": "Drastisk kutt i studieforbundfinansieringen rammer frivillig sektor",
-  "url": "https://www.abelia.no/artikler/til-forsiden-/drastisk-kutt-i-studieforbundfinansieringen-rammer-frivillig-sektor/",
-  "kilde": "Abelia",
-  "dato": "2026-10-07",
-  "sammendrag": "Abelia advarer om at kuttet på 70 millioner kroner til studieforbundene rammer kurs i frivillige organisasjoner, som språkopplæring, førstehjelp og datakurs for eldre. Leder for sivilsamfunn Birgitte Brekke etterlyser også bedre rammevilkår for frivillig sektor i budsjettet.",
-  "viktig": false,
-  "bilde": "https://www.abelia.no/globalassets/fotoware/2026/10/20251202_abelia_birgitte_121127_hr.jpg?width=1200&height=630&mode=crop",
-  "fylker": [],
-  "kategori": "Organisasjonene",
-  "forbund": []
- },
- {
-  "tittel": "Regjeringen halverer tilskuddet til studieforbundene i KD, ber Stortinget reversere kuttet",
-  "url": "https://www.kompetanseforbundet.no/nyheter/2026/regjeringen-halverer-tilskuddet-til-studieforbundene-ber-stortinget-reversere-kuttet/",
-  "kilde": "Kompetanseforbundet",
-  "dato": "2026-10-07",
-  "sammendrag": "Regjeringen foreslår å kutte tilskuddet til studieforbundene under Kunnskapsdepartementet med 50,2 prosent, fra 67,3 til 34,8 mill. kr i 2027. Kompetanseforbundet ber Stortinget reversere kuttet.",
-  "viktig": true,
-  "bilde": "https://www.kompetanseforbundet.no/wp-content/uploads/2026/10/kent-foran-Stortinget-1024x684.png",
-  "kategori": "Organisasjonene",
-  "forbund": [
-   "Akademisk Studieforbund",
-   "Studieforbundet Livslang Læring",
-   "Studieforbundet Næring og samfunn"
-  ],
-  "nederst": true
- },
- {
-  "tittel": "Dette betyr statsbudsjettet 2027 for korps",
-  "url": "https://www.korps.no/aktuelt/statsbudsjettet-2027-for-korps",
-  "kilde": "Norges Musikkorps Forbund",
-  "dato": "2026-10-07",
-  "sammendrag": "NMF skriver at kurstilskuddet til korpsene blir kraftig redusert, med nesten en halvering over Kunnskapsdepartementet og om lag en femtedel over Kulturdepartementet, til sammen rundt 70 mill. kr. NMF får voksenopplæringsmidlene gjennom Studieforbundet Livslang Læring.",
-  "viktig": false,
-  "bilde": "https://cdn.prod.website-files.com/658055cdf20fc2fc6370b7e8/6ac64a17106af6791559e8f3__DSC1313.jpg",
-  "kategori": "Organisasjonene",
-  "forbund": [
-   "Studieforbundet Livslang Læring"
-  ]
- },
- {
-  "tittel": "Slik er kulturbudsjettet 2027",
-  "url": "https://www.kontekst.no/slik-er-kulturbudsjettet-2027/",
-  "kilde": "Kontekst",
-  "dato": "2026-10-07",
-  "sammendrag": "Kontekst gjennomgår kulturbudsjettet som kulturminister Lubna Jaffery la fram, og gjengir Kulturalliansens bekymring for kuttene til studieforbundene og flere kulturorganisasjoner.",
-  "viktig": false,
-  "bilde": "https://www.kontekst.no/wp-content/uploads/sites/2/2026/10/DSCF7373v2.jpg",
-  "fylker": [],
-  "kategori": "Medier",
-  "forbund": []
- },
- {
-  "tittel": "Digert kutt i statsbudsjettet",
-  "url": "https://www.musikkensstudieforbund.no/nyheter/gigantiske-kutt-i-statsbudsjettet",
-  "kilde": "Musikkens studieforbund",
-  "dato": "2026-10-07",
-  "sammendrag": "Musikkens studieforbund advarer om at kuttet i studieforbundstilskuddet i forslaget til statsbudsjett for 2027 rammer kor, korps, band og andre musikkgrupper i alle kommuner. Forbundet oppfordrer hver enkelt musikkgruppe til å kontakte politikerne, slik som da et mindre kutt ble reversert i 2018.",
-  "viktig": true,
-  "bilde": "https://i2.vrs.gd/musikk/Musikkens-studieforbund/Nye-penger-20171115_121810.jpg?width=1200&height=630&format=jpg&quality=80&crop=2048%2C1076%2C0%2C230",
-  "kategori": "Organisasjonene",
-  "forbund": [
-   "Musikkens Studieforbund"
-  ]
- },
- {
-  "tittel": "Statsbudsjettet 2027: Historisk kutt rammar studieforbunda",
-  "url": "https://www.kulturogtradisjon.no/post/statsbudsjettet-2027-historisk-kutt-rammar-studieforbunda",
-  "kilde": "Studieforbundet kultur og tradisjon",
-  "dato": "2026-10-07",
-  "sammendrag": "Regjeringen foreslår å kutte om lag 70 millioner kroner, rundt 26 prosent, i tilskuddet til studieforbundene, med 18,1 prosent kutt under Kulturdepartementet og 50,2 prosent under Kunnskapsdepartementet. Daglig leder Kjærsti Gangsø kaller forslaget dramatisk og påpeker at kuttet er tre ganger større enn i 2018.",
-  "viktig": true,
-  "bilde": "https://static.wixstatic.com/media/4a9374_5eadd307ac1146aa94ac9ac8116b7ddf~mv2.png/v1/fill/w_960,h_481,al_c,q_90/4a9374_5eadd307ac1146aa94ac9ac8116b7ddf~mv2.png",
-  "kategori": "Organisasjonene",
-  "forbund": [
-   "Studieforbundet Kultur og tradisjon"
-  ]
- },
- {
-  "tittel": "Lite musikk i kulturbudsjettet",
-  "url": "https://jazzinorge.no/2026/10/07/lite-musikk-i-kulturbudsjettet/",
-  "kilde": "Norsk jazzforum",
-  "dato": "2026-10-07",
-  "sammendrag": "Norsk jazzforum mener musikkfeltet får lite av et rekordstort kulturbudsjett, og peker på forslaget om å redusere tilskuddet til studieforbundene med 37,2 millioner kroner.",
-  "viktig": false,
-  "bilde": "https://jazzinorge.no/content/uploads/2025/10/Gry-Bratomyr_foto-NiklasLello_Norsk-jazzforum_presse_nett_2.jpg",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/folkorg-statsbudsjett-2027.jpg",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
@@ -818,29 +704,120 @@
   ]
  },
  {
-  "tittel": "FFOs reaksjoner på statsbudsjettet 2027",
-  "url": "https://www.ffo.no/aktuelt/nyheter/ffos-reaksjoner-pa-statsbudsjettet-2027",
-  "kilde": "FFO",
+  "tittel": "Lite musikk i kulturbudsjettet",
+  "url": "https://jazzinorge.no/2026/10/07/lite-musikk-i-kulturbudsjettet/",
+  "kilde": "Norsk jazzforum",
   "dato": "2026-10-07",
-  "sammendrag": "FFO kaller kuttet i rammene til studieforbundene uventet og dramatisk, med et nominelt kutt på 19 prosent. Studieforbundet Funkis og de 110 medlemsorganisasjonene rammes, og FFO advarer om at aktiviteten lokalt vil gå ned.",
+  "sammendrag": "Norsk jazzforum mener musikkfeltet får lite av et rekordstort kulturbudsjett, og peker på forslaget om å redusere tilskuddet til studieforbundene med 37,2 millioner kroner.",
   "viktig": false,
-  "bilde": "https://cdn.sanity.io/images/zidy0zu1/production/880e31a0880e304bf81dd447070f1f757323266f-5370x3516.jpg",
-  "kategori": "Organisasjonene",
-  "forbund": [
-   "Studieforbundet Funkis"
-  ]
- },
- {
-  "tittel": "Statsbudsjett for 2027: Ein fyrste kommentar frå dagleg leiar",
-  "url": "https://www.folkorg.no/nyhende/nyhende/2026-10-07-statsbudsjett-for-2027---ein-fyrste-kommentar-fra-dagleg-leiar",
-  "kilde": "FolkOrg",
-  "dato": "2026-10-07",
-  "sammendrag": "Dagleg leiar i FolkOrg, organisasjonen for folkemusikk og folkedans, kommenterer forslaget til statsbudsjett for 2027. Saken kunne ikke leses i sin helhet.",
-  "viktig": false,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/folkorg-statsbudsjett-2027.jpg",
+  "bilde": "https://jazzinorge.no/content/uploads/2025/10/Gry-Bratomyr_foto-NiklasLello_Norsk-jazzforum_presse_nett_2.jpg",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
+ },
+ {
+  "tittel": "Stort kutt for K-stud: Dårlig frivillighetspolitikk",
+  "url": "https://www.ka.no/sak/article/1921851",
+  "kilde": "KA",
+  "dato": "2026-10-07",
+  "sammendrag": "KA skriver at regjeringen foreslår å kutte 37 mill. kr til studieforbundene over Kulturdepartementets budsjett, noe som rammer Kristelig Studieforbund, og nærmere 70 mill. kr samlet med kuttet i KD. Avdelingsdirektør Jens A. Bjelland kaller det dårlig frivillighetspolitikk.",
+  "viktig": false,
+  "bilde": "https://d1nizz91i54auc.cloudfront.net/_service/300831/display/img_version/9351061/t/1791370012/img_name/42011_300831_953168c972.jpg",
+  "kategori": "Medier",
+  "forbund": [
+   "Kristelig Studieforbund"
+  ]
+ },
+ {
+  "tittel": "Regjeringen halverer tilskuddet til studieforbundene i KD, ber Stortinget reversere kuttet",
+  "url": "https://www.kompetanseforbundet.no/nyheter/2026/regjeringen-halverer-tilskuddet-til-studieforbundene-ber-stortinget-reversere-kuttet/",
+  "kilde": "Kompetanseforbundet",
+  "dato": "2026-10-07",
+  "sammendrag": "Regjeringen foreslår å kutte tilskuddet til studieforbundene under Kunnskapsdepartementet med 50,2 prosent, fra 67,3 til 34,8 mill. kr i 2027. Kompetanseforbundet ber Stortinget reversere kuttet.",
+  "viktig": true,
+  "bilde": "https://www.kompetanseforbundet.no/wp-content/uploads/2026/10/kent-foran-Stortinget-1024x684.png",
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Akademisk Studieforbund",
+   "Studieforbundet Livslang Læring",
+   "Studieforbundet Næring og samfunn"
+  ],
+  "nederst": true
+ },
+ {
+  "tittel": "Slik er kulturbudsjettet 2027",
+  "url": "https://www.kontekst.no/slik-er-kulturbudsjettet-2027/",
+  "kilde": "Kontekst",
+  "dato": "2026-10-07",
+  "sammendrag": "Kontekst gjennomgår kulturbudsjettet som kulturminister Lubna Jaffery la fram, og gjengir Kulturalliansens bekymring for kuttene til studieforbundene og flere kulturorganisasjoner.",
+  "viktig": false,
+  "bilde": "https://www.kontekst.no/wp-content/uploads/sites/2/2026/10/DSCF7373v2.jpg",
+  "fylker": [],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Dette betyr statsbudsjettet 2027 for korps",
+  "url": "https://www.korps.no/aktuelt/statsbudsjettet-2027-for-korps",
+  "kilde": "Norges Musikkorps Forbund",
+  "dato": "2026-10-07",
+  "sammendrag": "NMF skriver at kurstilskuddet til korpsene blir kraftig redusert, med nesten en halvering over Kunnskapsdepartementet og om lag en femtedel over Kulturdepartementet, til sammen rundt 70 mill. kr. NMF får voksenopplæringsmidlene gjennom Studieforbundet Livslang Læring.",
+  "viktig": false,
+  "bilde": "https://cdn.prod.website-files.com/658055cdf20fc2fc6370b7e8/6ac64a17106af6791559e8f3__DSC1313.jpg",
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Livslang Læring"
+  ]
+ },
+ {
+  "tittel": "Statsbudsjettet 2027: Ikke et godt budsjett for kulturfrivilligheten",
+  "url": "https://kulturalliansen.no/aktuelt/statsbudsjettet-2027-ikke-et-godt-budsjett-for-kulturfrivilligheten/",
+  "kilde": "Kulturalliansen",
+  "dato": "2026-10-07",
+  "sammendrag": "Kulturalliansen er svært bekymret for kuttet på nesten 70 millioner kroner til studieforbundene, som gjør det mulig for lag og foreninger å tilby opplæring. Daglig leder Stian Seland mener forslaget svekker vilkårene for kulturfrivilligheten.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kulturalliansen-logo.jpg",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Statsbudsjettet 2027: Historisk kutt rammar studieforbunda",
+  "url": "https://www.kulturogtradisjon.no/post/statsbudsjettet-2027-historisk-kutt-rammar-studieforbunda",
+  "kilde": "Studieforbundet kultur og tradisjon",
+  "dato": "2026-10-07",
+  "sammendrag": "Regjeringen foreslår å kutte om lag 70 millioner kroner, rundt 26 prosent, i tilskuddet til studieforbundene, med 18,1 prosent kutt under Kulturdepartementet og 50,2 prosent under Kunnskapsdepartementet. Daglig leder Kjærsti Gangsø kaller forslaget dramatisk og påpeker at kuttet er tre ganger større enn i 2018.",
+  "viktig": true,
+  "bilde": "https://static.wixstatic.com/media/4a9374_5eadd307ac1146aa94ac9ac8116b7ddf~mv2.png/v1/fill/w_960,h_481,al_c,q_90/4a9374_5eadd307ac1146aa94ac9ac8116b7ddf~mv2.png",
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Kultur og tradisjon"
+  ]
+ },
+ {
+  "tittel": "Statsbudsjettet 2027: Rekordstort kulturbudsjett med dramatiske kutt for grasrotaktiviteten",
+  "url": "https://www.musikk.no/nmr/nyheter/statsbudsjettet-2027",
+  "kilde": "Norsk musikkråd",
+  "dato": "2026-10-07",
+  "sammendrag": "Norsk musikkråd mener det foreslåtte kuttet på 70 mill. kr til studieforbundene viser at musikkfrivilligheten nedprioriteres. Generalsekretær Lise Keilty Gulbransen advarer om at kuttet rammer både eldre og frivillige.",
+  "viktig": false,
+  "bilde": "https://i2.vrs.gd/musikk/Norsk-musikkrad/Personer/639ab2c3-8d33-40eb-b959-b56670baa885.jpg?width=1200&height=630&format=jpg&quality=80&crop=2048%2C1076%2C0%2C145",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Digert kutt i statsbudsjettet",
+  "url": "https://www.musikkensstudieforbund.no/nyheter/gigantiske-kutt-i-statsbudsjettet",
+  "kilde": "Musikkens studieforbund",
+  "dato": "2026-10-07",
+  "sammendrag": "Musikkens studieforbund advarer om at kuttet i studieforbundstilskuddet i forslaget til statsbudsjett for 2027 rammer kor, korps, band og andre musikkgrupper i alle kommuner. Forbundet oppfordrer hver enkelt musikkgruppe til å kontakte politikerne, slik som da et mindre kutt ble reversert i 2018.",
+  "viktig": true,
+  "bilde": "https://i2.vrs.gd/musikk/Musikkens-studieforbund/Nye-penger-20171115_121810.jpg?width=1200&height=630&format=jpg&quality=80&crop=2048%2C1076%2C0%2C230",
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Musikkens Studieforbund"
+  ]
  },
  {
   "tittel": "Regjeringen halverer bevilgningen før den har gjennomført sin egen varslede gjennomgang",
@@ -856,14 +833,37 @@
   ]
  },
  {
-  "tittel": "Statsbudsjettet 2027: Rekordstort kulturbudsjett med dramatiske kutt for grasrotaktiviteten",
-  "url": "https://www.musikk.no/nmr/nyheter/statsbudsjettet-2027",
-  "kilde": "Norsk musikkråd",
+  "tittel": "Vil øke kulturbudsjettet med 946 millioner",
+  "url": "https://subjekt.no/2026/10/07/slik-blir-kulturbudsjettet-for-2027/",
+  "kilde": "Subjekt",
   "dato": "2026-10-07",
-  "sammendrag": "Norsk musikkråd mener det foreslåtte kuttet på 70 mill. kr til studieforbundene viser at musikkfrivilligheten nedprioriteres. Generalsekretær Lise Keilty Gulbransen advarer om at kuttet rammer både eldre og frivillige.",
+  "sammendrag": "Subjekt gjennomgår kulturbudsjettet for 2027 og skriver at studieforbundene taper mest. Saken ligger bak betalingsmur og kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://i2.vrs.gd/musikk/Norsk-musikkrad/Personer/639ab2c3-8d33-40eb-b959-b56670baa885.jpg?width=1200&height=630&format=jpg&quality=80&crop=2048%2C1076%2C0%2C145",
+  "bilde": "https://subjekt.no/content/uploads/2026/03/NTB_mMhELjhyQ6o-scaled.jpg",
   "fylker": [],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "UngFunk reagerer på statsbudsjettet 2027",
+  "url": "https://ungefunksjonshemmede.no/nyheter/ungfunk-reagerer-p%C3%A5-statsbudsjettet-2027",
+  "kilde": "Unge funksjonshemmede",
+  "dato": "2026-10-07",
+  "sammendrag": "Unge funksjonshemmede mener statsbudsjettet for 2027 ikke følger opp ambisjonene i likestillingsstrategien for funksjonshemmede. Organisasjonen kritiserer blant annet store kutt i støtten til studieforbundene.",
+  "viktig": false,
+  "bilde": "https://ungfunk-site.transforms.svdcdn.com/production/IMG_0690.jpg?w=1200&h=630&fm=jpg&auto=compress&fit=crop&dm=1791373290&s=0f2e0938637045c5e40116f1910044b7",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Aktiviteten blomstrer mens tilskuddene kuttes drastisk",
+  "url": "https://www.vofo.no/aktuelt/aktiviteten-blomstrer-mens-tilskuddene-kuttes-drastisk",
+  "kilde": "Vofo",
+  "dato": "2026-10-07",
+  "sammendrag": "Vofo om forslaget til statsbudsjett for 2027. Kursaktiviteten i studieforbundene øker, samtidig som tilskuddene kuttes kraftig.",
+  "viktig": true,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/vofo-aktiviteten-blomstrer.jpg?v=2",
   "kategori": "Organisasjonene",
   "forbund": []
  }
