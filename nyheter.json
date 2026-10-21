@@ -1,5 +1,18 @@
 [
  {
+  "tittel": "Husflid er også beredskap",
+  "url": "https://www.f-b.no/",
+  "kilde": "Fredrikstad Blad",
+  "dato": "2026-10-21",
+  "sammendrag": "Debattinnlegg i Fredrikstad Blad om husflid som beredskapskunnskap og studieforbundenes betydning, i lys av kuttforslaget i statsbudsjettet. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Østfold"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Regjeringen kutter i kursene som gjør hundeeiere tryggere",
   "url": "https://www.nkk.no/nyhetsarkiv/regjeringen-kutter-i-kursene-som-gjor-hundeeiere-tryggere",
   "kilde": "Norsk Kennel Klub",
@@ -102,6 +115,19 @@
   "forbund": []
  },
  {
+  "tittel": "Kompass: Musikk i fengsel og frihet",
+  "url": "https://radio.nrk.no/serie/kompass",
+  "kilde": "NRK P2",
+  "dato": "2026-10-20",
+  "sammendrag": "Kompass i NRK P2 handlet om prosjektet Musikk i fengsel og frihet, og i programmet ble kuttene i statsbudsjettet til Musikkens studieforbund omtalt som trist og bekymringsfullt. Saken er hentet fra medieovervåkingen, og lenken går til programmets side fordi episoden ikke kunne åpnes.",
+  "viktig": true,
+  "fylker": [],
+  "kategori": "Medier",
+  "forbund": [
+   "Musikkens studieforbund"
+  ]
+ },
+ {
   "tittel": "LHL Narvik: Et kurs kan bety at noen kommer seg ut døra",
   "url": "https://www.facebook.com/472470255953345_122188921952629027",
   "kilde": "LHL Narvik (Facebook)",
@@ -132,11 +158,12 @@
  },
  {
   "tittel": "Kutt til studieforbund rammer musikklivet i Kristiansund",
-  "url": "https://www.nordmorsposten.no/",
+  "url": "https://www.np.no/meninger/kutt-til-studieforbund-rammer-musikklivet-i-kristiansund/226170",
   "kilde": "Nordmørsposten",
   "dato": "2026-10-20",
-  "sammendrag": "Nordmørsposten har et innlegg om at forslaget i budsjettet for 2027 om å kutte rundt 70 millioner kroner til studieforbundene vil ramme musikklivet i Kristiansund. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "sammendrag": "Knut Olav Hjelen i Kristiansund kirkekor skriver i et leserinnlegg at forslaget om å kutte rundt 70 millioner kroner til studieforbundene i 2027 vil ramme korets instruktører og medlemmer, og ber stortingspolitikerne fra Møre og Romsdal reversere kuttet.",
   "viktig": false,
+  "bilde": "https://image.np.no/207428.jpg?imageId=207428&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
   "fylker": [
    "Møre og Romsdal"
   ],
@@ -220,7 +247,7 @@
  },
  {
   "tittel": "Tilskot er avgjerande for å kunne gjennomføre kurs og opplæring",
-  "url": "https://fjuken.no/debatt/o/kvbXKa/tilskot-er-avgje-rande-for-aa-kunne-gjennom-foere-kurs-og-opplaering",
+  "url": "https://www.fjuken.no/nyheiter/n/kvbXKa/tilskot-er-avgje-rande-for-aa-kunne-gjennom-foere-kurs-og-opplaering",
   "kilde": "Fjuken",
   "dato": "2026-10-19",
   "sammendrag": "Studieforbundet kultur og tradisjon kritiserer forslaget om å kutte om lag 70 millioner kroner til studieforbundene. Kuttet kan føre til at kurs og opplæring i lokale lag ikke blir gjennomført, med Vågå som eksempel.",
@@ -238,8 +265,21 @@
   ]
  },
  {
+  "tittel": "NMF Nordvest i NRK Møre og Romsdal om kutt i vaksenopplæringsmidlar",
+  "url": "https://www.facebook.com/126086487469749_1819611325895509",
+  "kilde": "Norges Musikkorps Forbund Nordvest",
+  "dato": "2026-10-19",
+  "sammendrag": "Norges Musikkorps Forbund Nordvest forteller at de var i NRK Møre og Romsdal sammen med Vofo for å snakke om forslaget til kutt i voksenopplæringsmidlene i statsbudsjettet. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Møre og Romsdal"
+  ],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
   "tittel": "Kjemper mot budsjettkutt: – De små lagene merker det først",
-  "url": "https://www.iab.no/",
+  "url": "https://www.indre.no/",
   "kilde": "Indre Akershus Blad",
   "dato": "2026-10-18",
   "sammendrag": "Jesper Maj Larsen i Bjørkelangen JFF advarer mot kuttet på om lag 70 millioner kroner til studieforbundene i statsbudsjettet for 2027, og sier frivillige kurs er viktige for å motvirke ensomhet og at de små lagene merker kuttet først. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
@@ -385,7 +425,7 @@
  },
  {
   "tittel": "Lise og Berit krysser fingrene før konserten: – Vi gir ikke opp",
-  "url": "https://www.avisa-gaula.no/",
+  "url": "https://www.avisagaula.no/",
   "kilde": "Avisa Gaula",
   "dato": "2026-10-15",
   "sammendrag": "Avisa Gaula skriver om voksenkorpsene i Melhus, som allerede merker forslaget om kutt i voksenopplæringsmidlene i statsbudsjettet på økonomien. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
