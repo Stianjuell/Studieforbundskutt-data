@@ -1,5 +1,34 @@
 [
  {
+  "tittel": "Kutt til studieforbund rammer musikklivet i Vollen",
+  "url": "https://www.budstikka.no/",
+  "kilde": "Budstikka",
+  "dato": "2026-10-22",
+  "sammendrag": "Innlegget advarer om at regjeringens forslag om å kutte rundt 70 millioner kroner i tilskuddet til studieforbundene i statsbudsjettet for 2027 vil ramme musikklivet i Vollen i Asker. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Akershus"
+  ],
+  "sted": "Vollen (Asker)",
+  "lat": 59.8,
+  "lon": 10.48,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Eikanger-Bjørsvik: Kva er det regjeringa ikkje skjønar?",
+  "url": "https://www.facebook.com/share/p/19VwSGUEzb/",
+  "kilde": "Eikanger-Bjørsvik Musikklag",
+  "dato": "2026-10-22",
+  "sammendrag": "Eikanger-Bjørsvik Musikklag bruker korpsøvelsen som eksempel på voksen- og ungdomsopplæring på tvers av generasjoner, og ber regjeringen snu i forslaget om å kutte 50,2 prosent av voksenopplæringsmidlene under Kunnskapsdepartementet og 18,1 prosent under Kulturdepartementet. Korpset advarer om at kuttet vil ramme korps og annet frivillig arbeid sterkt.",
+  "viktig": false,
+  "fylker": [
+   "Vestland"
+  ],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
   "tittel": "Kraftige reaksjoner mot kutt i frivilligheten: – Vi er ganske fortvilet",
   "url": "https://www.vofo.no/aktuelt/kraftige-reaksjoner-mot-kutt-i-frivilligheten-vi-er-ganske-fortvilet",
   "kilde": "Vofo",
