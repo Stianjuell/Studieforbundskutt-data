@@ -1,5 +1,16 @@
 [
  {
+  "tittel": "Det tok hundre år å bygge, men tar bare ett budsjettår å rive ned",
+  "url": "https://www.vofo.no/aktuelt/det-tok-hundre-ar-a-bygge-men-tar-bare-ett-budsjettar-a-rive-ned",
+  "kilde": "Vofo",
+  "dato": "2026-10-22",
+  "sammendrag": "Vofo sa i budsjetthøringen i familie- og kulturkomiteen på Stortinget at kuttet på rundt 70 millioner kroner til studieforbundene vil gi færre kurs og mindre opplæring i frivilligheten over hele landet. Vofo ba komiteen reversere kuttet på 37,5 millioner kroner under Kultur- og likestillingsdepartementet.",
+  "viktig": false,
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
   "tittel": "Kutt til studieforbund rammer musikklivet i Vollen",
   "url": "https://www.budstikka.no/kutt-til-studieforbund-rammer-musikklivet-i-vollen/o/80-55-21357",
   "kilde": "Budstikka",
@@ -227,6 +238,18 @@
   "sted": "Rena (Åmot)",
   "lat": 61.13,
   "lon": 11.37,
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Kutt i studieforbundene: et uforståelig slag mot den lokale opplæringen",
+  "url": "https://www.sangerforum.no/nyheter/kutt-i-studieforbundene-et-uforstaelig-slag-mot-den-lokale-opplaeringen",
+  "kilde": "Norsk sangerforum",
+  "dato": "2026-10-20",
+  "sammendrag": "Norsk sangerforum og Koralliansen advarer om at kuttet i tilskuddet til studieforbundene i statsbudsjettet for 2027 vil ramme opplæring og rekruttering i korene lokalt. De ber familie- og kulturkomiteen reversere kuttet og holde tilskuddet minst på 2026-nivå.",
+  "viktig": false,
+  "bilde": "https://i2.vrs.gd/musikk/Norsk-Sangerforum/Kjetil_Aamann.png?width=1200&height=630&format=jpg&quality=80&crop=2000%2C1050%2C0%2C342",
+  "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
  },
