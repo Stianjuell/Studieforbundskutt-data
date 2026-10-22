@@ -22,6 +22,7 @@
   "dato": "2026-10-22",
   "sammendrag": "Eikanger-Bjørsvik Musikklag bruker korpsøvelsen som eksempel på voksen- og ungdomsopplæring på tvers av generasjoner, og ber regjeringen snu i forslaget om å kutte 50,2 prosent av voksenopplæringsmidlene under Kunnskapsdepartementet og 18,1 prosent under Kulturdepartementet. Korpset advarer om at kuttet vil ramme korps og annet frivillig arbeid sterkt.",
   "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/facebook-eikanger-bjorsvik-kva-er-det-regjeringa-ikkje-skjonar.jpg",
   "fylker": [
    "Vestland"
   ],
@@ -35,6 +36,7 @@
   "dato": "2026-10-21",
   "sammendrag": "Vofo og Norges Musikkorps Forbund i Møre og Romsdal advarer mot kuttet på 70 millioner kroner til studieforbundene, som de frykter vil svekke rekrutteringen av frivillige og ungdom. Vofos konsekvenskart anslår et tap på 3,3 millioner kroner i Møre og Romsdal.",
   "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/31266544fe09711b90164ebd20adb2302b5c7e25-2048x1536.jpg?w=720&fit=max&auto=format",
   "fylker": [
    "Møre og Romsdal"
   ],
@@ -62,6 +64,7 @@
   "dato": "2026-10-21",
   "sammendrag": "Lederen i Risør shantykor skriver at kuttet på rundt 70 millioner kroner til studieforbundene vil ramme musikklivet i Risør og dirigenter og instruktører som jobber med lagene. Han ber stortingsrepresentantene fra Agder om å reversere kuttet.",
   "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/austagderblad-no-musikklivet-i-risor-rammes.jpg",
   "fylker": [
    "Agder"
   ],
@@ -513,6 +516,23 @@
   "forbund": [
    "Musikkens studieforbund"
   ]
+ },
+ {
+  "tittel": "Fem på scenekanten: Makalausen Revygruppe om kuttet i voksenopplæringsmidlene",
+  "url": "https://fb.watch/v/38zzjTGVA/",
+  "kilde": "Teaternytt",
+  "dato": "2026-10-15",
+  "sammendrag": "I den nye videospalten Fem på scenekanten besøker Teaternytt Makalausen Revygruppe i Hvarnes for å høre hva kuttet på 70 millioner kroner i voksenopplæringsmidler i statsbudsjettet for 2027 vil bety for amatørteateret.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/facebook-teaternytt-fem-pa-scenekanten-makalausen-revygruppe.jpg",
+  "fylker": [
+   "Vestfold"
+  ],
+  "sted": "Hvarnes (Larvik)",
+  "lat": 59.26,
+  "lon": 9.94,
+  "kategori": "Medier",
+  "forbund": []
  },
  {
   "tittel": "Kuttet i foreslått støtte rammer frivilligheten bredt",
