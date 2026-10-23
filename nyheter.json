@@ -1,12 +1,26 @@
 [
  {
+  "tittel": "Regjeringen svikter frivilligheten i Akershus",
+  "url": "https://www.rb.no/regjeringens-svikter-frivilligheten-i-akershus/o/80-43-79220",
+  "kilde": "Romerikes Blad",
+  "dato": "2026-10-22",
+  "sammendrag": "Fylkesordfører Trine-Lise Østlund Blime (H) og fylkesvaraordfører Ole Jacob Johansen (Frp) i Akershus skriver at frivilligheten trenger gode vilkår og verktøy for å blomstre, og at regjeringens forslag til statsbudsjett for 2027, med kutt i tilskuddet til studieforbundene, svikter frivilligheten i Akershus. Saken kunne ikke leses i sin helhet.",
+  "viktig": true,
+  "fylker": [
+   "Akershus"
+  ],
+  "kategori": "Medier",
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/rb-no-regjeringen-svikter-frivilligheten-i-akershus.jpg"
+ },
+ {
   "tittel": "Kutt til studieforbund rammer musikklivet i Sarpsborg",
   "url": "https://www.sa.no/kutt-til-studieforbund-rammer-musikklivet-i-sarpsborg/o/80-46-30605",
   "kilde": "Sarpsborg Arbeiderblad",
   "dato": "2026-10-22",
   "sammendrag": "Dyveke Kuløy, dirigent for Rockekoret, skriver at det foreslåtte kuttet i tilskuddet til studieforbundene i statsbudsjettet for 2027 rammer musikklivet i Sarpsborg. Saken kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://www.sa.no/kutt-til-studieforbund-rammer-musikklivet-i-sarpsborg/o/80-46-30605#skjermbilde",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/sa-no-kutt-til-studieforbund-rammer-musikklivet-i-sarpsborg.jpg",
   "fylker": [
    "Østfold"
   ],
@@ -39,12 +53,12 @@
   "dato": "2026-10-22",
   "sammendrag": "Kuttet i tilskuddet til Musikkens studieforbund i statsbudsjettet for 2027 kan føre til at opptil halvparten av tilbudene i Musikk i fengsel og frihet må legges ned. Leder Audun Reithaug sier kuttet rammer både musikkopplæring i fengslene og lokale musikkgrupper.",
   "viktig": false,
-  "bilde": "https://www.vofo.no/aktuelt/musikktilbud-i-fengslene-star-i-fare-halvparten-kan-bli-rammet#skjermbilde",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": [
    "Musikkens studieforbund"
-  ]
+  ],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/vofo-no-musikktilbud-i-fengslene-star-i-fare-halvparten-kan-bli-rammet.jpg"
  },
  {
   "tittel": "Det tok hundre år å bygge, men tar bare ett budsjettår å rive ned",
@@ -53,7 +67,7 @@
   "dato": "2026-10-22",
   "sammendrag": "Vofo sa i budsjetthøringen i familie- og kulturkomiteen på Stortinget at kuttet på rundt 70 millioner kroner til studieforbundene vil gi færre kurs og mindre opplæring i frivilligheten over hele landet. Vofo ba komiteen reversere kuttet på 37,5 millioner kroner under Kultur- og likestillingsdepartementet.",
   "viktig": false,
-  "bilde": "https://www.vofo.no/aktuelt/det-tok-hundre-ar-a-bygge-men-tar-bare-ett-budsjettar-a-rive-ned#skjermbilde",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/vofo-no-det-tok-hundre-ar-a-bygge-men-tar-bare-ett-budsjettar-a-rive-ned.jpg",
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
@@ -65,7 +79,7 @@
   "dato": "2026-10-22",
   "sammendrag": "Eskil Laukvik, styreleder i Namdal storband, skriver at regjeringens forslag om å kutte tilskuddet til studieforbundene med rundt 70 millioner kroner i statsbudsjettet for 2027 rammer musikklivet i Namdalen og Bindal. Saken kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://www.namdalsavisa.no/kutt-til-studieforbund-rammer-musikklivet-i-namdalen-og-bindal/o/80-121-20398#skjermbilde",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/namdalsavisa-no-kutt-til-studieforbund-rammer-musikklivet-i-namdalen-og-bindal.jpg",
   "fylker": [
    "Trøndelag",
    "Nordland"
@@ -83,7 +97,7 @@
   "dato": "2026-10-22",
   "sammendrag": "Knut Olav Hjelen i Kristiansund kirkekor skriver at regjeringens forslag om å kutte tilskuddet til studieforbundene med rundt 70 millioner kroner i statsbudsjettet for 2027 rammer musikklivet i Kristiansund. Saken kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://www.tk.no/kutt-til-studieforbund-rammer-musikklivet-i-kristiansund/o/80-51-40163#skjermbilde",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/tk-no-kutt-til-studieforbund-rammer-musikklivet-i-kristiansund.jpg",
   "fylker": [
    "Møre og Romsdal"
   ],
@@ -100,7 +114,6 @@
   "dato": "2026-10-22",
   "sammendrag": "Håkon Endresen i Vollen Big Band skriver at regjeringens forslag om å kutte rundt 70 millioner kroner i tilskuddet til studieforbundene i statsbudsjettet for 2027 vil ramme musikklivet i Vollen i Asker, og at bandet kan bli nødt til å redusere aktiviteten. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://www.budstikka.no/kutt-til-studieforbund-rammer-musikklivet-i-vollen/o/80-55-21357#skjermbilde",
   "fylker": [
    "Akershus"
   ],
@@ -108,7 +121,8 @@
   "lat": 59.8,
   "lon": 10.48,
   "kategori": "Medier",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/budstikka-no-kutt-til-studieforbund-rammer-musikklivet-i-vollen.jpg"
  },
  {
   "tittel": "Regjeringen kutter i beredskapen vår",
@@ -178,37 +192,23 @@
   ]
  },
  {
-  "tittel": "Regjeringen svikter frivilligheten i Akershus",
-  "url": "https://www.rb.no/regjeringens-svikter-frivilligheten-i-akershus/o/80-43-79220",
-  "kilde": "Romerikes Blad",
-  "dato": "2026-10-22",
-  "sammendrag": "Fylkesordfører Trine-Lise Østlund Blime (H) og fylkesvaraordfører Ole Jacob Johansen (Frp) i Akershus skriver at frivilligheten trenger gode vilkår og verktøy for å blomstre, og at regjeringens forslag til statsbudsjett for 2027, med kutt i tilskuddet til studieforbundene, svikter frivilligheten i Akershus. Saken kunne ikke leses i sin helhet.",
-  "viktig": true,
-  "bilde": "https://www.rb.no/regjeringens-svikter-frivilligheten-i-akershus/o/80-43-79220#skjermbilde",
-  "fylker": [
-   "Akershus"
-  ],
-  "kategori": "Medier",
-  "forbund": []
- },
- {
   "tittel": "Vi trenger mer fellesskap. Hvorfor kutter vi i det?",
   "url": "https://www.moss-avis.no/vi-trenger-mer-fellesskap-hvorfor-kutter-vi-i-det/o/80-67-40567",
   "kilde": "Moss Avis",
   "dato": "2026-10-22",
   "sammendrag": "Rikke Falstad-Jordal Bakken, styreleder i Moss, skriver at regjeringens forslag om å redusere tilskuddet til studieforbundene under Kulturdepartementet med 20 prosent rammer fellesskapet, og viser til støtten lokale lag får gjennom Musikkens studieforbund. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://www.moss-avis.no/vi-trenger-mer-fellesskap-hvorfor-kutter-vi-i-det/o/80-67-40567#skjermbilde",
   "fylker": [
    "Østfold"
   ],
-  "sted": "Moss",
-  "lat": 59.43,
-  "lon": 10.66,
   "kategori": "Medier",
   "forbund": [
    "Musikkens Studieforbund"
-  ]
+  ],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/moss-avis-no-vi-trenger-mer-fellesskap-hvorfor-kutter-vi-i-det.jpg",
+  "sted": "Moss",
+  "lat": 59.43,
+  "lon": 10.66
  },
  {
   "tittel": "Kraftige reaksjoner mot kutt i frivilligheten: – Vi er ganske fortvilet",
