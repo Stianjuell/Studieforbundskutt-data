@@ -1,5 +1,40 @@
 [
  {
+  "tittel": "«Smålig budsjett kutter for de som trenger det mest»",
+  "url": "https://www.bladet.no/debatt/o/MAkdEB/smaalig-budsjett-kutter-for-de-som-trenger-det-mest",
+  "kilde": "Bladet",
+  "dato": "2026-10-23",
+  "sammendrag": "Torgeir Anda i Malvik Venstre kritiserer at statsbudsjettet for 2027 kutter for mennesker med nedsatt funksjonsevne, blant annet ved at Sjiraffen Kultur- og Kompetansesenter i Trondheim ikke får fast bevilgning og at Camphill og folkehøgskolene rammes. Innlegget nevner ikke kuttet i studieforbundene.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/bladet-no-smalig-budsjett-kutter-for-de-som-trenger-det-mest.jpg",
+  "fylker": [
+   "Trøndelag"
+  ],
+  "sted": "Hommelvik (Malvik)",
+  "lat": 63.41,
+  "lon": 10.8,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Statsbudsjettet: Sjiraffen rammes dobbelt",
+  "url": "https://www.facebook.com/sjiraffenkulturogkompetansesenter",
+  "kilde": "Sjiraffen Kultur- og Kompetansesenter",
+  "dato": "2026-10-23",
+  "sammendrag": "Sjiraffen Kultur- og Kompetansesenter i Trondheim skriver til stortingsrepresentantene fra Trøndelag at kuttet i tilskuddet til studieforbundene kan gi et inntektstap på minst 250 000 til 300 000 kroner i 2027 for rundt 50 årlige kurs for mennesker med utviklingshemming. Senteret mangler samtidig fast grunnfinansiering i budsjettforslaget og ber om at kuttet reverseres.",
+  "viktig": false,
+  "fylker": [
+   "Trøndelag"
+  ],
+  "sted": "Trondheim",
+  "lat": 63.43,
+  "lon": 10.39,
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
+  ]
+ },
+ {
   "tittel": "Kutt til studieforbund rammer musikklivet i Sarpsborg",
   "url": "https://www.sa.no/kutt-til-studieforbund-rammer-musikklivet-i-sarpsborg/o/80-46-30605",
   "kilde": "Sarpsborg Arbeiderblad",
