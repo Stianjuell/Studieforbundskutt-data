@@ -1,5 +1,63 @@
 [
  {
+  "tittel": "Regjeringen svikter frivilligheten i Akershus",
+  "url": "https://www.rb.no/regjeringens-svikter-frivilligheten-i-akershus/o/80-43-79220",
+  "kilde": "Romerikes Blad",
+  "dato": "2026-10-23",
+  "sammendrag": "Debattinnlegg i Romerikes Blad om at regjeringens forslag til statsbudsjett for 2027, med kutt i tilskuddet til studieforbundene, svikter frivilligheten i Akershus. Saken kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Akershus"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Kutt til studieforbund rammer musikklivet i Sarpsborg",
+  "url": "https://www.sa.no/kutt-til-studieforbund-rammer-musikklivet-i-sarpsborg/o/80-46-30605",
+  "kilde": "Sarpsborg Arbeiderblad",
+  "dato": "2026-10-22",
+  "sammendrag": "Dyveke Kuløy, dirigent for Rockekoret, skriver at det foreslåtte kuttet i tilskuddet til studieforbundene rammer musikklivet i Sarpsborg. Saken er hentet fra et Google-varsel og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Østfold"
+  ],
+  "sted": "Sarpsborg",
+  "lat": 59.28,
+  "lon": 11.11,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Et angrep på frivilligheten",
+  "url": "https://www.andalsnes-avis.no/meninger/n/77AALo/et-angrep-paa-frivilligheten",
+  "kilde": "Åndalsnes Avis",
+  "dato": "2026-10-22",
+  "sammendrag": "Odd Arne Grande, nestleder i Studieforbundet Funkis Møre og Romsdal, skriver at det foreslåtte kuttet på 70 millioner kroner til studieforbundene gir færre kurs og svekker inkludering og lokalsamfunn. Han anslår at 695 kurs med 8 721 deltakere i Møre og Romsdal kan forsvinne, og ber politikerne tenke seg om.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/0b53716f-f7fe-3bf3-9086-16e759a6a2d3?fit=crop&q=80&tight=false&w=800&h=1343",
+  "fylker": [
+   "Møre og Romsdal"
+  ],
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet Funkis"
+  ]
+ },
+ {
+  "tittel": "Musikktilbud i fengslene står i fare: – Halvparten kan bli rammet",
+  "url": "https://www.vofo.no/aktuelt/musikktilbud-i-fengslene-star-i-fare-halvparten-kan-bli-rammet",
+  "kilde": "Vofo",
+  "dato": "2026-10-22",
+  "sammendrag": "Kuttet i tilskuddet til Musikkens studieforbund i statsbudsjettet for 2027 kan føre til at opptil halvparten av tilbudene i Musikk i fengsel og frihet må legges ned. Leder Audun Reithaug sier kuttet rammer både musikkopplæring i fengslene og lokale musikkgrupper.",
+  "viktig": false,
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Musikkens studieforbund"
+  ]
+ },
+ {
   "tittel": "Det tok hundre år å bygge, men tar bare ett budsjettår å rive ned",
   "url": "https://www.vofo.no/aktuelt/det-tok-hundre-ar-a-bygge-men-tar-bare-ett-budsjettar-a-rive-ned",
   "kilde": "Vofo",
@@ -8,6 +66,39 @@
   "viktig": false,
   "fylker": [],
   "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Kutt til studieforbund rammer musikklivet i Namdalen og Bindal",
+  "url": "https://www.namdalsavisa.no/kutt-til-studieforbund-rammer-musikklivet-i-namdalen-og-bindal/o/80-121-20398",
+  "kilde": "Namdalsavisa",
+  "dato": "2026-10-22",
+  "sammendrag": "Innlegget viser til at regjeringen i statsbudsjettet for 2027 foreslår å kutte tilskuddet til studieforbundene med rundt 70 millioner kroner, og at dette rammer musikklivet i Namdalen og Bindal. Saken er hentet fra et Google-varsel og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Trøndelag",
+   "Nordland"
+  ],
+  "sted": "Grong",
+  "lat": 64.46,
+  "lon": 12.31,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Kutt til studieforbund rammer musikklivet i Kristiansund",
+  "url": "https://www.tk.no/kutt-til-studieforbund-rammer-musikklivet-i-kristiansund/o/80-51-40163",
+  "kilde": "Tidens Krav",
+  "dato": "2026-10-22",
+  "sammendrag": "Innlegget viser til at regjeringen i statsbudsjettet for 2027 foreslår å kutte tilskuddet til studieforbundene med rundt 70 millioner kroner, og at dette rammer musikklivet i Kristiansund. Saken er hentet fra et Google-varsel og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Møre og Romsdal"
+  ],
+  "sted": "Kristiansund",
+  "lat": 63.11,
+  "lon": 7.73,
+  "kategori": "Medier",
   "forbund": []
  },
  {
@@ -23,6 +114,23 @@
   "sted": "Vollen (Asker)",
   "lat": 59.8,
   "lon": 10.48,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Regjeringen kutter i beredskapen vår",
+  "url": "https://www.venneslatidende.no/meninger/o/zljj3O/regjeringen-kutter-i-beredskapen-vaar",
+  "kilde": "Vennesla Tidende",
+  "dato": "2026-10-22",
+  "sammendrag": "Leder i Vennesla Senterparti, Torhild Røsand, mener regjeringens forslag om å kutte rundt 70 millioner kroner til studieforbundene svekker frivilligheten og beredskapen. Hun advarer om at kurs og frivillig aktivitet over hele landet kan bli rammet.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/4ee4203d-579f-368b-a679-90c0ab251faf?fit=crop&q=80&tight=false&w=1200&h=800",
+  "fylker": [
+   "Agder"
+  ],
+  "sted": "Vennesla",
+  "lat": 58.27,
+  "lon": 7.97,
   "kategori": "Medier",
   "forbund": []
  },
@@ -865,6 +973,20 @@
   ],
   "kategori": "Organisasjonene",
   "forbund": []
+ },
+ {
+  "tittel": "Lite positivt statsbudsjett for kulturfrivilligheita og mykje av aktiviteten i BUL",
+  "url": "https://www.bul.no/mindre-positivt-statsbudsjett-bade-for-bul-og-naerskylde-organisasjonar/",
+  "kilde": "BUL Oslo",
+  "dato": "2026-10-09",
+  "sammendrag": "Bondeungdomslaget i Oslo mener budsjettforslaget gir lite godt for kulturfrivilligheten, og peker på kutt til Noregs Ungdomslag, Noregs Mållag og Norges Husflidslag. Kuttet på rundt 70 millioner kroner, om lag 26 prosent av studieforbundsordningen, er særlig urovekkende for kurs og aktivitet i lagene.",
+  "viktig": false,
+  "bilde": "https://www.bul.no/wp-content/uploads/2025/12/Oppsummer-2025.avif",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
+  ]
  },
  {
   "tittel": "Statsbudsjettet 2027: Virke etterlyser sterkere satsing på frivilligheten og ideell sektor",
