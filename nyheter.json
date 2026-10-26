@@ -6,12 +6,12 @@
   "dato": "2026-10-25",
   "sammendrag": "Bonde- og småbrukarlaget skriver i et debattinnlegg at praktisk kunnskap om matproduksjon og lagring er beredskap, og at de er bekymret for at støtten til studieforbund og frivillig opplæring kuttes. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
   "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/gd-no-kunnskap-er-beredskap.jpg",
   "fylker": [
    "Innlandet"
   ],
   "kategori": "Medier",
-  "forbund": [],
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/gd-no-kunnskap-er-beredskap.jpg"
+  "forbund": []
  },
  {
   "tittel": "Musikklivet i Bjørnafjorden får regningen for kutt",
@@ -32,11 +32,12 @@
  },
  {
   "tittel": "Eit kvelartak på frivilligheita?",
-  "url": "https://www.storfjordnytt.no/",
+  "url": "https://www.storfjordnytt.no/2026/debatt/innlegg/eit-kvelartak-pa-frivilligheita/",
   "kilde": "Storfjordnytt",
   "dato": "2026-10-25",
-  "sammendrag": "Storfjordnytt tar opp regjeringens forslag om å kutte 70 millioner kroner i tilskuddet til studieforbundene, en reduksjon på 25 prosent, og hva det betyr for frivilligheten. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "sammendrag": "Debattinnlegg av Anna Margrethe Drægebø Moe, leiar i Mental Helse Fjord, om regjeringens forslag om å kutte 70 millioner kroner, rundt 25 prosent, i tilskuddet til studieforbundene og hva det betyr for frivilligheten. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
   "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/storfjordnytt-no-eit-kvelartak-pa-frivilligheita.jpg",
   "fylker": [
    "Møre og Romsdal"
   ],
@@ -231,6 +232,7 @@
   "dato": "2026-10-22",
   "sammendrag": "Vofo Vestland deltok på konferansen Styrke i samspel og løftet frivilligheten som læringsarena og beredskapsressurs. Vofo mener regjeringens foreslåtte kutt i tilskuddet til studieforbundene går stikk i strid med behovet for kompetanse, beredskap og deltakelse.",
   "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/23c72ff4bc5536a4738b5363b24a045c94437d54-614x1152.png?w=640&fit=max&auto=format",
   "fylker": [
    "Vestland"
   ],
