@@ -10,7 +10,8 @@
    "Innlandet"
   ],
   "kategori": "Medier",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/gd-no-kunnskap-er-beredskap.jpg"
  },
  {
   "tittel": "Musikklivet i Bjørnafjorden får regningen for kutt",
@@ -80,14 +81,14 @@
   "dato": "2026-10-24",
   "sammendrag": "Varingen skriver at regjeringens forslag om et samlet kutt på 70 millioner kroner til studieforbundene kan gi Studieforbundet Funkis rundt 8 millioner kroner mindre, med mindre kursaktivitet og tilrettelegging for medlemsorganisasjonene. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
   "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/varingen-no-frykter-betydelige-kutt.jpg",
   "fylker": [
    "Akershus"
   ],
   "kategori": "Medier",
   "forbund": [
    "Studieforbundet Funkis"
-  ],
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/varingen-no-frykter-betydelige-kutt.jpg"
+  ]
  },
  {
   "tittel": "Den skjøre kunstnerøkonomien",
