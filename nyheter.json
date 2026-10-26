@@ -1,5 +1,65 @@
 [
  {
+  "tittel": "Kunnskap er beredskap!",
+  "url": "https://www.gd.no/kunnskap-er-beredskap/o/5-18-2224327",
+  "kilde": "Gudbrandsdølen Dagningen",
+  "dato": "2026-10-25",
+  "sammendrag": "Bonde- og småbrukarlaget skriver i et debattinnlegg at praktisk kunnskap om matproduksjon og lagring er beredskap, og at de er bekymret for at støtten til studieforbund og frivillig opplæring kuttes. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Innlandet"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Musikklivet i Bjørnafjorden får regningen for kutt",
+  "url": "https://www.osogfusa.no/meiningar/musikklivet-i-bjornafjorden-far-regningen-for-kutt/540879",
+  "kilde": "Os & Fusaposten",
+  "dato": "2026-10-25",
+  "sammendrag": "Os Mannskor advarer i et debattinnlegg om at kuttet på rundt 70 millioner kroner til studieforbundene vil ramme lokale kor og musikklivet i Bjørnafjorden hardt, fordi tilskuddet betaler dirigenter og instruktører. Innlegget ber stortingspolitikere fra Hordaland om å reversere kuttet.",
+  "viktig": false,
+  "bilde": "https://image.osogfusa.no/485665.jpg?imageId=485665&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+  "fylker": [
+   "Vestland"
+  ],
+  "sted": "Os (Bjørnafjorden)",
+  "lat": 60.19,
+  "lon": 5.47,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Eit kvelartak på frivilligheita?",
+  "url": "https://www.storfjordnytt.no/",
+  "kilde": "Storfjordnytt",
+  "dato": "2026-10-25",
+  "sammendrag": "Storfjordnytt tar opp regjeringens forslag om å kutte 70 millioner kroner i tilskuddet til studieforbundene, en reduksjon på 25 prosent, og hva det betyr for frivilligheten. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Møre og Romsdal"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Kutt rammer musikklivet i Risør",
+  "url": "https://www.agderposten.no/meninger/o/mK2nog/kutt-rammer-musikklivet-i-risoer",
+  "kilde": "Agderposten",
+  "dato": "2026-10-25",
+  "sammendrag": "Debattinnlegg om at regjeringens forslag om å kutte rundt 70 millioner kroner til studieforbundene i statsbudsjettet for 2027 vil ramme kurs og opplæring i frivillige musikklag i Risør. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/a5e22162-e3ee-3767-a5f1-3e3ba54cf517?fit=crop&q=80&tight=false&w=1200&h=900",
+  "fylker": [
+   "Agder"
+  ],
+  "sted": "Risør",
+  "lat": 58.72,
+  "lon": 9.23,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Foreslåtte kutt kan få lokale konsekvensar: – Vil eigentleg ramme oss relativt hardt",
   "url": "https://www.norddalen.no/foreslatte-kutt-kan-fa-lokale-konsekvensar-vil-eigentleg-ramme-oss-relativt-hardt/s/80-84-2652",
   "kilde": "Norddalen",
@@ -10,6 +70,33 @@
   "fylker": [
    "Møre og Romsdal"
   ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Frykter betydelige kutt",
+  "url": "https://www.varingen.no/frykter-betydelige-kutt/o/80-92-18227",
+  "kilde": "Varingen",
+  "dato": "2026-10-24",
+  "sammendrag": "Varingen skriver at regjeringens forslag om et samlet kutt på 70 millioner kroner til studieforbundene kan gi Studieforbundet Funkis rundt 8 millioner kroner mindre, med mindre kursaktivitet og tilrettelegging for medlemsorganisasjonene. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Akershus"
+  ],
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet Funkis"
+  ]
+ },
+ {
+  "tittel": "Den skjøre kunstnerøkonomien",
+  "url": "https://scenekunst.no/artikler/den-skjore-kunstnerokonomien",
+  "kilde": "Scenekunst",
+  "dato": "2026-10-23",
+  "sammendrag": "Kommentaren i Scenekunst handler mest om kuttet til Skuespiller- og danseralliansen, men forteller at kulturministeren i en budsjettdebatt fikk spørsmål om hva studieforbundene hadde gjort galt for å få et kutt på rundt 20 prosent, og svarte «ingenting». Skribenten tolker kuttet som et uttrykk for at departementet prioriterer annerledes.",
+  "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/xrdqknwr/production/6393b3447eed7ecbb31074dc82a50684de0ddc6c-1280x853.jpg?w=800",
+  "fylker": [],
   "kategori": "Medier",
   "forbund": []
  },
