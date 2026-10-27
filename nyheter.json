@@ -1,5 +1,72 @@
 [
  {
+  "tittel": "Kunnskap er beredskap",
+  "url": "https://www.ostlendingen.no/",
+  "kilde": "Østlendingen",
+  "dato": "2026-10-27",
+  "sammendrag": "Debattinnlegg om at praktisk kunnskap om matproduksjon og lagring er beredskap, og bekymring for at støtten til studieforbund og frivillig opplæring kuttes. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Innlandet"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Et angrep på frivilligheten",
+  "url": "https://www.morenytt.no/",
+  "kilde": "Møre-Nytt",
+  "dato": "2026-10-27",
+  "sammendrag": "Leserinnlegg fra Studieforbundet Funkis som advarer om at kuttet på 70 millioner kroner til studieforbundene kan gi færre kurs, mindre inkludering og svekket fellesskap i Møre og Romsdal. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Møre og Romsdal"
+  ],
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet Funkis"
+  ]
+ },
+ {
+  "tittel": "Regjeringens forslag om kutt kan bety høyere kontingent og færre øvelser for korene",
+  "url": "https://www.andoyposten.no/",
+  "kilde": "Andøyposten",
+  "dato": "2026-10-27",
+  "sammendrag": "Debattinnlegg om at korene i Nordre Nordland er viktige kulturbærere, og at regjeringens forslag om kutt i studieforbundenes opplæringsmidler kan gi høyere kontingent og færre øvelser. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Nordland"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Regjeringen svikter frivilligheten i Akershus",
+  "url": "https://www.budstikka.no/",
+  "kilde": "Budstikka",
+  "dato": "2026-10-26",
+  "sammendrag": "Fylkesledelsen i Akershus skriver at regjeringens forslag om å kutte 70 millioner kroner til studieforbundene i statsbudsjettet for 2027 går direkte ut over frivillige lag og foreninger i fylket. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": true,
+  "fylker": [
+   "Akershus"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Ikke svekk korpsenes muligheter til å lære, utvikle seg og skape fellesskap",
+  "url": "https://www.moss-avis.no/",
+  "kilde": "Moss Avis",
+  "dato": "2026-10-26",
+  "sammendrag": "Debattinnlegg fra korpsbevegelsen som advarer mot regjeringens kraftige kutt i støtten til studieforbundene i statsbudsjettet for 2027, fordi det svekker korpsenes opplæring og fellesskap. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Østfold"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Bekymret for kutt: – Kan bli dyrere å delta",
   "url": "https://www.rb.no/bekymret-for-kutt-kan-bli-dyrere-a-delta/s/80-43-74704",
   "kilde": "Romerikes Blad",
@@ -13,6 +80,23 @@
   "sted": "Lillestrøm",
   "lat": 59.96,
   "lon": 11.05,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Før sommeren måtte de trekke forslaget – nå prøver Ap-regjeringen seg igjen",
+  "url": "https://www.osogfusa.no/meiningar/for-sommeren-matte-de-trekke-forslaget-na-prover-ap-regjeringen-seg-igjen/540228",
+  "kilde": "Os & Fusaposten",
+  "dato": "2026-10-26",
+  "sammendrag": "Thomas Nyløkken, leiar i Bjørnafjorden Høgre, kritiserer gebyrøkninger for jegere og skyttere og at regjeringen samtidig kutter 70 millioner kroner til studieforbundene og den frivillige voksenopplæringen. Han viser til at Norges Jeger- og Fiskeforbund gjennomførte over 800 kurs med studieforbundsstøtte i 2025.",
+  "viktig": false,
+  "bilde": "https://image.osogfusa.no/540351.jpg?imageId=540351&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+  "fylker": [
+   "Vestland"
+  ],
+  "sted": "Os (Bjørnafjorden)",
+  "lat": 60.19,
+  "lon": 5.47,
   "kategori": "Medier",
   "forbund": []
  },
@@ -109,6 +193,21 @@
   ]
  },
  {
+  "tittel": "Kutt til studieforbund rammer musikklivet i Namdalen og Bindal",
+  "url": "https://ytringen.no/kutt-til-studieforbund-rammer-musikklivet-i-namdalen-og-bindal/19.23431",
+  "kilde": "Ytringen",
+  "dato": "2026-10-24",
+  "sammendrag": "Eskil Laukvik, styreleder i Namdal Storband, skriver at kuttet på rundt 70 millioner kroner til studieforbundene i statsbudsjettet for 2027 truer kurs, instruktører og regionens eneste helårs storbandtilbud. Han ber lokale stortingsrepresentanter reversere kuttet.",
+  "viktig": false,
+  "bilde": "https://image.ytringen.no/335251.jpg?imageId=335251&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+  "fylker": [
+   "Trøndelag",
+   "Nordland"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Den skjøre kunstnerøkonomien",
   "url": "https://scenekunst.no/artikler/den-skjore-kunstnerokonomien",
   "kilde": "Scenekunst",
@@ -201,6 +300,20 @@
   "kategori": "Organisasjonene",
   "forbund": [
    "Studieforbundet kultur og tradisjon"
+  ]
+ },
+ {
+  "tittel": "Hvilket fremtidig kompetansesamfunn ønsker vi?",
+  "url": "https://www.korps.no/aktuelt/hvilket-fremtidig-kompetansesamfunn-onsker-vi",
+  "kilde": "Norges Musikkorps Forbund",
+  "dato": "2026-10-23",
+  "sammendrag": "Kronikk fra generalsekretærene i Norges Musikkorps Forbund og Studieforbundet Livslang læring om forslaget om å halvere studieforbundenes tilskudd under Kunnskapsdepartementet fra 67,3 til 34,8 millioner kroner. De mener kuttet svekker kurs, frivillig lederopplæring og lokalsamfunn, og ber Stortinget avvise forslaget.",
+  "viktig": false,
+  "bilde": "https://cdn.prod.website-files.com/658055cdf20fc2fc6370b7e8/6adb53bbb609365b5bd4c954_DSCF9333.avif",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Livslang Læring"
   ]
  },
  {
@@ -510,6 +623,19 @@
   ],
   "kategori": "Organisasjonene",
   "forbund": []
+ },
+ {
+  "tittel": "– Dette er vår eneste mulighet til å henge med i den digitale hverdagen",
+  "url": "https://www.sfll.no/dette-er-var-eneste-mulighet-til-a-henge-med-i-den-digitale-hverdagen/",
+  "kilde": "Studieforbundet Livslang Læring",
+  "dato": "2026-10-21",
+  "sammendrag": "Studieforbundet Livslang Læring advarer om at regjeringens forslag om å kutte 32,5 millioner kroner i tilskuddet til studieforbundene kan føre til at digitale kurs for eldre legges ned. Organisasjonene frykter mer ensomhet blant eldre og økt press på kommunale tjenester.",
+  "viktig": false,
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Livslang Læring"
+  ]
  },
  {
   "tittel": "Nei til kutt i støtten til studieforbundene",
