@@ -44,6 +44,20 @@
   "forbund": []
  },
  {
+  "tittel": "Ytring: Små midlar med stor kraft",
+  "url": "https://www.folkemusikk.no/nyheter/2026-10-27-ytring-sma-midlar-med-stor-kraft",
+  "kilde": "FolkOrg",
+  "dato": "2026-10-27",
+  "sammendrag": "Styreleiar Kristian Hanto og dagleg leiar Aslak Brimi i FolkOrg kritiserer forslaget om å kutte 37,2 millionar kroner til studieforbunda i statsbudsjettet for 2027 og fryktar færre kurs og høgare deltakaravgifter. Dei krev at Stortinget reverserer kuttet.",
+  "viktig": false,
+  "bilde": "https://www.folkemusikk.no/images/18.187116621a16333c3ee1914/1793096999581/Styreleiar%20og%20dagleg%20leiar%20(1).webp",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Musikkens Studieforbund"
+  ]
+ },
+ {
   "tittel": "Regjeringen svikter frivilligheten i Akershus",
   "url": "https://www.budstikka.no/regjeringen-svikter-frivilligheten-i-akershus/o/80-55-22218",
   "kilde": "Budstikka",
@@ -53,6 +67,20 @@
   "bilde": "https://g.acdn.no/obscura/API/dynamic/r1/cue/tr_2000_2000_s_f/1792742035000/budsti/2026/10/23/7/Blime+og+Johansen+kvadrat.jpg?chk=DB1FAE",
   "fylker": [
    "Akershus"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Et kutt til studieforbundene er et kutt i beredskapen vår",
+  "url": "https://www.finnmarkdebatten.no/et-kutt-til-studieforbundene-er-et-kutt-i-beredskapen-var/o/80-149-4215",
+  "kilde": "Finnmarkdebatten",
+  "dato": "2026-10-26",
+  "sammendrag": "Debattinnlegg av Viktoria Eriksen, daglig leder i Finnmark musikkråd, som argumenterer for at kuttet i tilskuddet til studieforbundene i statsbudsjettet for 2027 også svekker beredskapen. Saken kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://g.acdn.no/obscura/API/dynamic/r1/cue/tr_2000_2000_s_f/1792754822000/ifinnd/2026/10/23/11/066156fa-b202-4d5a-9ae5-88cb40d61ac2.bin?chk=DDF4BB",
+  "fylker": [
+   "Finnmark"
   ],
   "kategori": "Medier",
   "forbund": []
