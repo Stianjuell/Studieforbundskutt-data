@@ -107,7 +107,7 @@
   "dato": "2026-10-27",
   "sammendrag": "Norman Lagesen, styreleder i Norges Musikkorps Forbund Øst, advarer mot at regjeringens kutt i støtten til studieforbundene i statsbudsjettet for 2027 vil svekke opplæringen korpsene får gjennom voksenopplæringsordningen. Han ber om at kuttet ikke blir vedtatt.",
   "viktig": false,
-  "bilde": "https://www.rb.no/ikke-svekk-korpsenes-muligheter-til-a-lare-utvikle-seg-og-skape-fellesskap/o/80-43-83102#bilde",
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/rb-ikke-svekk-korpsenes-muligheter.jpg",
   "fylker": [
    "Akershus"
   ],
@@ -116,11 +116,12 @@
  },
  {
   "tittel": "Mener forslaget til statsbudsjett er helt uakseptabelt",
-  "url": "https://www.tk.no",
+  "url": "https://www.tk.no/notiser-fra-nordmore/s/5-51-1479541",
   "kilde": "Tidens Krav",
   "dato": "2026-10-27",
   "sammendrag": "Voksenopplæringsforbundet i Møre og Romsdal mener budsjettforslaget er uakseptabelt, fordi det vil gi en samlet reduksjon på 3,3 millioner kroner til de 140 aktive studieorganisasjonene i fylket. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
   "viktig": false,
+  "bilde": "https://r.acdn.no/local/v3/publications/www.tk.no/gfx/square_logo.jpg",
   "fylker": [
    "Møre og Romsdal"
   ],
@@ -272,7 +273,7 @@
   "dato": "2026-10-25",
   "sammendrag": "Debattinnlegg av Anna Margrethe Drægebø Moe, leiar i Mental Helse Fjord, om regjeringens forslag om å kutte 70 millioner kroner, rundt 25 prosent, i tilskuddet til studieforbundene og hva det betyr for frivilligheten. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
   "viktig": false,
-  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/storfjordnytt-no-eit-kvelartak-pa-frivilligheita.jpg",
+  "bilde": "https://www.storfjordnytt.no/wp-content/uploads/2020/03/storfjordnytt-logo-some.png",
   "fylker": [
    "Møre og Romsdal"
   ],
@@ -356,17 +357,6 @@
   ]
  },
  {
-  "tittel": "Norges Husflidslag deler Vofos advarsel fra stortingshøringen",
-  "url": "https://www.facebook.com/118537558164493_1585455896943295",
-  "kilde": "Norges Husflidslag",
-  "dato": "2026-10-23",
-  "sammendrag": "Norges Husflidslag løfter fram at Vofo advarte familie- og kulturkomiteen mot alvorlige konsekvenser for kurs og opplæring i frivilligheten dersom kuttet i studieforbundene blir vedtatt. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
-  "viktig": false,
-  "fylker": [],
-  "kategori": "Organisasjonene",
-  "forbund": []
- },
- {
   "tittel": "Statsbudsjettet: Sjiraffen rammes dobbelt",
   "url": "https://www.facebook.com/sjiraffenkulturogkompetansesenter",
   "kilde": "Sjiraffen Kultur- og Kompetansesenter",
@@ -425,6 +415,7 @@
   "dato": "2026-10-23",
   "sammendrag": "Debattinnlegg om at korene i Nordre Nordland er viktige kulturbærere, og at regjeringens forslag om å kutte opplæringstilskuddet med 20 prosent kan gi høyere kontingenter og færre øvelser. Skribentene ber Stortinget stanse kuttet.",
   "viktig": false,
+  "bilde": "https://r.acdn.no/local/v3/publications/www.lofot-tidende.no/gfx/square_logo.jpg",
   "fylker": [
    "Nordland"
   ],
