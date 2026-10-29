@@ -1,5 +1,35 @@
 [
  {
+  "tittel": "Nå er grunnmuren truet",
+  "url": "https://www.h-avis.no/na-er-grunnmuren-truet/o/80-62-35544",
+  "kilde": "Haugesunds Avis",
+  "dato": "2026-10-28",
+  "sammendrag": "Debattinnlegg som mener frivilligheten er selve limet i Haugesund, og at regjeringens forslag om å kutte tilskuddet til studieforbundene med over 70 millioner kroner truer grunnmuren for korps og lag i byen. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/h-avis-no-na-er-grunnmuren-truet.jpg",
+  "fylker": [
+   "Rogaland"
+  ],
+  "sted": "Haugesund",
+  "lat": 59.41,
+  "lon": 5.27,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Ikke svekk korpsene",
+  "url": "https://www.budstikka.no/",
+  "kilde": "Budstikka",
+  "dato": "2026-10-28",
+  "sammendrag": "Norman Lagesen, styreleder i Norges Musikkorps Forbund Øst, advarer mot at regjeringens kraftige kutt i støtten til studieforbundene i statsbudsjettet for 2027 vil svekke opplæringen i korpsene. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Akershus"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Tetiana (42) har skapt sin egen arbeidsplass i Eidsvoll: – Vi har masse å gjøre",
   "url": "https://www.eub.no/tetiana-42-har-skapt-sin-egen-arbeidsplass-i-eidsvoll-vi-har-masse-a-gjore/s/80-136-7832",
   "kilde": "Eidsvoll Ullensaker Blad",
@@ -144,6 +174,19 @@
   "viktig": false,
   "bilde": "https://premium.vgc.no/v2/images/793151e7-f6bc-38e0-8370-3983de7f1c20?fit=crop&format=auto&h=1267&w=1900&s=8e503a13cac45fe4bdd87a04a954bc17cad1c0e0",
   "fylker": [],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Fryktar dramatiske budsjettkutt",
+  "url": "https://haramsnytt.no/notiser/vis/fryktar-dramatiske-budsjettkutt/3f.583",
+  "kilde": "Haramsnytt",
+  "dato": "2026-10-27",
+  "sammendrag": "Voksenopplæringsforbundet slår alarm etter at regjeringen foreslår å kutte rundt 70 millioner kroner i støtten til studieforbundene. Saken står bak betalingsmur og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Møre og Romsdal"
+  ],
   "kategori": "Medier",
   "forbund": []
  },
@@ -480,6 +523,22 @@
   ]
  },
  {
+  "tittel": "Regjeringen kutter i beredskapen vår",
+  "url": "https://www.fvn.no/",
+  "kilde": "Fædrelandsvennen",
+  "dato": "2026-10-22",
+  "sammendrag": "Debattinnlegg som mener regjeringens forslag om å kutte rundt 70 millioner kroner i støtten til studieforbundene svekker beredskapen, og viser til Vofos beregning av 793 færre kurs og 19 017 færre kurstimer. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Agder"
+  ],
+  "sted": "Vennesla",
+  "lat": 58.27,
+  "lon": 7.97,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Regjeringens uansvarlige kutt for frivilligheten",
   "url": "https://www.eub.no/regjeringens-uansvarlige-kutt-for-frivilligheten/o/80-136-7994",
   "kilde": "Eidsvoll Ullensaker Blad",
@@ -603,6 +662,21 @@
   "lon": 7.73,
   "kategori": "Medier",
   "forbund": []
+ },
+ {
+  "tittel": "Et angrep på frivilligheten",
+  "url": "https://www.tk.no/",
+  "kilde": "Tidens Krav",
+  "dato": "2026-10-22",
+  "sammendrag": "Leserinnlegg fra Studieforbundet Funkis som advarer om at kuttet på 70 millioner kroner til studieforbundene kan gi færre kurs, mindre inkludering og svekket fellesskap i Møre og Romsdal. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Møre og Romsdal"
+  ],
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet Funkis"
+  ]
  },
  {
   "tittel": "Trøndelag musikkråd: 70 millioner kroner tas fra frivilligheten",
