@@ -1,5 +1,92 @@
 [
  {
+  "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre!",
+  "url": "https://www.telen.no/",
+  "kilde": "Telen",
+  "dato": "2026-10-30",
+  "sammendrag": "Lederen i Notodden Husflidslag skriver i egenberedskapsuka at kuttet på 70 millioner kroner til studieforbundene svekker kunnskapen og fellesskapet som trengs i krisetider. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Telemark"
+  ],
+  "sted": "Notodden",
+  "lat": 59.56,
+  "lon": 9.26,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Ikke svekk korpsenes muligheter til å skape fellesskap",
+  "url": "https://www.sa.no/",
+  "kilde": "Sarpsborg Arbeiderblad",
+  "dato": "2026-10-30",
+  "sammendrag": "Norman Lagesen, styreleder i Norges Musikkorps Forbund Øst, mener det ikke holder å snakke varmt om frivillighet og inkludering når regjeringen samtidig kutter kraftig i støtten til studieforbundene i statsbudsjettet for 2027. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Østfold"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Frykter 700 færre kurs i Møre og Romsdal",
+  "url": "https://www.andalsnes-avis.no/nyheter/n/58X8g1/frykter-700-faerre-kurs-i-moere-og-romsdal",
+  "kilde": "Åndalsnes Avis",
+  "dato": "2026-10-30",
+  "sammendrag": "Regjeringens forslag til statsbudsjett for 2027 kan gi 700 færre kurs i Møre og Romsdal, og Voksenopplæringsforbundet frykter kraftige kutt i frivilligheten. Saken er bak betalingsmur og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/e07079c8-5754-34b8-be96-196a4be2bce0?fit=crop&q=80&tight=false&w=1200&h=900",
+  "fylker": [
+   "Møre og Romsdal"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Slår alarm om kuttplanar: – Rammar barn og unge",
+  "url": "https://www.strilen.no/nyheiter/n/kvnpE6/slaar-alarm-om-korpskutt-rammar-og-barn-og-unge",
+  "kilde": "Strilen",
+  "dato": "2026-10-29",
+  "sammendrag": "Manger Musikklag frykter færre øvingstilbud, dyrere medlemskap og mindre hjelp til skolekorpsene etter de foreslåtte kuttene i voksenopplæringsmidlene, og ber Stortinget stoppe kuttene. Saken er bak betalingsmur og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/65f77001-9db1-3317-9e0f-c5b639a64dd5?fit=crop&q=80&tight=false&w=1200&h=869",
+  "fylker": [
+   "Vestland"
+  ],
+  "sted": "Manger (Alver)",
+  "lat": 60.64,
+  "lon": 5.04,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Foreslåtte budsjettkutt i frivilligheten",
+  "url": "https://www.hadeland.no/",
+  "kilde": "Hadeland",
+  "dato": "2026-10-29",
+  "sammendrag": "Leserinnlegg i egenberedskapsuka som trekker fram husflidslagenes rolle og advarer mot at tilskuddene til studieforbundene foreslås redusert med 70 millioner kroner, og som mener vi trenger mer kunnskap og fellesskap i krisetider. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Innlandet"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Kunnskap og fellesskap er vår beredskap",
+  "url": "https://www.strilen.no/meiningar/o/El1rQo/kunnskap-og-fellesskap-er-vaar-beredskap",
+  "kilde": "Strilen",
+  "dato": "2026-10-29",
+  "sammendrag": "Styreleder i Nordhordland Husflidslag skriver i egenberedskapsuka at beredskap handler om kunnskap og fellesskap, og at kuttene på 70 millioner kroner til studieforbundene og 1,1 millioner til Norges Husflidslag vil gi færre og dyrere kurs. Hun ber stortingsrepresentantene fra Vestland reversere kuttene.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/445cb634-c221-37cf-8c1b-daa24dfa053d?fit=crop&q=80&tight=false&w=1200&h=800",
+  "fylker": [
+   "Vestland"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Nå er grunnmuren truet",
   "url": "https://www.h-avis.no/na-er-grunnmuren-truet/o/80-62-35544",
   "kilde": "Haugesunds Avis",
