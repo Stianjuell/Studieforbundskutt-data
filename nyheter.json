@@ -53,6 +53,23 @@
   "forbund": []
  },
  {
+  "tittel": "Kutt til studieforbund rammer musikklivet i Sarpsborg",
+  "url": "https://www.sa.no/kutt-til-studieforbund-rammer-musikklivet-i-sarpsborg/o/80-46-34499",
+  "kilde": "Sarpsborg Arbeiderblad",
+  "dato": "2026-10-30",
+  "sammendrag": "Inger-Lise Rud Foss og Gry Iversen i Prima damekor fra Tindlund skriver at det foreslåtte kuttet på rundt 70 millioner kroner til studieforbundene i statsbudsjettet for 2027 rammer musikklivet i Sarpsborg, og at koret er bekymret for framtiden. Saken er bak sperre og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/sa-no-kutt-til-studieforbund-rammer-musikklivet-i-sarpsborg-prima-damekor.jpg",
+  "fylker": [
+   "Østfold"
+  ],
+  "sted": "Sarpsborg",
+  "lat": 59.28,
+  "lon": 11.11,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Kutt til studieforbund rammer musikklivet i Nittedal",
   "url": "https://www.varingen.no/kutt-til-studieforbund-rammer-musikklivet-i-nittedal/o/80-92-18161",
   "kilde": "Varingen",
