@@ -298,16 +298,16 @@ svg .pin:hover,svg .pin:focus-visible{fill:var(--accent);outline:none}
   </header>
 
   <nav class="views" role="tablist" aria-label="Visning">
-    <button id="v-kart" role="tab" aria-selected="true" aria-controls="kartvisning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>Konsekvenskartet</span></button>
+    <button id="v-kart" role="tab" aria-selected="true" aria-controls="kartvisning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>Kartet</span></button>
     <button id="v-nyheter" role="tab" aria-selected="false" aria-controls="nyhetsvisning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z"/><path d="M17 9h3v8a2 2 0 0 1-2 2"/><path d="M8 9h5M8 13h5"/></svg><span>Nyheter</span></button>
     <button id="v-krav" role="tab" aria-selected="false" aria-controls="kravvisning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg><span>Hva krever vi</span></button>
   </nav>
   <div id="kartvisning" role="tabpanel" style="display:grid;gap:24px">
   <section class="bevar" id="bevar" aria-labelledby="bevar-h" aria-roledescription="karusell">
-    <h2 id="bevar-h">Dette jobber vi for å bevare</h2>
-    <p class="sub">Korps, dans, teater, håndverk, kystkultur, trosopplæring, beredskap og fellesskap over hele landet. Hver uke møtes folk for å lære noe nytt sammen. Her er noen av historiene.</p>
+    <h2 id="bevar-h">Siste nytt om kuttet</h2>
+    <p class="sub">De nyeste sakene om kuttet til studieforbundene, fra aviser, organisasjoner og politikere over hele landet.</p>
     <div class="car"><div class="track" id="track" tabindex="0" aria-live="off"></div></div>
-    <div class="cnav"><button id="cprev" aria-label="Forrige historie">‹</button><span class="cnt" id="ccnt"></span><button id="cnext" aria-label="Neste historie">›</button><button class="play" id="cplay" aria-pressed="false">Pause</button><button class="play fsb" id="cfs" aria-pressed="false">Start fullskjerm</button></div>
+    <div class="cnav"><button id="cprev" aria-label="Forrige sak">‹</button><span class="cnt" id="ccnt"></span><button id="cnext" aria-label="Neste sak">›</button><button class="play" id="cplay" aria-pressed="false">Pause</button><button class="play fsb" id="cfs" aria-pressed="false">Start fullskjerm</button></div>
   </section>
 
   <section class="totals" aria-label="Hele landet">
@@ -355,7 +355,7 @@ svg .pin:hover,svg .pin:focus-visible{fill:var(--accent);outline:none}
     </div>
   </section>
   <section id="nyhetsvisning" role="tabpanel" hidden>
-    <p class="lede" style="margin-bottom:20px">Saker om kuttene til studieforbundene. Lenkene åpner saken hos kilden.</p>
+    <p class="lede" style="margin-bottom:20px">Saker om kuttene til studieforbundene, hentet fra Budsjettkampradaren. Lenkene åpner saken hos kilden.</p>
     <div class="news" id="news"></div>
   </section>
 </div>
@@ -377,12 +377,13 @@ function build(){
     o.fb=Object.fromEntries(Object.entries(o.fb).sort((a,b)=>b[1]-a[1]));
     ["tk","tt","td"].forEach(k=>o[k]=Math.round(o[k])); return o});
   byId=Object.fromEntries(DATA.map(d=>[d.id,d]));
+  {const n={id:"NO",n:"Hele landet",kurs:0,timer:0,delt:0,kr:0,tk:0,tt:0,td:0,fb:{}};DATA.forEach(d=>{["kurs","timer","delt","kr","tk","tt","td"].forEach(k=>n[k]+=d[k]);Object.entries(d.fb).forEach(([k,v])=>n.fb[k]=(n.fb[k]||0)+v)});n.fb=Object.fromEntries(Object.entries(n.fb).sort((a,b)=>b[1]-a[1]));byId.NO=n;}
 }
 build();
 const LABEL={kr:"Tapt tilskudd",tk:"Potensielt tap av kurs",tt:"Potensielt tap av kurstimer",td:"Potensielt tap av deltakere"};
 const nf=new Intl.NumberFormat("nb-NO");
-const fmt=(m,v)=>m==="kr"?(v>=1e6?(v/1e6).toLocaleString("nb-NO",{maximumFractionDigits:1})+" mill. kr":nf.format(v)+" kr"):nf.format(v);
-let metric="kr", sel="50";
+const fmt=(m,v)=>m==="kr"?(v>=1e6?(v/1e6).toLocaleString("nb-NO",{maximumFractionDigits:1})+" mill. kr":nf.format(Math.round(v))+" kr"):nf.format(v);
+let metric="kr", sel="NO";
 
 const sum=k=>DATA.reduce((a,d)=>a+d[k],0);
 function totals(){document.getElementById("t-kr").textContent=fmt("kr",sum("kr"));
@@ -432,8 +433,10 @@ function pinItems(){
     out.push({type:"n",tittel:n.tittel,url:n.url,dato:n.dato,fylke:fy||(Array.isArray(n.fylker)?n.fylker[0]:""),sted:sted||fy,lat,lon,tekst:n.sammendrag||"",kilde:n.kilde,bilde:n.bilde});
   });
   // Nasjonale saker spres utover kartet, én per sted, så de blir synlige. De velger ikke noe fylke.
+  // Nasjonale saker skal aldri legge seg oppå en historie eller lokal sak: hopp over steder som allerede har en nål.
+  const opptatt=out.map(o=>toXY(o.lat,o.lon)), LEDIG=NASJ.filter(([,la,lo])=>{const [x,y]=toXY(la,lo);return !opptatt.some(([a,b])=>Math.hypot(a-x,b-y)<8)}), SL=LEDIG.length?LEDIG:NASJ;
   nasj.sort((a,b)=>((a.nederst?1:0)-(b.nederst?1:0))||(b.dato||"").localeCompare(a.dato||"")).forEach((n,i)=>{
-    const [s,la,lo]=NASJ[i%NASJ.length], r=Math.floor(i/NASJ.length);
+    const [s,la,lo]=SL[i%SL.length], r=Math.floor(i/SL.length);
     out.push({type:"n",nasjonal:true,tittel:n.tittel,url:n.url,dato:n.dato,fylke:"",sted:"Nasjonal sak",lat:la+r*0.3,lon:lo+r*0.4,tekst:n.sammendrag||"",kilde:n.kilde,bilde:n.bilde});
   });
   return out;
@@ -481,23 +484,20 @@ function renderCarousel(){
   const pairs={}; DATA.forEach(d=>{const s=hs.find(h=>h.fylke===d.n&&!used.has(h)); if(s){pairs[d.id]=s;used.add(s)}});
   const pool=hs.filter(h=>!used.has(h)); let pi=0; const take=n=>{for(let k=0;k<n&&pi<pool.length;k++)items.push(pool[pi++])};
   const q=Math.ceil(pool.length/4);
-  // Saker fra nyhetslista: de med bilde, viktige og nyeste først, maks 8.
-  const nyh=[...(window.__news||[])].filter(n=>n&&n.tittel&&/^https:\/\//.test(n.url||"")&&!n.nederst)
-    .sort((a,b)=>(b.dato||"").localeCompare(a.dato||"")||(rangKilde(a)-rangKilde(b))||((b.viktig?1:0)-(a.viktig?1:0))).map(n=>({...n,_nyhet:true}));
-  // Ferske saker (nyeste dato og dagen før) vises først i karusellen.
-  const nyD=(nyh[0]&&nyh[0].dato)||""; const grense=nyD?new Date(new Date(nyD+"T12:00:00").getTime()-864e5).toISOString().slice(0,10):"";
-  const fersk=nyh.filter(n=>(n.dato||"")>=grense).length;
+  // Saker fra nyhetslista: alle saker, nyeste først; innen samme dato medier, organisasjoner, vofo.no, sosiale medier.
+  const okN=n=>n&&n.tittel&&/^https:\/\//.test(n.url||"")&&!n.nederst;
+  const harB=n=>/^https:\/\//.test(n.bilde||"")&&!/\.svg(\?|$)/i.test(n.bilde);
+  const alleN=(window.__news||[]).filter(okN);
+  const medN=alleN.filter(n=>n.kategori==="Medier").sort((a,b)=>(b.dato||"").localeCompare(a.dato||"")||((b.viktig?1:0)-(a.viktig?1:0)));
+  const andreN=alleN.filter(n=>n.kategori!=="Medier"&&harB(n)).sort((a,b)=>((b.viktig?1:0)-(a.viktig?1:0))||(b.dato||"").localeCompare(a.dato||"")).slice(0,8);
+  // Ferske saker: datert de siste tre dagene, eller lagt inn i radaren de siste to døgnene. De sorteres etter når de kom inn, nyeste først, og vises først i karusellen.
+  const gDato=new Date(Date.now()-3*864e5).toISOString().slice(0,10), gLagt=new Date(Date.now()-2*864e5).toISOString();
+  const erFersk=n=>(n.dato||"")>=gDato||String(n.lagtTil||"")>=gLagt;
+  const nyh=[...alleN].sort((a,b)=>((erFersk(b)?1:0)-(erFersk(a)?1:0))||(erFersk(a)&&erFersk(b)?String(b.lagtTil||b.dato||"").localeCompare(String(a.lagtTil||a.dato||"")):0)||(b.dato||"").localeCompare(a.dato||"")||(rangKilde(a)-rangKilde(b))||((b.viktig?1:0)-(a.viktig?1:0))).map(n=>({...n,_nyhet:true}));
+  let fersk=nyh.filter(erFersk).length; if(fersk<3)fersk=Math.min(3,nyh.length); nyh.slice(0,fersk).forEach(n=>n._fersk=true);
   let ni=0; const tn=(k=1)=>{for(let j=0;j<k&&ni<nyh.length;j++)items.push(nyh[ni++])};
-  tn(fersk); items.push(F.aar); tn(); take(q); items.push(F.bredde, F.sitat); tn(); take(q);
-  items.push(F.spill, F.kons); tn(); take(q); items.push(F.forbund, F.tabell); tn(); take(q);
-  items.push(F.fylker); [...DATA].sort((a,b)=>b.kr-a.kr).forEach((d,i)=>{items.push(F.fylke[d.id]); if(pairs[d.id])items.push(pairs[d.id]); if(i%3===2)tn();});
-  take(pool.length); tn(nyh.length); items.push(F.snu);
-  // Maks 61 lysbilder: kutt først eldre nyheter, så historier uten fylkespar, så resten av historiene (bakfra).
-  const MAKS=61, ferskSet=new Set(nyh.slice(0,fersk)), parSet=new Set(Object.values(pairs));
-  const kutt=pred=>{for(let i=items.length-1;i>=0&&items.length>MAKS;i--){if(pred(items[i]))items.splice(i,1);}};
-  kutt(x=>x&&x._nyhet&&!ferskSet.has(x));
-  kutt(x=>x&&typeof x==="object"&&!x._nyhet&&hs.includes(x)&&!parSet.has(x));
-  kutt(x=>x&&typeof x==="object"&&!x._nyhet&&hs.includes(x));
+  // Karusellen viser bare nyheter, nyeste først (maks 61).
+  items.push(...nyh.slice(0,61));
   tr.innerHTML=items.map((h,i)=>typeof h==="string"?h.replace("__N__",`${i+1} av ${items.length}`):h._nyhet?newsSlide(h,i,items.length):storySlide(h,i,items.length)).join("");
   tr.querySelectorAll("button[data-kart]").forEach(b=>b.onclick=()=>{stopAuto();exitFs&&exitFs();document.querySelector(".mapbox").scrollIntoView({behavior:"smooth",block:"start"})});
   tr.querySelectorAll("button[data-fid]").forEach(b=>b.onclick=()=>{stopAuto();exitFs&&exitFs();select(b.dataset.fid);document.querySelector(".mapbox").scrollIntoView({behavior:"smooth",block:"start"})});
@@ -537,7 +537,7 @@ function newsSlide(h,i,n){
   const fy=Array.isArray(h.fylker)&&h.fylker.length===1?h.fylker[0]:""; const fid=(DATA.find(d=>d.n===fy)||{}).id||"";
   return `<article class="slide nyh" role="group" aria-roledescription="lysbilde" aria-label="${i+1} av ${n}">
     <div class="sim"><span>${e(h.kilde)}</span><img src="${e(im(h.bilde))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></div>
-    <div class="stx"><div class="ssted">I mediene · ${e(h.kilde)}${dato?" · "+e(dato):""}</div><h3>${e(h.tittel)}</h3>${h.sammendrag?`<p>${e(h.sammendrag)}</p>`:""}
+    <div class="stx"><div class="ssted">${h._fersk?"Nytt · ":"I mediene · "}${e(h.kilde)}${dato?" · "+e(dato):""}</div><h3>${e(h.tittel)}</h3>${h.sammendrag?`<p>${e(h.sammendrag)}</p>`:""}
     <div class="sbtn"><a href="${e(h.url)}" target="_blank" rel="noopener">Les saken</a>${fid?`<button data-fid="${fid}">Se ${e(fy)} i kartet</button>`:""}</div></div></article>`;
 }
 function storySlide(h,i,n){
@@ -592,7 +592,7 @@ function paint(){
   document.querySelectorAll("#rank tbody tr").forEach(tr=>tr.addEventListener("click",()=>{select(tr.dataset.id);document.getElementById("panel").scrollIntoView({behavior:"smooth",block:"start"})}));
 }
 function sentence(d){
-  return `I ${d.n} vil kuttet i statsbudsjettet bety ${fmt("kr",d.kr)} mindre til studieforbundene. Det gir et potensielt tap av ${nf.format(d.tk)} kurs og ${nf.format(d.td)} deltakere.`;
+  return `${d.id==="NO"?"På landsbasis":"I "+d.n} vil kuttet i statsbudsjettet bety ${fmt("kr",d.kr)} mindre til studieforbundene. Det gir et potensielt tap av ${nf.format(d.tk)} kurs og ${nf.format(d.td)} deltakere.`;
 }
 function renderLocal(){
   const box=document.getElementById("lokal"); if(!box)return;
@@ -607,7 +607,7 @@ function renderLocal(){
   box.innerHTML=h;
   const m=document.getElementById("more"); if(m)m.onclick=()=>{view("nyheter");scrollTo({top:0,behavior:"smooth"})};
 }
-const SHARE="https://www.vofo.no/kart", HASFORM=false;
+const SHARE="https://claude.ai/artifact/DAcmZWLew8NRfSF13uqEgp", HASFORM=false;
 function slug(n){return n.toLowerCase().replace(/æ/g,"ae").replace(/ø/g,"o").replace(/å/g,"a").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
 let initial=true;
 VB={x:0,y:0,w:GEO.w,h:GEO.h}; var anim=0;
@@ -630,7 +630,7 @@ function zoomTo(id){
   svg.classList.add("zoomed"); document.getElementById("zoomout").hidden=false;
 }
 function zoomOut(){const pp=document.getElementById("pop");if(pp)pp.hidden=true;animateTo({x:0,y:0,w:GEO.w,h:GEO.h}); svg.classList.remove("zoomed"); document.getElementById("zoomout").hidden=true;}
-document.getElementById("zoomout").addEventListener("click",zoomOut);
+document.getElementById("zoomout").addEventListener("click",()=>select("NO"));
 let zoomOnSelect=false;
 function select(id){
   sel=id; const d=byId[id]; const max=Math.max(...Object.values(d.fb));
@@ -648,7 +648,7 @@ function select(id){
     <div id="hist"></div>
     <div id="lokal"></div>`;
   if(!initial){try{history.replaceState(null,"","#"+slug(d.n))}catch(_){}}
-  if(zoomOnSelect)zoomTo(id);
+  if(id==="NO"){if(!initial)zoomOut()}else if(zoomOnSelect)zoomTo(id);
   renderLocal();
   renderHist();
   paint();
@@ -672,13 +672,20 @@ function renderNews(list){
   <h3>${esc(n.tittel)}</h3>${n.sammendrag?`<p>${esc(n.sammendrag)}</p>`:""}</div></a>`}).join("");
 }
 renderNews(NEWS);
-const DATAURL="https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/";
+const DATAURL="";
 if(DATAURL)(async function hent(){try{
   const [n,h]=await Promise.all(["nyheter","historier"].map(f=>fetch(DATAURL+f+".json?t="+Math.floor(Date.now()/3e5),{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null)));
   if(Array.isArray(h)&&h.length){const rows=h.filter(r=>r&&r.tittel&&r.url&&r.fylke);const seen=new Set(rows.map(r=>r.url));HIST=rows.concat(HIST.filter(x=>!seen.has(x.url)));drawPins();renderHist();renderCarousel();}
   if(Array.isArray(n)&&n.length)renderNews(n.filter(r=>r&&r.tittel));
 }catch(_){}}());
-
+(async()=>{try{
+  const db=window.claude&&await window.claude.use("db"); if(!db)return;
+  db.collection("historier").limit(500).onSnapshot(s=>{
+    const rows=s.docs.map(d=>d.data()).filter(r=>r&&r.tittel&&r.url&&r.fylke); if(!rows.length)return;rows.forEach(r=>{if(r&&r.bilde&&/^data:image\/(jpeg|png|webp);base64,/.test(r.bildeData||""))IMG[r.bilde]=r.bildeData});
+    const seen=new Set(rows.map(r=>r.url)); HIST=rows.concat(HIST.filter(h=>!seen.has(h.url))); drawPins(); renderHist(); renderCarousel();},()=>{});
+  db.collection("nyheter").orderBy("dato","desc").limit(200).onSnapshot(s=>{
+    const rows=s.docs.map(d=>d.data()).filter(r=>r&&r.tittel); rows.forEach(r=>{if(r&&r.bilde&&/^data:image\/(jpeg|png|webp);base64,/.test(r.bildeData||""))IMG[r.bilde]=r.bildeData}); if(rows.length)renderNews(rows);},()=>{});
+}catch(_){}})();
 const VIEWS={kart:"kartvisning",nyheter:"nyhetsvisning",krav:"kravvisning"};
 function view(v){Object.entries(VIEWS).forEach(([k,id])=>{document.getElementById(id).hidden=k!==v;document.getElementById("v-"+k).setAttribute("aria-selected",k===v)});
   try{history.replaceState(null,"",v==="kart"?"#"+slug(byId[sel].n):"#"+v)}catch(_){}}
@@ -687,8 +694,7 @@ document.getElementById("v-nyheter").onclick=()=>view("nyheter");
 document.getElementById("v-krav").onclick=()=>view("krav");
 document.querySelector("[data-tilkart]").onclick=()=>{view("kart");window.scrollTo({top:0,behavior:"smooth"})};
 document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest('a[href="#send-inn"]');if(!a)return;e.preventDefault();view("kart");setTimeout(()=>document.getElementById("send-inn")?.scrollIntoView({behavior:"smooth"}),50)});
-if(location.hash==="#nyheter")view("nyheter");
-if(location.hash==="#krav")view("krav");
+{const h=location.hash.slice(1);let kartHash=h==="kart";try{kartHash=kartHash||DATA.some(d=>slug(d.n)===h);}catch(_){}if(h==="krav")view("krav");else if(!kartHash)view("nyheter");}
 
 
 const hf=document.getElementById("hform");
