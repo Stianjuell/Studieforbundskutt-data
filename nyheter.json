@@ -1,5 +1,22 @@
 [
  {
+  "tittel": "– Et ekstremt usosialt kutt",
+  "url": "https://www.hammerfestingen.no/et-ekstremt-usosialt-kutt/s/80-160-11936",
+  "kilde": "Hammerfestingen",
+  "dato": "2026-11-05",
+  "sammendrag": "Lag og foreninger i Hammerfest som har studieforbundsstøtten som eneste forutsigbare tilskudd, frykter direkte konsekvenser av kuttet på rundt 70 millioner kroner og håper regjeringen snur. Saken er bak betalingsmur og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://g.acdn.no/obscura/API/dynamic/r1/cue/tr_2000_2000_s_f/1793372721000/hammer/2026/10/30/15/20261030_123707~2.jpg?chk=9AAF13",
+  "fylker": [
+   "Finnmark"
+  ],
+  "sted": "Hammerfest",
+  "lat": 70.66,
+  "lon": 23.68,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Kan bli dyrere å lære håndverk",
   "url": "https://www.l-a.no/nyheter/n/64Ld6e/kan-bli-dyrere-aa-laere-haandverk",
   "kilde": "Lindesnes Avis",
@@ -26,6 +43,60 @@
   "sammendrag": "Fylkestingsrepresentant Svein Otto Nilsen (INP) i Trøndelag skriver at kuttet på 70 millioner kroner til studieforbundene utgjør 9 millioner i Trøndelag, og at musikklivet kan miste 3 millioner. Han ber budsjettpartnerne med Sp i spissen om å reversere kuttet.",
   "viktig": false,
   "bilde": "https://www.sagat.no/bilder/web/2094c84743522.jpg?v=1793777588",
+  "fylker": [
+   "Trøndelag"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Hver fjerde krone forsvinner: 6,7 millioner kroner mindre til læring og fellesskap i Innlandet",
+  "url": "https://www.h-a.no/hver-fjerde-krone-forsvinner-6-7-millioner-kroner-mindre-til-laring-og-fellesskap-i-innlandet/o/80-139-92243",
+  "kilde": "Hamar Arbeiderblad",
+  "dato": "2026-11-04",
+  "sammendrag": "Vofo Innlandet skriver i et debattinnlegg at kuttet på rundt 70 millioner kroner betyr 6,7 millioner kroner mindre til kursvirksomhet i frivillige organisasjoner i Innlandet, og ber Stortinget reversere kuttet.",
+  "viktig": false,
+  "bilde": "https://g.acdn.no/obscura/API/dynamic/r1/cue/tr_2000_2000_s_f/1793700362000/hamarb/2026/11/3/10/ab7e0132-4100-40d7-b017-a0afd781bd9d.bin?chk=9CA265",
+  "fylker": [
+   "Innlandet"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Rødt reverserer kuttet i studieforbundene",
+  "url": "https://www.kompetanseforbundet.no/nyheter/2026/rodt-reverserer-kuttet-i-studieforbundene/",
+  "kilde": "Kompetanseforbundet",
+  "dato": "2026-11-04",
+  "sammendrag": "Rødt setter i sitt alternative statsbudsjett for 2027 av 33 millioner kroner for å reversere hele kuttet i tilskuddet til studieforbundene under Kunnskapsdepartementet. Kompetanseforbundet takker partiet og sier det gir håp inn mot budsjettforhandlingene.",
+  "viktig": true,
+  "bilde": "https://www.kompetanseforbundet.no/wp-content/uploads/2026/11/hege-bae-nyholt-rodt-alternativt-budsjett-2027-1024x576.webp",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [],
+  "nederst": true
+ },
+ {
+  "tittel": "LOs regionkonferanse i Østfold – uttalelser vedtatt dag 1",
+  "url": "https://www.lo.no/hvem-vi-er/regioner/ostfold/nyheter-fra-ostfold/uttalelser-fra-los-regionkonferanse-dag-1",
+  "kilde": "LO Østfold",
+  "dato": "2026-11-04",
+  "sammendrag": "LOs regionkonferanse i Østfold vedtok uttalelsen «Ikke halver arbeidslivet og fagbevegelsens kompetanseverktøy», som krever at halveringen av tilskuddet til studieforbundene under Kunnskapsdepartementet reverseres. Konferansen peker på at kuttet rammer etterutdanning for dem som har kortest utdanning.",
+  "viktig": false,
+  "bilde": "https://www.lo.no/contentassets/b791e74dcce54226aa848fd4961f47fd/los-regionkonferanse-byparken.jpg",
+  "fylker": [
+   "Østfold"
+  ],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre",
+  "url": "https://www.tronderdebatt.no/vi-trenger-mer-kunnskap-og-fellesskap-i-krisetider-ikke-mindre/o/80-116-41439",
+  "kilde": "Trønderdebatt",
+  "dato": "2026-11-04",
+  "sammendrag": "Husflidslagene i Nord-Trøndelag advarer mot kuttet på 1,1 millioner kroner til Norges Husflidslag og kuttet på 70 millioner kroner til studieforbundene, og viser til at kunnskap og fellesskap er en del av beredskapen.",
+  "viktig": false,
   "fylker": [
    "Trøndelag"
   ],
@@ -164,6 +235,20 @@
   "sted": "Sandefjord",
   "lat": 59.13,
   "lon": 10.22,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "– No må vi seie frå",
+  "url": "https://www.vigga.no/meninger/meiningar/o/Jrj3R4/no-maa-vi-seie-fraa",
+  "kilde": "Vigga",
+  "dato": "2026-11-03",
+  "sammendrag": "Ordførerne i Nord-Gudbrandsdal kritiserer et sentraliserende statsbudsjett og peker blant annet på at frivilligheten rammes når støtten til studieforbundene halveres, med svekkede tilbud som Seniorsurf og Seniornett.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/faf7419d-67a8-37f5-86f3-9747d6f2a3fe?fit=crop&q=80&tight=false&w=1200&h=900",
+  "fylker": [
+   "Innlandet"
+  ],
   "kategori": "Medier",
   "forbund": []
  },
