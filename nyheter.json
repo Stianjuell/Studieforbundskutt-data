@@ -1,5 +1,21 @@
 [
  {
+  "tittel": "Fortviler over nasjonalt forslag: – En måte å spare seg dønn fattig",
+  "url": "https://www.sande-avis.no/",
+  "kilde": "Sande Avis",
+  "dato": "2026-11-06",
+  "sammendrag": "Lokale frivillige i Sande reagerer på det foreslåtte kuttet i tilskuddet til studieforbundene, og statssekretær Erlend Hanstveit i Kultur- og likestillingsdepartementet svarer avisen. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": true,
+  "fylker": [
+   "Vestfold"
+  ],
+  "sted": "Sande (Holmestrand)",
+  "lat": 59.59,
+  "lon": 10.21,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "– Et ekstremt usosialt kutt",
   "url": "https://www.hammerfestingen.no/et-ekstremt-usosialt-kutt/s/80-160-11936",
   "kilde": "Hammerfestingen",
@@ -14,6 +30,29 @@
   "lat": 70.66,
   "lon": 23.68,
   "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "MDG reverserer kuttet, styrker studieforbundene og vil samle tilskuddet i ett departement",
+  "url": "https://mdg.no/politikk/aktuelt/nyhet/altbud27-nyhet",
+  "kilde": "MDG",
+  "dato": "2026-11-05",
+  "sammendrag": "MDG setter i sitt alternative statsbudsjett for 2027 av 70 millioner kroner til studieforbundene under Kulturdepartementet og 70 millioner under Kunnskapsdepartementet, som reverserer kuttet og styrker ordningen. Partiet vil også at Stortinget ber regjeringen samle tilskuddet under ett departement fra 2028 med en samlet bevilgning minst på dagens nivå.",
+  "viktig": true,
+  "bilde": "https://d1nizz91i54auc.cloudfront.net/_service/505811/display/img_version/9380527/t/1793875373/img_name/68683_505811_9eb0fb3c03.jpg",
+  "fylker": [],
+  "kategori": "Myndigheter og Storting",
+  "forbund": []
+ },
+ {
+  "tittel": "Alle budsjettpartnerne vil reversere kuttet",
+  "url": "https://www.vofo.no/aktuelt/alle-budsjettpartnerne-vil-reversere-kuttet",
+  "kilde": "Vofo",
+  "dato": "2026-11-05",
+  "sammendrag": "Senterpartiet, Rødt og MDG reverserer hele kuttet på rundt 70 millioner kroner til studieforbundene i sine alternative statsbudsjetter for 2027, og SV reverserer det meste. Vofo mener dette viser at kuttet ikke har flertall i Stortinget, og ber regjeringen og budsjettpartnerne reversere hele kuttet.",
+  "viktig": true,
+  "fylker": [],
+  "kategori": "Organisasjonene",
   "forbund": []
  },
  {
@@ -97,6 +136,20 @@
   "dato": "2026-11-04",
   "sammendrag": "Husflidslagene i Nord-Trøndelag advarer mot kuttet på 1,1 millioner kroner til Norges Husflidslag og kuttet på 70 millioner kroner til studieforbundene, og viser til at kunnskap og fellesskap er en del av beredskapen.",
   "viktig": false,
+  "fylker": [
+   "Trøndelag"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Er frivilligheten et glemt kapitel?",
+  "url": "https://www.gauldalsposten.no/ordetfritt/o/KrdG8o/er-frivilligheten-et-glemt-kapitel-for-regjeringen",
+  "kilde": "Gauldalsposten",
+  "dato": "2026-11-04",
+  "sammendrag": "Debattinnlegget om kuttet på rundt 70 millioner kroner til studieforbundene og hva det betyr for frivilligheten i Trøndelag er også trykket i Ságat. Saken kom fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/87f6783c-d05f-378c-8205-5ee57fc655de?fit=crop&q=80&tight=false&w=1200&h=800",
   "fylker": [
    "Trøndelag"
   ],
@@ -2028,6 +2081,22 @@
   "viktig": false,
   "bilde": "https://cdn.sanity.io/images/2m2bmunq/production/33b0ac0b98f1e1ca28aa45c790537ea981fd8f9a-1311x1311.png?auto=format&fit=max&q=75&w=600",
   "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Vi sier ifra om økte kostnader for jegere og frivilligheten!",
+  "url": "https://www.ajffhalden.no/vi-sier-ifra-om-okte-kostnader-for-jegere-og-frivilligheten/",
+  "kilde": "AJFF Halden",
+  "dato": "2026-10-15",
+  "sammendrag": "Arbeidernes Jeger- og Fiskerforening Halden advarer mot at kuttet på 70 millioner kroner til studieforbundene vil gjøre jegerprøvekurs og instruktørkurs dyrere og svekke den lokale aktiviteten. Foreningen kritiserer også økte gebyrer i våpenforvaltningen.",
+  "viktig": false,
+  "fylker": [
+   "Østfold"
+  ],
+  "sted": "Halden",
+  "lat": 59.12,
+  "lon": 11.39,
   "kategori": "Organisasjonene",
   "forbund": []
  },
