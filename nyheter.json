@@ -1,5 +1,19 @@
 [
  {
+  "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre",
+  "url": "https://www.s-n.no/meninger/o/QgGWgP/vi-trenger-mer-kunnskap-og-fellesskap-i-krisetider-ikke-mindre",
+  "kilde": "Stjørdals-Nytt",
+  "dato": "2026-11-07",
+  "sammendrag": "Lederen i Trøndelag husflidslag Nord advarer mot kuttet på 1,1 millioner kroner til Norges Husflidslag og 70 millioner kroner til studieforbundene, som vil gi dyrere kurs og færre aktiviteter. Hun ber stortingsrepresentantene fra Trøndelag om å reversere kuttene.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/86cced24-1017-3120-9f75-cf3d7af1e2c8?fit=crop&q=80&tight=false&w=1200&h=1053",
+  "fylker": [
+   "Trøndelag"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Fortviler over nasjonalt forslag: – En måte å spare seg dønn fattig",
   "url": "https://www.sandeavis.no/fortviler-over-nasjonalt-forslag-en-mate-a-spare-seg-donn-fattig/s/80-72-6197",
   "kilde": "Sande Avis",
@@ -24,6 +38,29 @@
   "sammendrag": "138 organisasjoner fra hele bredden av norsk frivillighet, blant dem Norges idrettsforbund, FFO, DNT og Røde Kors, står sammen i et opprop om at regjeringens kutt på 69,7 millioner kroner til studieforbundene må stanses. Alle de fire partiene som forhandler med Arbeiderpartiet om statsbudsjettet, har foreslått å reversere kuttet, men Vofo understreker at ingenting er avgjort før partiene er enige.",
   "viktig": true,
   "bilde": "https://cdn.sanity.io/images/qy7enua2/production/a0081fadc56b71f0f5b4c48571112a0b09785fb7-4032x3024.jpg?rect=0,96,4032,2117&w=1200&h=630&fit=max&auto=format",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Vil snu kuttet til studieforbundene",
+  "url": "https://www.kor.no/artikler/vil-snu-kuttet-til-studieforbundene",
+  "kilde": "Norges Korforbund",
+  "dato": "2026-11-06",
+  "sammendrag": "Norges Korforbund er glad for at Sp, SV, MDG og Rødt vil reversere regjeringens kutt til studieforbundene i statsbudsjettet for 2027. Generalsekretær Kim Stian Gjerdingen Bakke peker på at opplæringsmidlene via studieforbundene finansierer lokal koraktivitet.",
+  "viktig": true,
+  "bilde": "https://cdn.sanity.io/images/2m2bmunq/production/0507dd0b047eb889bb5577e578ddee58eb801eb9-1542x2313.jpg?auto=format&fit=max&q=75&w=1067",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Statsbudsjettet 2027: Vil rette opp kutt til kulturfrivilligheten",
+  "url": "https://kulturalliansen.no/aktuelt/statsbudsjettet-2026-vil-rette-opp-kutt-til-kulturfrivilligheten",
+  "kilde": "Kulturalliansen",
+  "dato": "2026-11-06",
+  "sammendrag": "Kulturalliansen viser til at alle fire budsjettpartnerne til regjeringen vil reversere hele eller mesteparten av kuttet på nesten 70 millioner kroner til studieforbundene. Sp, Rødt og MDG reverserer hele kuttet, mens SV reverserer det meste.",
+  "viktig": true,
   "fylker": [],
   "kategori": "Organisasjonene",
   "forbund": []
@@ -92,6 +129,22 @@
   "fylker": [],
   "kategori": "Medier",
   "forbund": []
+ },
+ {
+  "tittel": "MDG reverserer kuttet til studieforbundene under Kunnskapsdepartementet",
+  "url": "https://www.naeringogsamfunn.no/mdg-reverserer-kuttet-til-studieforbundene-under-kunnskapsdepartementet.6756185-597340.html",
+  "kilde": "Studieforbundet næring og samfunn",
+  "dato": "2026-11-05",
+  "sammendrag": "MDG reverserer kuttet og foreslår 70 millioner kroner til studieforbundene under Kunnskapsdepartementet, slik at alle fire budsjettpartnerne nå vil reversere kuttet. Studieforbundet er uenig i MDGs forslag om å samle tilskuddet i ett departement fra 2028.",
+  "viktig": true,
+  "bilde": "https://www.naeringogsamfunn.no/getfile.php/5513041.2482.tsmpz7jai7iizk/1200x630/MDG.png",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Akademisk studieforbund",
+   "Studieforbundet livslang læring",
+   "Studieforbundet næring og samfunn"
+  ]
  },
  {
   "tittel": "Kan bli dyrere å lære håndverk",
@@ -193,6 +246,22 @@
   ],
   "kategori": "Medier",
   "forbund": []
+ },
+ {
+  "tittel": "Rødt reverserer også hele kuttet til studieforbundene",
+  "url": "https://www.naeringogsamfunn.no/roedt-reverserer-ogsaa-hele-kuttet-til-studieforbundene.6756125-597340.html",
+  "kilde": "Studieforbundet næring og samfunn",
+  "dato": "2026-11-04",
+  "sammendrag": "Rødt reverserer i sitt alternative statsbudsjett for 2027 hele kuttet på 33 millioner kroner til studieforbundene under Kunnskapsdepartementet. Studieforbundet næring og samfunn takker partiet og oppfordrer MDG til å følge etter.",
+  "viktig": false,
+  "bilde": "https://www.naeringogsamfunn.no/getfile.php/5512912.2482.jzbspubqak7nnm/1200x630/R%C3%B8dt.png",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Akademisk studieforbund",
+   "Studieforbundet livslang læring",
+   "Studieforbundet næring og samfunn"
+  ]
  },
  {
   "tittel": "Gram i Politisk kvarter: Kutter kraftig i folkehøgskolene og studieforbundene",
@@ -342,6 +411,36 @@
   ],
   "kategori": "Medier",
   "forbund": []
+ },
+ {
+  "tittel": "Stopp kuttet!",
+  "url": "https://www.bandorg.no/nyheter/stopp-kuttet-til-studieforbundene",
+  "kilde": "Bandorg",
+  "dato": "2026-11-03",
+  "sammendrag": "Bandorg mener kuttet på 70 millioner kroner til studieforbundene vil svekke opplæringen i frivilligheten og fritidstilbudet for ungdom over hele landet. Organisasjonen oppfordrer medlemmene til å kontakte politikere, skrive leserinnlegg og lage videoer.",
+  "viktig": false,
+  "bilde": "https://www.bandorg.no/imager/images/1331115/Trondelag_Kickstart26_-23_101d7b8599c0cc599ee16e9637ccc19e.jpg",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Musikkens studieforbund"
+  ]
+ },
+ {
+  "tittel": "Senterpartiet reverserer hele kuttet i tilskuddet til studieforbundene.",
+  "url": "https://www.naeringogsamfunn.no/senterpartiet-reverserer-hele-kuttet-i-tilskuddet-til-studieforbundene.6756070-597340.html",
+  "kilde": "Studieforbundet næring og samfunn",
+  "dato": "2026-11-03",
+  "sammendrag": "Senterpartiet setter av 32,5 millioner kroner i sitt alternative budsjett for 2027 for å reversere kuttet til studieforbundene under Kunnskapsdepartementet, der regjeringen foreslår å redusere tilskuddet fra 67,3 til 34,8 millioner kroner.",
+  "viktig": false,
+  "bilde": "https://www.naeringogsamfunn.no/getfile.php/5512823.2482.nwnilmabswsm7p/1200x630/erling-sande-sp-alternativt-statsbudsjett-2027.webp",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Akademisk studieforbund",
+   "Studieforbundet livslang læring",
+   "Studieforbundet næring og samfunn"
+  ]
  },
  {
   "tittel": "SV vil redde Kilden og øke ramma for universitetene",
