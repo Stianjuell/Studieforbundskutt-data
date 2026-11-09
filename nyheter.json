@@ -1,5 +1,42 @@
 [
  {
+  "tittel": "Kutt rammer musikklivet i Skien",
+  "url": "https://www.varden.no",
+  "kilde": "Varden",
+  "dato": "2026-11-09",
+  "sammendrag": "Tetiana Lutsiv i Ukrainsk kreativitet og identitet, avdeling Skien, skriver i papirutgaven av Varden at kuttet på rundt 70 millioner kroner til studieforbundene vil ramme musikklivet i Skien og dirigentene, instruktørene og pedagogene laget jobber med. Hun ber stortingsrepresentantene fra Telemark reversere kuttet og si hva de vil gjøre for å sikre kursene.",
+  "viktig": false,
+  "bilde": "https://www.varden.no/applefavicon.png",
+  "fylker": [
+   "Telemark"
+  ],
+  "sted": "Skien",
+  "lat": 59.21,
+  "lon": 9.61,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "En dårlig 50-årsgave til kulturlivet",
+  "url": "https://www.f-b.no/en-darlig-50-arsgave-til-kulturlivet/o/80-59-97028",
+  "kilde": "Fredrikstad Blad",
+  "dato": "2026-11-08",
+  "sammendrag": "Remi Sølvberg, stortingsrepresentant og kulturpolitisk talsperson for Rødt fra Østfold, skriver at voksenopplæringsloven, Norsk musikkråd og Musikkens studieforbund fyller 50 år samtidig som regjeringen foreslår å kutte i tilskuddene til studieforbundene, og trekker fram kursene i Fredrikstad Husflidslag.",
+  "viktig": true,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/f-b-no-en-darlig-50-arsgave-til-kulturlivet.jpg",
+  "fylker": [
+   "Østfold"
+  ],
+  "sted": "Fredrikstad",
+  "lat": 59.22,
+  "lon": 10.93,
+  "kategori": "Medier",
+  "forbund": [
+   "Musikkens Studieforbund",
+   "Studieforbundet kultur og tradisjon"
+  ]
+ },
+ {
   "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre",
   "url": "https://www.s-n.no/meninger/o/QgGWgP/vi-trenger-mer-kunnskap-og-fellesskap-i-krisetider-ikke-mindre",
   "kilde": "Stjørdals-Nytt",
@@ -10,6 +47,23 @@
   "fylker": [
    "Trøndelag"
   ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Kulturløft eller kultur-jojo?",
+  "url": "https://www.tronderdebatt.no/kulturloft-eller-kultur-jojo/o/80-122-1476",
+  "kilde": "Trønderdebatt",
+  "dato": "2026-11-07",
+  "sammendrag": "Jan Grønningen, leder av hovedutvalg for kultur i Trøndelag fylkeskommune, mener regjeringens kulturløft henger dårlig sammen med forslaget om å kutte rundt 70 millioner kroner til studieforbundene.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/tronderdebatt-no-kulturloft-eller-kultur-jojo.jpg",
+  "fylker": [
+   "Trøndelag"
+  ],
+  "sted": "Trøndelag",
+  "lat": 63.25,
+  "lon": 10.24,
   "kategori": "Medier",
   "forbund": []
  },
@@ -63,6 +117,40 @@
   "viktig": true,
   "fylker": [],
   "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre!",
+  "url": "https://www.inderoyningen.no/vi-trenger-mer-kunnskap-og-fellesskap-i-krisetider-ikke-mindre/o/80-119-6950",
+  "kilde": "Inderøyningen",
+  "dato": "2026-11-06",
+  "sammendrag": "Monica Stein, leder i Trøndelag Husflidslag Nord og medlem av Beitstad Husflidslag, skriver at kunnskap og fellesskap fra blant annet husflidslagene er en del av beredskapen, og at kuttet på 70 millioner kroner til studieforbundene vil svekke dette.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/inderoyningen-no-vi-trenger-mer-kunnskap-og-fellesskap-i-krisetider.jpg",
+  "fylker": [
+   "Trøndelag"
+  ],
+  "sted": "Straumen (Inderøy)",
+  "lat": 63.87,
+  "lon": 11.3,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Praktisk kunnskap lært i fellesskap, er god beredskap!",
+  "url": "https://www.op.no/praktisk-kunnskap-lart-i-fellesskap-er-god-beredskap/o/80-36-43873",
+  "kilde": "Østlands-Posten",
+  "dato": "2026-11-06",
+  "sammendrag": "Ellen Holtan Folkestad, styreleder i Norges Husflidslag, skriver at praktisk kunnskap lært i fellesskap i blant annet de åtte husflidslagene i Vestfold er god beredskap, og advarer mot at tilskuddene til studieforbundene foreslås redusert med 70 millioner kroner.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/op-no-praktisk-kunnskap-laert-i-fellesskap-er-god-beredskap.jpg",
+  "fylker": [
+   "Vestfold"
+  ],
+  "sted": "Larvik",
+  "lat": 59.05,
+  "lon": 10.03,
+  "kategori": "Medier",
   "forbund": []
  },
  {
