@@ -411,7 +411,7 @@ const PROJ={minx:-60250,maxy:7939090,s:0.0005104862381418301};
 function toXY(lat,lon){const [x,y]=utm33(lat,lon);return [(x-PROJ.minx)*PROJ.s,(PROJ.maxy-y)*PROJ.s]}
 const pinLayer=document.createElementNS("http://www.w3.org/2000/svg","g"); pinLayer.id="pins"; svg.appendChild(pinLayer);
 const FYLKESBY={"Østfold":[59.22,10.93],"Akershus":[59.96,11.05],"Oslo":[59.91,10.75],"Innlandet":[60.79,11.07],"Buskerud":[59.74,10.20],"Vestfold":[59.27,10.41],"Telemark":[59.21,9.61],"Agder":[58.15,7.99],"Rogaland":[58.97,5.73],"Vestland":[60.39,5.32],"Møre og Romsdal":[62.47,6.15],"Trøndelag":[63.43,10.39],"Nordland":[67.28,14.40],"Troms":[69.65,18.96],"Finnmark":[69.97,23.27]};
-const NASJ=[["Lillehammer",61.12,10.47],["Arendal",58.46,8.77],["Steinkjer",64.01,11.50],["Haugesund",59.41,5.27],["Mo i Rana",66.31,14.14],["Kongsberg",59.67,9.65],["Harstad",68.80,16.54],["Førde",61.45,5.85],["Vadsø",70.07,29.75],["Halden",59.12,11.39],["Kristiansund",63.11,7.73],["Larvik",59.05,10.03],["Hammerfest",70.66,23.68],["Gjøvik",60.80,10.69],["Narvik",68.44,17.43],["Notodden",59.56,9.26],["Jessheim",60.14,11.17],["Hønefoss",60.17,10.26]];
+const NASJ={"Østfold":[[59.12,11.39],[59.43,10.66],[59.57,11.33],[59.22,10.93],[59.28,11.11]],"Akershus":[[60.14,11.17],[59.72,10.84],[60.33,11.26],[59.96,11.05]],"Innlandet":[[61.12,10.47],[60.88,11.56],[61.77,9.54],[60.80,10.69]],"Buskerud":[[59.67,9.65],[60.70,8.95],[60.17,10.26]],"Vestfold":[[59.05,10.03],[59.49,10.31],[59.13,10.22],[59.42,10.48]],"Telemark":[[59.56,9.26],[59.48,8.63],[58.87,9.41]],"Agder":[[58.46,8.77],[58.59,7.80],[58.03,7.46]],"Rogaland":[[59.41,5.27],[58.85,5.74],[58.45,6.00]],"Vestland":[[61.45,5.85],[60.63,6.42],[59.78,5.50]],"Møre og Romsdal":[[63.11,7.73],[62.47,6.15],[62.74,7.16]],"Trøndelag":[[64.01,11.50],[62.57,11.38],[64.47,11.50],[63.30,9.85]],"Nordland":[[66.31,14.14],[68.44,17.43],[67.28,14.40],[65.84,13.19]],"Troms":[[69.65,18.96],[68.80,16.54],[69.23,17.98],[69.77,21.03]],"Finnmark":[[70.66,23.68],[70.07,29.75],[69.97,23.27],[69.73,30.05]]};
 // Nasjonale saker fra studieforbund med kjent hovedkontor plasseres der.
 const HK={"Studieforbundet kultur og tradisjon":["Vågå",61.875,9.100],"Frilynt Norge":["Sandefjord",59.131,10.216],"Studieforbundet Livslang Læring":["Bamble",59.030,9.700]};
 function pinItems(){
@@ -428,19 +428,28 @@ function pinItems(){
       if(!fy||!FYLKESBY[fy])return; [lat,lon]=FYLKESBY[fy]; sted=fy; }
     out.push({type:"n",tittel:n.tittel,url:n.url,dato:n.dato,fylke:fy||(Array.isArray(n.fylker)?n.fylker[0]:""),sted:sted||fy,lat,lon,tekst:n.sammendrag||"",kilde:n.kilde,bilde:n.bilde});
   });
-  // Nasjonale saker spres utover kartet, én per sted, så de blir synlige. De velger ikke noe fylke.
-  // Nasjonale saker skal aldri legge seg oppå en historie eller lokal sak: hopp over steder som allerede har en nål.
-  const opptatt=out.map(o=>toXY(o.lat,o.lon)), LEDIG=NASJ.filter(([,la,lo])=>{const [x,y]=toXY(la,lo);return !opptatt.some(([a,b])=>Math.hypot(a-x,b-y)<8)}), SL=LEDIG.length?LEDIG:NASJ;
+  // Nasjonale saker fordeles likt på alle fylker unntatt Oslo, etter tur, og spres rundt flere byer i hvert fylke.
+  // Hvert punkt må ligge inne i fylket og ha god avstand til alle andre nåler, så ingen legger seg oppå hverandre.
+  const opptatt=out.map(o=>toXY(o.lat,o.lon)), MIN=17, GA=Math.PI*(3-Math.sqrt(5));
+  const land=[...svg.querySelectorAll(":scope > path")];
+  const inni=(els,x,y)=>{if(!els.length||typeof DOMPoint==="undefined")return true;try{const p=new DOMPoint(x,y);return els.some(el=>el.isPointInFill(p))}catch(_){return true}};
+  const ledig=(x,y,m)=>!opptatt.some(([a,b])=>Math.hypot(a-x,b-y)<m);
+  const FY=Object.keys(NASJ).map(f=>({f,els:land.filter(p=>(byId[p.dataset.id]||{}).n===f),byer:NASJ[f].map(([la,lo])=>({xy:toXY(la,lo),k:0})),n:0}));
+  const finn=(c,els,m)=>{for(let k=0;k<120;k++){const r=k?8*Math.sqrt(k):0, x=c.xy[0]+r*Math.cos(k*GA), y=c.xy[1]+r*Math.sin(k*GA);if(inni(els,x,y)&&ledig(x,y,m))return [x,y]}return null};
   nasj.sort((a,b)=>((a.nederst?1:0)-(b.nederst?1:0))||(b.dato||"").localeCompare(a.dato||"")).forEach((n,i)=>{
-    const [s,la,lo]=SL[i%SL.length], r=Math.floor(i/SL.length);
-    out.push({type:"n",nasjonal:true,tittel:n.tittel,url:n.url,dato:n.dato,fylke:"",sted:"Nasjonal sak",lat:la+r*0.3,lon:lo+r*0.4,tekst:n.sammendrag||"",kilde:n.kilde,bilde:n.bilde});
+    const fy=FY[i%FY.length]; let xy=null;
+    for(const m of [MIN,12,8])for(let t=0;t<fy.byer.length&&!xy;t++){xy=finn(fy.byer[(fy.n+t)%fy.byer.length],fy.els,m)}
+    fy.n++;
+    if(!xy){const c=fy.byer[0];xy=[c.xy[0]+(i%5)*4,c.xy[1]+Math.floor(i/5)%5*4]}
+    opptatt.push(xy);
+    out.push({type:"n",nasjonal:true,tittel:n.tittel,url:n.url,dato:n.dato,fylke:"",sted:"Nasjonal sak",xy,tekst:n.sammendrag||"",kilde:n.kilde,bilde:n.bilde});
   });
   return out;
 }
 function drawPins(){
   pinLayer.replaceChildren();
   const groups={};
-  pinItems().forEach(h=>{const [x,y]=toXY(h.lat,h.lon);const k=x.toFixed(0)+","+y.toFixed(0);(groups[k]=groups[k]||{x,y,l:[]}).l.push(h)});
+  pinItems().forEach(h=>{const [x,y]=h.xy||toXY(h.lat,h.lon);const k=x.toFixed(0)+","+y.toFixed(0);(groups[k]=groups[k]||{x,y,l:[]}).l.push(h)});
   Object.values(groups).forEach(g=>{
     const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
     const hasNews=g.l.some(i=>i.type==="n"), nasjonal=g.l.every(i=>i.nasjonal);
