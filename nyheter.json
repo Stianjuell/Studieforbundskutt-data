@@ -1,5 +1,22 @@
 [
  {
+  "tittel": "Kven skal ha råd til å spele i korps i framtida?",
+  "url": "https://www.sunnhordland.no/meiningar/o/VgKyAr/kven-skal-ha-raad-til-aa-spele-i-korps-i-framtida",
+  "kilde": "Sunnhordland",
+  "dato": "2026-11-10",
+  "sammendrag": "Styreleiarane i Fitjar Musikklag og Fitjar Skulekorps skriver at de to korpsene får rundt 80 000 kroner i året i voksenopplæringsmidler til dirigent og opplæring. Blir kuttet på 70 millioner kroner til studieforbundene vedtatt, må de øke kontingenten, redusere opplæringen eller finne nye inntekter.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/9afd4316-d58c-3c0d-8fd3-228bb4c20012?fit=crop&q=80&tight=false&w=1200&h=800",
+  "fylker": [
+   "Vestland"
+  ],
+  "sted": "Fitjar",
+  "lat": 59.92,
+  "lon": 5.32,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Kutt rammer musikklivet i Skien",
   "url": "https://www.varden.no",
   "kilde": "Varden",
@@ -13,6 +30,34 @@
   "sted": "Skien",
   "lat": 59.21,
   "lon": 9.61,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre!",
+  "url": "https://www.steinkjer-avisa.no/vi-trenger-mer-kunnskap-og-fellesskap-i-krisetider-ikke-mindre/o/80-117-13796",
+  "kilde": "Steinkjer-Avisa",
+  "dato": "2026-11-09",
+  "sammendrag": "Monica Stein, leder i Trøndelag Husflidslag Nord, skriver at de 17 husflidslagene i Nord-Trøndelag er viktige for beredskap og fellesskap. Kuttet på 70 millioner kroner til studieforbundene vil ifølge henne bety dyrere kurs, færre aktiviteter og mindre mulighet til å lære bort praktiske ferdigheter.",
+  "viktig": false,
+  "bilde": "https://g.acdn.no/obscura/API/dynamic/r1/cue/tr_2000_2000_s_f/1794221390000/steink/2026/11/9/10/Skjermbilde+2026-11-09+kl.+11.49.36.png?chk=5416B5",
+  "fylker": [
+   "Trøndelag"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Praktisk kunnskap lært i fellesskap er god beredskap!",
+  "url": "https://www.tb.no/praktisk-kunnskap-lart-i-fellesskap-er-god-beredskap/o/80-76-70150",
+  "kilde": "Tønsbergs Blad",
+  "dato": "2026-11-09",
+  "sammendrag": "Styreleder Ellen Holtan Folkestad i Norges Husflidslag skriver at de åtte husflidslagene i Vestfold bygger praktisk kunnskap og fellesskap som styrker beredskapen. Hun mener det er vanskelig å forstå at regjeringen foreslår å kutte 70 millioner kroner til studieforbundene, noe som gir dyrere kurs og færre aktiviteter.",
+  "viktig": false,
+  "bilde": "https://g.acdn.no/obscura/API/dynamic/r1/cue/tr_2000_2000_s_f/1794224452000/tonsbb/2026/11/5/11/135eb8fe-7858-42a4-81b8-8ace78ad9143.bin?chk=495556",
+  "fylker": [
+   "Vestfold"
+  ],
   "kategori": "Medier",
   "forbund": []
  },
@@ -531,6 +576,20 @@
   ]
  },
  {
+  "tittel": "Sentraliserande budsjett og med aukande forskjellar. No må vi seie ifrå!",
+  "url": "https://www.gd.no/sentraliserande-budsjett-og-med-aukande-forskjellar-no-ma-vi-seie-ifra/o/80-18-55450",
+  "kilde": "Gudbrandsdølen Dagningen",
+  "dato": "2026-11-03",
+  "sammendrag": "Ordførerne i Lesja, Dovre, Sel, Vågå, Lom og Skjåk mener statsbudsjettet flytter kostnader fra staten til kommunene og innbyggerne. De skriver at også frivilligheten rammes når støtten til studieforbundene halveres, og trekker fram tilbud som Seniorsurf og Seniornett.",
+  "viktig": false,
+  "bilde": "https://g.acdn.no/obscura/API/dynamic/r1/cue/tr_2000_2000_s_f/1793689014000/gudbrd/2026/11/3/6/s%C3%A6rltkshgrthaerg.jpg?chk=673CDE",
+  "fylker": [
+   "Innlandet"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "SV vil redde Kilden og øke ramma for universitetene",
   "url": "https://www.khrono.no/sv-vil-redde-kilden-og-oke-ramma-for-universitetene/1096798",
   "kilde": "Khrono",
@@ -588,6 +647,22 @@
   "kategori": "Organisasjonene",
   "forbund": [],
   "nederst": true
+ },
+ {
+  "tittel": "SV vil reversere kuttet til studieforbundene under Kunnskapsdepartementet",
+  "url": "https://www.naeringogsamfunn.no/sv-vil-reversere-kuttet-til-studieforbundene-under-kunnskapsdepartementet.6755996-597340.html",
+  "kilde": "Studieforbundet næring og samfunn",
+  "dato": "2026-11-02",
+  "sammendrag": "SV setter av 33 millioner kroner i sitt alternative statsbudsjett for 2027 for å reversere kuttet i tilskuddet til studieforbundene under Kunnskapsdepartementet, som regjeringen vil redusere fra 67,3 til 34,8 millioner kroner. Studieforbundet næring og samfunn takker SV for forslaget.",
+  "viktig": true,
+  "bilde": "https://www.naeringogsamfunn.no/getfile.php/5512691.2482.lswpkptwwpjjzk/1200x630/sunniva-holmas-eidsvoll-sv-alternativt-statsbudsjett-2027.webp",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Akademisk studieforbund",
+   "Studieforbundet livslang læring",
+   "Studieforbundet næring og samfunn"
+  ]
  },
  {
   "tittel": "Regjeringen radbrekker frivilligheten i Trøndelag",

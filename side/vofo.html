@@ -1,10 +1,4 @@
-<!doctype html>
-<html lang="nb">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Hva kuttet i statsbudsjettet 2027 kan bety for studieforbundenes kurs, kurstimer og deltakere i hvert fylke.">
-<title>Konsekvenskartet</title>
+<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="description" content="Hva kuttet i statsbudsjettet 2027 kan bety for studieforbundenes kurs, kurstimer og deltakere i hvert fylke."><title>Konsekvenskartet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gelasio:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 <style>
@@ -502,7 +496,7 @@ function renderCarousel(){
   let fersk=nyh.filter(erFersk).length; if(fersk<3)fersk=Math.min(3,nyh.length); nyh.slice(0,fersk).forEach(n=>n._fersk=true);
   let ni=0; const tn=(k=1)=>{for(let j=0;j<k&&ni<nyh.length;j++)items.push(nyh[ni++])};
   // Karusellen viser bare nyheter, nyeste først (maks 61).
-  items.push(...nyh.slice(0,61));
+  items.push(...nyh.filter(n=>n._fersk));
   tr.innerHTML=items.map((h,i)=>typeof h==="string"?h.replace("__N__",`${i+1} av ${items.length}`):h._nyhet?newsSlide(h,i,items.length):storySlide(h,i,items.length)).join("");
   tr.querySelectorAll("button[data-kart]").forEach(b=>b.onclick=()=>{stopAuto();exitFs&&exitFs();document.querySelector(".mapbox").scrollIntoView({behavior:"smooth",block:"start"})});
   tr.querySelectorAll("button[data-fid]").forEach(b=>b.onclick=()=>{stopAuto();exitFs&&exitFs();select(b.dataset.fid);document.querySelector(".mapbox").scrollIntoView({behavior:"smooth",block:"start"})});
