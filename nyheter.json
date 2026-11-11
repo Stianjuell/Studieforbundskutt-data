@@ -1,5 +1,72 @@
 [
  {
+  "tittel": "Takk for at noen lytter, men kampen er ikke over",
+  "url": "https://www.an.no/",
+  "kilde": "Avisa Nordland",
+  "dato": "2026-11-10",
+  "sammendrag": "Innlegg om at regjeringens forslag om å kutte 70 millioner kroner i tilskuddet til studieforbundene vil ramme organisasjonslivet og frivilligheten i Nordland, med tall fra Vofo og Studieforbundet kultur og tradisjon. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Nordland"
+  ],
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
+  ]
+ },
+ {
+  "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre!",
+  "url": "https://www.frostingen.no/vi-trenger-mer-kunnskap-og-fellesskap-i-krisetider-ikke-mindre/o/80-166-9671",
+  "kilde": "Frostingen",
+  "dato": "2026-11-10",
+  "sammendrag": "Leserinnlegg fra husflidslagene i Nord-Trøndelag, med 17 lokallag og 835 medlemmer, som advarer om at kuttet på 70 millioner kroner til studieforbundene gir dyrere kurs og færre aktiviteter. De ber stortingsrepresentantene fra Trøndelag reversere kuttene.",
+  "viktig": false,
+  "bilde": "https://g.acdn.no/obscura/API/dynamic/r1/cue/tr_2000_2000_s_f/1793701063000/frosti/2026/11/3/10/IMG_9006.jpg?chk=6DB1CA",
+  "fylker": [
+   "Trøndelag"
+  ],
+  "sted": "Frosta",
+  "lat": 63.59,
+  "lon": 10.74,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Husflidslagene kan miste kurs: – Prøver seg jo hele tiden",
+  "url": "https://www.t-a.no/",
+  "kilde": "Trønder-Avisa",
+  "dato": "2026-11-10",
+  "sammendrag": "Norges Husflidslag reagerer på kuttforslagene i statsbudsjettet og peker på at kuttet til studieforbundene vil ramme kursene i lokallagene. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Trøndelag"
+  ],
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
+  ]
+ },
+ {
+  "tittel": "Fra møterom til Stortinget: Slik mobiliserer frivilligheten mot budsjettkuttene",
+  "url": "https://www.vofo.no/aktuelt/fra-moterom-til-stortinget-slik-mobiliserer-frivilligheten-mot-budsjettkuttene",
+  "kilde": "Vofo",
+  "dato": "2026-11-10",
+  "sammendrag": "Vofo forteller om aksjonsgruppen som ble etablert fem dager etter at statsbudsjettet for 2027 ble lagt fram, og som arbeider med politisk påvirkning og mobilisering mot kuttet på 69,7 millioner kroner. 140 organisasjoner har nå sluttet seg til et felles opprop.",
+  "viktig": false,
+  "bilde": "https://cdn.sanity.io/images/qy7enua2/production/9f3bffc4152a71697fb3866e2f0f5a750b2a3b89-5712x4284.jpg?rect=0,643,5712,2999&w=1200&h=630&fit=max&auto=format",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Funkis",
+   "Studieforbundet Livslang Læring",
+   "Musikkens Studieforbund",
+   "Studieforbundet kultur og tradisjon",
+   "Kristelig Studieforbund",
+   "Idrettens Studieforbund",
+   "Senterpartiets Studieforbund"
+  ]
+ },
+ {
   "tittel": "Kven skal ha råd til å spele i korps i framtida?",
   "url": "https://www.sunnhordland.no/meiningar/o/VgKyAr/kven-skal-ha-raad-til-aa-spele-i-korps-i-framtida",
   "kilde": "Sunnhordland",
