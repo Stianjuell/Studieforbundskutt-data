@@ -1,5 +1,31 @@
 [
  {
+  "tittel": "Skammeleg av eit parti som påstår i partiprogrammet sitt at dei står på for eit tryggare Norge og ein betre velferdsstat",
+  "url": "https://www.hallingdolen.no/meiningar/o/bkKROl/statsbudsjettet-2027",
+  "kilde": "Hallingdølen",
+  "dato": "2026-11-11",
+  "sammendrag": "Leserinnlegg om statsbudsjettet 2027 som spør om Ap spiller et kynisk spill i budsjettforhandlingene, og som ifølge medieovervåkingen nevner redusert støtte til studieforbund og mindre folkehøgskoler blant kuttene. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/d9cb1c00-f3ae-395b-853d-3c6f03b8456e?fit=crop&q=80&tight=false&w=1200&h=676",
+  "fylker": [],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Har Østfold råd å miste 3,3 millioner kroner til læring og fellesskap?",
+  "url": "https://www.moss-avis.no/har-ostfold-rad-a-miste-3-3-millioner-kroner-til-laring-og-fellesskap/o/80-67-54450",
+  "kilde": "Moss Avis",
+  "dato": "2026-11-11",
+  "sammendrag": "Debattinnlegg der Voksenopplæringsforbundet i Østfold, studieforbundene og frivilligheten i fylket advarer mot at kuttet i statsbudsjettet vil ta 3,3 millioner kroner fra læring og fellesskap i Østfold og ramme vedtatte fylkeskommunale planer. Innlegget sto også i Sarpsborg Arbeiderblad; saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/moss-avis-no-har-ostfold-rad-a-miste-3-3-millioner-til-laering-og-fellesskap.jpg",
+  "fylker": [
+   "Østfold"
+  ],
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Takk for at noen lytter, men kampen er ikke over",
   "url": "https://www.an.no/takk-for-at-noen-lytter-men-kampen-er-ikke-over/o/80-4-59652",
   "kilde": "Avisa Nordland",
