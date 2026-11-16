@@ -1,5 +1,39 @@
 [
  {
+  "tittel": "Stopp kuttet til studieforbund – musikklivet i Tydal merker det!",
+  "url": "https://www.selbyggen.no/stopp-kuttet-til-studieforbund-musikklivet-i-tydal/306122",
+  "kilde": "Selbyggen",
+  "dato": "2026-11-15",
+  "sammendrag": "Debattinnlegg fra Tydal Trekkspillklubb som advarer om at kuttet på rundt 70 millioner kroner til studieforbundene i statsbudsjettet for 2027 kan ramme klubbens aktivitet og i verste fall føre til nedleggelse. Innlegget ber stortingspolitikerne fra Sør-Trøndelag om å reversere kuttet.",
+  "viktig": false,
+  "bilde": "https://image.selbyggen.no/280189.jpg?imageId=280189&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+  "fylker": [
+   "Trøndelag"
+  ],
+  "sted": "Tydal",
+  "lat": 63.04,
+  "lon": 11.65,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Synger ut sin misnøye over kutt",
+  "url": "https://www.solungavisa.no/kutt-til-studieforbund-rammer-musikklivet-i-asnes-kommune-i-innlandet/s/80-69-367574",
+  "kilde": "Solungavisa",
+  "dato": "2026-11-15",
+  "sammendrag": "Solør-samveldets mannskor Los Prostatas i Åsnes synger ut sin skuffelse over forslaget om å kutte rundt 70 millioner kroner i tilskuddet til studieforbundene i statsbudsjettet for 2027, og sier kuttet vil ramme koret hardt. Saken er også publisert i Østlendingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/solungavisa-no-synger-ut-sin-misnoye-over-kutt.jpg",
+  "fylker": [
+   "Innlandet"
+  ],
+  "sted": "Åsnes",
+  "lat": 60.61,
+  "lon": 12.01,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Fra nord til sør: Frivilligheten mobiliserer mot kuttene",
   "url": "https://www.vofo.no/aktuelt/hele-landet-engasjerer-seg-for-a-bevare-voksenopplaeringen-i-frivillige-organisasjoner",
   "kilde": "Vofo",
@@ -12,6 +46,49 @@
    "Musikkens Studieforbund",
    "Studieforbundet Funkis",
    "Idrettens Studieforbund"
+  ]
+ },
+ {
+  "tittel": "SV, Sp, Rødt og MDG står samlet: studieforbund-kuttet i KD må reverseres",
+  "url": "https://www.kompetanseforbundet.no/nyheter/2026/alle-budsjettpartnere-vil-reversere-studieforbund-kuttet/",
+  "kilde": "Kompetanseforbundet",
+  "dato": "2026-11-13",
+  "sammendrag": "Alle de fire budsjettpartnerne SV, Senterpartiet, Rødt og MDG legger inn penger i sine alternative budsjetter for å reversere halveringen av tilskuddet til studieforbundene under Kunnskapsdepartementet, fra 67,3 til 34,8 millioner kroner. Kompetanseforbundet forventer full reversering i budsjettavtalen med Arbeiderpartiet.",
+  "viktig": false,
+  "bilde": "https://www.kompetanseforbundet.no/wp-content/uploads/2026/11/alternative-statsbudsjetter-2027-sv-sp-rodt-mdg-1024x576.webp",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Akademisk Studieforbund",
+   "Studieforbundet Livslang Læring",
+   "Studieforbundet Næring og samfunn"
+  ],
+  "nederst": true
+ },
+ {
+  "tittel": "Kutt i kompetanse bremser omstillingen",
+  "url": "https://www.nito.no/aktuelt/nito-i-samfunnet/debatt-kutt-i-kompetanse-bremser-omstillingen/",
+  "kilde": "NITO",
+  "dato": "2026-11-13",
+  "sammendrag": "NITO-president Kjetil Lein og Kompetanseforbundets generalsekretær Kent Gudmundsen kritiserer at regjeringen vil halvere tilskuddet til studieforbundsordningen under Kunnskapsdepartementet, som gir korte og arbeidslivsrelevante kurs til over 100 000 deltakere i året. De ber Stortinget reversere hele kuttet i budsjettforhandlingene.",
+  "viktig": false,
+  "bilde": "https://www.nito.no/contentassets/f73936d4804d449cbae8bb356bff21bd/lein4.png",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": []
+ },
+ {
+  "tittel": "Kva blir gjort for å hindre budsjettkutta?",
+  "url": "https://www.kulturogtradisjon.no/post/kva-blir-gjort-for-%C3%A5-hindre-budsjettkutta",
+  "kilde": "Studieforbundet kultur og tradisjon",
+  "dato": "2026-11-12",
+  "sammendrag": "Studieforbundet kultur og tradisjon gjør rede for arbeidet mot kuttet på rundt 70 millioner kroner til studieforbunda i statsbudsjettet for 2027, med en aksjonsgruppe av Vofo, studieforbund og medlemsorganisasjoner. Senterpartiet, Rødt og MDG har foreslått å reversere kuttet i sine alternative budsjetter.",
+  "viktig": false,
+  "bilde": "https://static.wixstatic.com/media/4a9374_53308838d79646f4a32b7bb93574019e~mv2.png/v1/fill/w_1920,h_1080,al_c,q_95/4a9374_53308838d79646f4a32b7bb93574019e~mv2.png",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
   ]
  },
  {
