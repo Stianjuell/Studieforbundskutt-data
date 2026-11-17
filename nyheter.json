@@ -1,5 +1,21 @@
 [
  {
+  "tittel": "Når dansen stilner, mister vi mer enn kurs",
+  "url": "https://www.budstikka.no/nar-dansen-stilner-mister-vi-mer-enn-kurs/o/80-55-48409",
+  "kilde": "Budstikka",
+  "dato": "2026-11-17",
+  "sammendrag": "Gunnar Høiås, styremedlem i Akershus Seniordans, mener kuttet på 70 millioner kroner til studieforbundene er langt mer enn en liten innsparing, og viser til Vofos konsekvenskart som anslår at studieforbundene i Akershus kan miste om lag 7,2 millioner kroner. Ifølge innlegget kan kuttet gi et potensielt tap på 1 413 kurs og 20 008 deltakere i fylket.",
+  "viktig": false,
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/budstikka-no-nar-dansen-stilner-mister-vi-mer-enn-kurs.jpg",
+  "fylker": [
+   "Akershus"
+  ],
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
+  ]
+ },
+ {
   "tittel": "Stopp kuttet til studieforbund – musikklivet i Tydal merker det!",
   "url": "https://www.selbyggen.no/stopp-kuttet-til-studieforbund-musikklivet-i-tydal/306122",
   "kilde": "Selbyggen",
@@ -116,6 +132,51 @@
   ],
   "kategori": "Medier",
   "forbund": []
+ },
+ {
+  "tittel": "IT-sikkerhet for seniorer",
+  "url": "https://www.sfll.no/it-sikkerhet-for-seniorer/",
+  "kilde": "Studieforbundet Livslang Læring",
+  "dato": "2026-11-11",
+  "sammendrag": "Seniornett Holmlia frykter at kuttet i studieforbundsstøtten truer dataveiledningen for eldre, samtidig som cyberrisikoen i Norge er hevet til høyt nivå. Foreningen lærer seniorer å bruke BankID, apper og å beskytte seg mot svindel.",
+  "viktig": false,
+  "bilde": "https://www.sfll.no/wp-content/uploads/2026/11/5-oktober-2026-1-jfif-11-11-2026_10_08_PM.jpg",
+  "fylker": [
+   "Oslo"
+  ],
+  "sted": "Holmlia (Oslo)",
+  "lat": 59.83,
+  "lon": 10.8,
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Livslang Læring"
+  ]
+ },
+ {
+  "tittel": "OPPROP: 140 organisasjoner har signert",
+  "url": "https://www.sfll.no/opprop-140-organisasjoner-har-signert/",
+  "kilde": "Studieforbundet Livslang Læring",
+  "dato": "2026-11-11",
+  "sammendrag": "Studieforbundet Livslang Læring forteller at 140 organisasjoner har sluttet seg til Vofos opprop mot kuttet på 69,7 millioner kroner til studieforbundene, blant dem 23 av SFLLs medlemsorganisasjoner.",
+  "viktig": false,
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Livslang Læring"
+  ]
+ },
+ {
+  "tittel": "Rødt, MDG, Senterpartiet og SV reverserer kutt",
+  "url": "https://www.sfll.no/rodt-mdg-senterpartiet-og-sv-reverserer-kutt/",
+  "kilde": "Studieforbundet Livslang Læring",
+  "dato": "2026-11-11",
+  "sammendrag": "Studieforbundet Livslang Læring gjennomgår hvordan Rødt, MDG, Senterpartiet og SV begrunner at de reverserer kuttet til studieforbundene i sine alternative budsjetter.",
+  "viktig": false,
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Livslang Læring"
+  ]
  },
  {
   "tittel": "Takk for at noen lytter, men kampen er ikke over",
