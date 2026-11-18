@@ -657,7 +657,8 @@
    "Trøndelag"
   ],
   "kategori": "Medier",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/tronderdebatt-no-vi-trenger-mer-kunnskap-og-fellesskap-i-krisetider.jpg"
  },
  {
   "tittel": "Er frivilligheten et glemt kapitel?",
@@ -791,7 +792,8 @@
    "Innlandet"
   ],
   "kategori": "Medier",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/norddalen-no-dagens-regjering-legg-fram-eit-sentraliserande-statsbudsjett.jpg"
  },
  {
   "tittel": "6,7 millioner kroner mindre til læring og fellesskap i Innlandet",
@@ -991,7 +993,8 @@
   "kategori": "Medier",
   "forbund": [
    "Studieforbundet kultur og tradisjon"
-  ]
+  ],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/ha-halden-no-ikke-kutt-i-laeringen-som-bygger-lokalsamfunnene-vare.jpg"
  },
  {
   "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre!",
@@ -1119,7 +1122,8 @@
   "lat": 60.39,
   "lon": 5.32,
   "kategori": "Medier",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/fanaposten-no-regjeringens-budsjettkutt-rammer-tveiteras-ungdomskor.jpg"
  },
  {
   "tittel": "Skriftlig innspill til familie- og kulturkomiteen – statsbudsjettet 2027 - Fra Norsk senter for folkemusikk og folkedans",
@@ -1380,7 +1384,8 @@
    "Møre og Romsdal"
   ],
   "kategori": "Medier",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/haramsnytt-no-fryktar-dramatiske-budsjettkutt.jpg"
  },
  {
   "tittel": "Et inkluderende musikkliv, eller bare for dem som har råd?",
@@ -1716,7 +1721,7 @@
  },
  {
   "tittel": "Regjeringen kutter i beredskapen vår",
-  "url": "https://www.fvn.no/",
+  "url": "https://www.fvn.no/mening/debattinnlegg/o/PgGbwb/regjeringen-kutter-i-beredskapen-vaar",
   "kilde": "Fædrelandsvennen",
   "dato": "2026-10-22",
   "sammendrag": "Debattinnlegg som mener regjeringens forslag om å kutte rundt 70 millioner kroner i støtten til studieforbundene svekker beredskapen, og viser til Vofos beregning av 793 færre kurs og 19 017 færre kurstimer. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
@@ -1728,7 +1733,8 @@
   "lat": 58.27,
   "lon": 7.97,
   "kategori": "Medier",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/fvn-no-regjeringen-kutter-i-beredskapen-var.jpg"
  },
  {
   "tittel": "Regjeringens uansvarlige kutt for frivilligheten",
@@ -1871,7 +1877,7 @@
  },
  {
   "tittel": "Et angrep på frivilligheten",
-  "url": "https://www.tk.no/",
+  "url": "https://www.tk.no/et-angrep-pa-frivilligheten/o/80-51-40172",
   "kilde": "Tidens Krav",
   "dato": "2026-10-22",
   "sammendrag": "Leserinnlegg fra Studieforbundet Funkis som advarer om at kuttet på 70 millioner kroner til studieforbundene kan gi færre kurs, mindre inkludering og svekket fellesskap i Møre og Romsdal. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
@@ -1882,7 +1888,8 @@
   "kategori": "Medier",
   "forbund": [
    "Studieforbundet Funkis"
-  ]
+  ],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/tk-no-et-angrep-pa-frivilligheten.jpg"
  },
  {
   "tittel": "Trøndelag musikkråd: 70 millioner kroner tas fra frivilligheten",
@@ -2691,7 +2698,8 @@
   "lat": 59.12,
   "lon": 11.39,
   "kategori": "Organisasjonene",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/ajffhalden-no-vi-sier-ifra-om-okte-kostnader-for-jegere-og-frivilligheten.jpg"
  },
  {
   "tittel": "Statsbudsjettet 2027: Ber om nasjonalt utviklingsløft for kulturskolen",
