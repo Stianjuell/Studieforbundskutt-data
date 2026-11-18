@@ -221,7 +221,8 @@
   "kategori": "Medier",
   "forbund": [
    "Studieforbundet kultur og tradisjon"
-  ]
+  ],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/an-no-takk-for-at-noen-lytter-men-kampen-er-ikke-over.jpg"
  },
  {
   "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre!",
@@ -253,7 +254,8 @@
   "kategori": "Medier",
   "forbund": [
    "Studieforbundet kultur og tradisjon"
-  ]
+  ],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/t-a-no-husflidslagene-kan-miste-kurs-prover-seg-jo-hele-tiden.jpg"
  },
  {
   "tittel": "Fra møterom til Stortinget: Slik mobiliserer frivilligheten mot budsjettkuttene",
@@ -451,7 +453,8 @@
   "viktig": true,
   "fylker": [],
   "kategori": "Organisasjonene",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/kulturalliansen-no-statsbudsjettet-2027-vil-rette-opp-kutt-til-kulturfrivilligheten.jpg"
  },
  {
   "tittel": "Vi trenger mer kunnskap og fellesskap i krisetider – ikke mindre!",
@@ -525,7 +528,8 @@
   "viktig": true,
   "fylker": [],
   "kategori": "Organisasjonene",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/vofo-no-alle-budsjettpartnerne-vil-reversere-kuttet.jpg"
  },
  {
   "tittel": "MDG styrker studieforbundene – alle fire budsjettpartnerne vil reversere kuttet",
