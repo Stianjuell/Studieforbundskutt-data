@@ -14,6 +14,40 @@
   "forbund": []
  },
  {
+  "tittel": "Foreslått kutt rammer musikklivet på Frosta",
+  "url": "https://www.frostingen.no",
+  "kilde": "Frostingen",
+  "dato": "2026-11-18",
+  "sammendrag": "Innlegget handler om hvordan regjeringens forslag om å kutte tilskuddet til studieforbundene med rundt 70 millioner kroner i statsbudsjettet for 2027 rammer musikklivet på Frosta. Saken er hentet fra medieovervåkingen og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "fylker": [
+   "Trøndelag"
+  ],
+  "sted": "Frosta",
+  "lat": 63.59,
+  "lon": 10.74,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
+  "tittel": "Kurs er meir enn læring",
+  "url": "https://www.rbnett.no/meninger/o/mMRVmO/kurs-er-meir-enn-laering",
+  "kilde": "Romsdals Budstikke",
+  "dato": "2026-11-18",
+  "sammendrag": "En kursdeltaker i Studieforbundet Funkis skriver at kuttet på rundt 70 millioner kroner til studieforbundene kan gi færre kurs og møteplasser, og viser til et KI-kurs i Molde med rundt 50 deltakere. Han ber Stortinget sikre at studieforbundene fortsatt kan tilby læring og fellesskap.",
+  "viktig": false,
+  "fylker": [
+   "Møre og Romsdal"
+  ],
+  "sted": "Molde",
+  "lat": 62.74,
+  "lon": 7.16,
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet Funkis"
+  ]
+ },
+ {
   "tittel": "Når dansen stilner, mister vi mer enn kurs",
   "url": "https://www.budstikka.no/nar-dansen-stilner-mister-vi-mer-enn-kurs/o/80-55-48409",
   "kilde": "Budstikka",
