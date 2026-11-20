@@ -27,7 +27,8 @@
   "lat": 63.59,
   "lon": 10.74,
   "kategori": "Medier",
-  "forbund": []
+  "forbund": [],
+  "bilde": "https://raw.githubusercontent.com/Stianjuell/Studieforbundskutt-data/main/img/frostingen-no-foreslatt-kutt-rammer-musikklivet-pa-frosta.jpg"
  },
  {
   "tittel": "Kurs er meir enn læring",
