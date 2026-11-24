@@ -1,5 +1,39 @@
 [
  {
+  "tittel": "KrF vil reversere kuttet i studieforbundene",
+  "url": "https://www.kompetanseforbundet.no/nyheter/2026/krf-vil-reversere-kuttet-i-studieforbundene/",
+  "kilde": "Kompetanseforbundet",
+  "dato": "2026-11-23",
+  "sammendrag": "KrF setter i sitt alternative statsbudsjett for 2027 av 32,5 millioner kroner for å reversere kuttet i tilskuddet til studieforbundene under Kunnskapsdepartementet. Regjeringen foreslår å redusere tilskuddet fra 67,3 til 34,8 millioner kroner.",
+  "viktig": true,
+  "bilde": "https://www.kompetanseforbundet.no/wp-content/uploads/2026/11/krf-hero-1024x576.webp",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Akademisk Studieforbund",
+   "Studieforbundet Livslang Læring",
+   "Studieforbundet Næring og samfunn"
+  ],
+  "nederst": true
+ },
+ {
+  "tittel": "Venstre vil reversere kuttet i studieforbundene",
+  "url": "https://www.kompetanseforbundet.no/nyheter/2026/venstre-vil-reversere-kuttet-i-studieforbundene/",
+  "kilde": "Kompetanseforbundet",
+  "dato": "2026-11-23",
+  "sammendrag": "Venstre setter i sitt alternative statsbudsjett for 2027 av 33,1 millioner kroner for å reversere halveringen av tilskuddet til studieforbundene under Kunnskapsdepartementet. Dermed støtter seks partier at kuttet reverseres.",
+  "viktig": true,
+  "bilde": "https://www.kompetanseforbundet.no/wp-content/uploads/2026/11/venstre-hero-1024x576.webp",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Akademisk Studieforbund",
+   "Studieforbundet Livslang Læring",
+   "Studieforbundet Næring og samfunn"
+  ],
+  "nederst": true
+ },
+ {
   "tittel": "Seniornett Holmlia hjelper eldre i en digital hverdag",
   "url": "https://journalen.oslomet.no/nb/innenriks/2026/11/seniornett-holmlia-hjelper-eldre-i-en-digital-hverdag",
   "kilde": "Journalen",
@@ -16,6 +50,25 @@
   "kategori": "Medier",
   "forbund": [
    "Studieforbundet Livslang Læring"
+  ]
+ },
+ {
+  "tittel": "Lærer nytt håndverk",
+  "url": "https://www.l-a.no/kultur/n/M5RBor/laerer-nytt-haandverk",
+  "kilde": "Lindesnes Avis",
+  "dato": "2026-11-21",
+  "sammendrag": "Ungdommer lærer brodering hos Mandal Husflidslag, som i 2025 holdt 19 kurs med 112 deltakere gjennom Studieforbundet kultur og tradisjon. Saken er hentet fra medieovervåkingen om statsbudsjettet og kunne ikke leses i sin helhet.",
+  "viktig": false,
+  "bilde": "https://vcdn.polarismedia.no/d4bee314-41a1-3416-acff-9e16ae4291ec?fit=crop&q=80&tight=false&w=1200&h=800",
+  "fylker": [
+   "Agder"
+  ],
+  "sted": "Mandal (Lindesnes)",
+  "lat": 58.03,
+  "lon": 7.46,
+  "kategori": "Medier",
+  "forbund": [
+   "Studieforbundet kultur og tradisjon"
   ]
  },
  {
