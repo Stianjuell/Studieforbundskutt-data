@@ -522,7 +522,9 @@ function renderCarousel(){
   // Saker fra nyhetslista: alle saker, nyeste først; innen samme dato medier, organisasjoner, vofo.no, sosiale medier.
   const okN=n=>n&&n.tittel&&/^https:\/\//.test(n.url||"")&&!n.nederst;
   const harB=n=>/^https:\/\//.test(n.bilde||"")&&!/\.svg(\?|$)/i.test(n.bilde);
-  const alleN=(window.__news||[]).filter(okN).filter(n=>!/kompetanseforbundet/i.test(n.url||""));
+  // Kilder som ikke skal vises i karusellen.
+  const ikkeKarusell=/kompetanseforbundet|l-a\.no|journalen\.oslomet\.no/i;
+  const alleN=(window.__news||[]).filter(okN).filter(n=>!ikkeKarusell.test(n.url||""));
   const medN=alleN.filter(n=>n.kategori==="Medier").sort((a,b)=>(b.dato||"").localeCompare(a.dato||"")||((b.viktig?1:0)-(a.viktig?1:0)));
   const andreN=alleN.filter(n=>n.kategori!=="Medier"&&harB(n)).sort((a,b)=>((b.viktig?1:0)-(a.viktig?1:0))||(b.dato||"").localeCompare(a.dato||"")).slice(0,8);
   // Ferske saker: datert de siste tre dagene, eller lagt inn i radaren de siste to døgnene. De sorteres etter når de kom inn, nyeste først, og vises først i karusellen.
