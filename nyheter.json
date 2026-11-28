@@ -1,5 +1,22 @@
 [
  {
+  "tittel": "Jubel for avtale",
+  "url": "https://www.fjuken.no/nyheiter/n/M5RxgK/jubel-for-avtale",
+  "kilde": "Fjuken",
+  "dato": "2026-11-27",
+  "sammendrag": "Fjuken melder at kuttet til studieforbundene er reversert i budsjettforliket, noe som gleder den lokale avdelingen i Vågå. Saken ligger bak betalingsmur og kunne ikke leses i sin helhet.",
+  "viktig": true,
+  "bilde": "https://vcdn.polarismedia.no/36061b75-fffa-3aa4-b031-f735940fe749?fit=crop&q=80&tight=false&w=1200&h=797",
+  "fylker": [
+   "Innlandet"
+  ],
+  "sted": "Vågå",
+  "lat": 61.88,
+  "lon": 9.1,
+  "kategori": "Medier",
+  "forbund": []
+ },
+ {
   "tittel": "Kursstøtten kan bli reddet – Norges Husflidslag risikerer millionkutt i driften",
   "url": "https://husflid.no/kursstotten-kan-bli-reddet-norges-husflidslag-risikerer-millionkutt-i-driften/",
   "kilde": "Norges Husflidslag",
@@ -85,6 +102,34 @@
   ]
  },
  {
+  "tittel": "Studieforbundskuttet reverseres i budsjettavtalen",
+  "url": "https://www.musikkensstudieforbund.no/nyheter/studieforbundskuttet-reverseres-i-budsjettavtalen",
+  "kilde": "Musikkens studieforbund",
+  "dato": "2026-11-25",
+  "sammendrag": "Musikkens studieforbund melder at hele det foreslåtte kuttet på 70 millioner kroner til studieforbundsordningen reverseres i budsjettavtalen.",
+  "viktig": true,
+  "bilde": "https://i2.vrs.gd/musikk/Musikkens-studieforbund/Orkester-i-solnedgang_200110_134819_2026-05-15-113251_bodt.jpg?width=1200&height=630&format=jpg&quality=80&crop=1773%2C930%2C0%2C123",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Musikkens studieforbund"
+  ]
+ },
+ {
+  "tittel": "Kuttet til studieforbundene er reversert i budsjettavtalen",
+  "url": "https://www.naeringogsamfunn.no/kuttet-til-studieforbundene-er-reversert-i-budsjettavtalen.6622917-597340.html",
+  "kilde": "Studieforbundet Næring og samfunn",
+  "dato": "2026-11-25",
+  "sammendrag": "Studieforbundet Næring og samfunn takker Ap, Sp, SV og Rødt for enigheten om å reversere kuttet til studieforbundene under Kunnskapsdepartementet, og takker medlemsorganisasjonene for engasjementet.",
+  "viktig": true,
+  "bilde": "https://www.naeringogsamfunn.no/getfile.php/5514656.2482.pwpppkw7zssjws/1200x630/Stortinget.jpg",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Næring og samfunn"
+  ]
+ },
+ {
   "tittel": "KrF vil reversere kuttet i studieforbundene",
   "url": "https://www.kompetanseforbundet.no/nyheter/2026/krf-vil-reversere-kuttet-i-studieforbundene/",
   "kilde": "Kompetanseforbundet",
@@ -117,6 +162,34 @@
    "Studieforbundet Næring og samfunn"
   ],
   "nederst": true
+ },
+ {
+  "tittel": "KrF vil reversere kuttet til studieforbundene",
+  "url": "https://www.naeringogsamfunn.no/krf-vil-reversere-kuttet-til-studieforbundene.6757142-597340.html",
+  "kilde": "Studieforbundet Næring og samfunn",
+  "dato": "2026-11-23",
+  "sammendrag": "KrF setter av 32,5 millioner kroner i sitt alternative statsbudsjett for 2027 for å reversere kuttet i tilskuddet til studieforbund over Kunnskapsdepartementets budsjett.",
+  "viktig": true,
+  "bilde": "https://www.naeringogsamfunn.no/getfile.php/5514498.2482.qpjttttbzjnj7k/1200x630/Krf.jpg",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Næring og samfunn"
+  ]
+ },
+ {
+  "tittel": "Venstre vil også reversere kuttet til studieforbundene",
+  "url": "https://www.naeringogsamfunn.no/venstre-vil-ogsaa-reversere-kuttet-til-studieforbundene.6757144-597340.html",
+  "kilde": "Studieforbundet Næring og samfunn",
+  "dato": "2026-11-23",
+  "sammendrag": "Venstre går i sitt alternative statsbudsjett for 2027 inn for å reversere kuttet til studieforbundene under Kunnskapsdepartementet med 33,1 millioner kroner.",
+  "viktig": true,
+  "bilde": "https://www.naeringogsamfunn.no/getfile.php/5514474.2482.jlzmtwikaqiaiq/1200x630/Venstre.png",
+  "fylker": [],
+  "kategori": "Organisasjonene",
+  "forbund": [
+   "Studieforbundet Næring og samfunn"
+  ]
  },
  {
   "tittel": "Seniornett Holmlia hjelper eldre i en digital hverdag",
